@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+from datetime import timedelta
+import os
+from django.urls import reverse_lazy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,17 +39,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cars.apps.CarsConfig'
+    'cars.apps.CarsConfig',
+    'corsheaders',
+    'rest_framework.authtoken',
+    #third party package for user registration and authentication endpoints 	
+    'djoser',
+	
+     #rest API implementation library for django
+    'rest_framework',
+	
+	#JWT authentication backend library
+    'rest_framework_simplejwt',
+    
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    # 'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'calculator.urls'
@@ -55,6 +72,7 @@ ROOT_URLCONF = 'calculator.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -75,9 +93,19 @@ WSGI_APPLICATION = 'calculator.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
+    'default':{
+        
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cars',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',  # Или IP-адрес вашего PostgreSQL сервера
+        'PORT': '5432',       # Порт PostgreSQL (по умолчанию 5432)
+    
     }
 }
 
@@ -122,3 +150,148 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # Замените на адрес вашего фронтенда
+#     "http://127.0.0.1:3000",  # Замените на адрес вашего фронтенда
+# ]
+
+# Дополнительные настройки CORS
+# CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+# CORS_ALLOW_HEADERS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Origin',
+]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Замените на адрес вашего фронтенда
+    "http://127.0.0.1:3000",   # Замените на адрес вашего фронтенда
+    # Другие допустимые источники
+]
+
+
+# AUTH_USER_MODEL = 'cars.CustomUser'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'cars.utils.jwt_response_payload_handler',
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+    'EMAIL': {
+        # 'activation': 'cars.templates.email.activation',
+        'activation': 'cars.core.email.ActivationEmail',
+        
+        # 'password_reset': 'path.to.your.custom.password_reset.template.password_reset',
+        # Другие операции и шаблоны
+    },
+}
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("JWT",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
+
+# DJOSER CONFIG
+# DJOSER = {
+#     "LOGIN_FIELD": "email",
+#     "USER_CREATE_PASSWORD_RETYPE": True,
+#     "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
+#     "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+#     "SEND_CONFIRMATION_EMAIL": True,
+#     "SET_USERNAME_RETYPE": True,
+#     "SET_PASSWORD_RETYPE": True,
+#     "USERNAME_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
+#     "PASSWORD_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
+#     "ACTIVATION_URL": "activate/{uid}/{token}",
+#     "SEND_ACTIVATION_EMAIL": True,
+#     "SOCIAL_AUTH_TOKEN_STRATEGY": "djoser.social.token.jwt.TokenStrategy",
+#     "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": [
+#         "your redirect url",
+#         "your redirect url",
+#     ],
+#     "SERIALIZERS": {
+#         "user_create": "accounts.serializers.UserCreateSerializer",  # custom serializer
+#         "user": "djoser.serializers.UserSerializer",
+#         "current_user": "djoser.serializers.UserSerializer",
+#         "user_delete": "djoser.serializers.UserSerializer",
+#     },
+# }
+
+# EMAIL CONFIG
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'testerdjango123@gmail.com'
+# EMAIL_HOST_PASSWORD = '20022306'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'django.tester@yandex.ru'
+EMAIL_HOST_PASSWORD = 'cfdangdiiwtjypkf' #<- пароль вашего созданного приложения а не от почты
+DEFAULT_FROM_EMAIL = 'django.tester@yandex.ru'
+EMAIL_USE_TLS = True

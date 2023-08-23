@@ -1,0 +1,29 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Account Activation</title>
+</head>
+<body>
+    <p>Здравствуйте!</p>
+    <p>Перейдите по данной ссылке, чтобы закончить регистрацию в сервисе "Автокалькулятор.рф"</p>
+    
+    <a href="{{ domain }}/#/activate/{{ uid }}/{{ token }}/">Активируйте аккаунт</a>
+    <p>Спасибо, что выбрали нас!</p>
+    <p>С уважением, команда "Автокалькулятор.рф"</p>
+</body>
+</html> -->
+
+
+{% block text_body %}
+
+You're receiving this email because you need to finish the activation process on {{ site_name }}.
+Please go to the following page to activate your account:
+
+http://localhost:8000/activate/{{ uid }}/{{ token }}
+
+http://localhost:3000/activationAccount/?uid={{ uid }}&token={{ token }}
+Thanks for using our site!
+
+{% endblock text_body %}
+
+
