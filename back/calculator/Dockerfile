@@ -5,12 +5,12 @@ FROM python:3.10.9
 WORKDIR /usr/src/app
 
 # Копируем зависимости и устанавливаем их
-COPY ./requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Копируем исходный код Django-приложения
-COPY . /usr/src/app
-
+# COPY . /usr/src/app
+COPY . .
 # Указываем порт, который должен слушать контейнер
 EXPOSE 8000
 
