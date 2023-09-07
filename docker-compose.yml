@@ -1,0 +1,31 @@
+version: '3'
+services:
+  react-app:
+    build:
+      context: ./front
+    ports:
+      - "3000:3000"
+  django-app:
+    build: ./back/calculator
+      
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app/:/usr/src/app/
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:latest
+    # Задание переменных окружения для контейнера с postgres
+    environment:
+      - POSTGRES_DB=cars
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+     # Задание имени контейнера для сервиса pgdb
+    container_name: pgdb
+     # Связывание тома с директорией в контейнере для сохранения данных postgres
+    volumes:
+      - ./app/:/usr/src/app/
+
+

@@ -103,7 +103,7 @@ DATABASES = {
         'NAME': 'cars',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'localhost',  # Или IP-адрес вашего PostgreSQL сервера
+        'HOST': 'postgres',  # Или IP-адрес вашего PostgreSQL сервера
         'PORT': '5432',       # Порт PostgreSQL (по умолчанию 5432)
     
     }
