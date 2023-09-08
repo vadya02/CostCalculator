@@ -24,11 +24,11 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
      # Задание имени контейнера для сервиса pgdb
-    container_name: pgdb
+   
      # Связывание тома с директорией в контейнере для сохранения данных postgres
     volumes:
       - pg_data:/var/lib/postgresql/data
   
-  volumes:
-    pg_data:
+volumes:
+  pg_data:
 

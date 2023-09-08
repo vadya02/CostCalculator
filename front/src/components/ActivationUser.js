@@ -6,6 +6,7 @@ import Header from './Header';
 // import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import AuthStore from './AuthStore';
 function ActivationUser() {    
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -34,11 +35,11 @@ function ActivationUser() {
   
   return (
     <div className="">
-        <Header/>
+        <Header Store={AuthStore}/>
         <h5 className='h1'>
             Ваш аккаунт активирован
         </h5>
-        <p className='text-primary text-left'> <Link to="/calculator">Перейдите по данной ссылке</Link></p>
+        <p className='text-primary text-left'> <Link to="/">Перейдите по данной ссылке</Link></p>
     </div>
   );
   }
