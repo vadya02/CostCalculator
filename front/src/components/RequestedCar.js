@@ -20,9 +20,9 @@ function RequestedCar({ title, content }) {
     
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/requested_car',
+        url: `${process.env.REACT_APP_API_URL}/requested_car`,
         headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:3000',
+          'Access-Control-Allow-Origin': `${process.env.REACT_APP_URL}`,
           'Authorization': `Token ${localStorage.getItem('authToken')}`
         }
       })

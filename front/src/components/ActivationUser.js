@@ -18,7 +18,7 @@ function ActivationUser() {
         // Отправить POST-запрос с помощью Axios или другой библиотеки
         // Используйте uid и token для подтверждения почты
         const requestData = { uid, token };
-        const confirmationUrl = 'http://localhost:8000/auth/users/activation/';
+        const confirmationUrl = `${process.env.REACT_APP_API_URL}/auth/users/activation/`;
         // Отправка POST-запроса с помощью Axios
         axios.post(confirmationUrl, requestData)
         .then(response => {

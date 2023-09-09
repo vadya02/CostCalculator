@@ -1,23 +1,31 @@
 version: '3'
 services:
   react-app:
-    build:
-      context: ./front
+    image: arturjohnsehiri/deploy:frontend
+    # build:
+    #   context: ./front
     ports:
       - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://81.200.145.2:8000
+      - REACT_APP_URL=http://81.200.145.2:3000
   django-app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    image: arturjohnsehiri/deploy:backend
+    # build: 
+    #   context: ./back/calculator
+    #   dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      - ALLOWED_HOST=http://81.200.145.2:3000
+      - DB_HOST=postgres
     # command: python manage.py runserver 0.0.0.0:8000
     # volumes:
     #   - .:/usr/src/app
     depends_on:
       - postgres
   postgres:
-    image: postgres:latest
+    image: arturjohnsehiri/deploy:postgres
     # Задание переменных окружения для контейнера с postgres
     environment:
       - POSTGRES_DB=cars

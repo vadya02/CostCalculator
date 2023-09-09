@@ -36,7 +36,7 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
       axios({
         method: 'post',
         // url: 'https://chatbot.ext.lomger.tech/auth/users/',
-        url: 'http://127.0.0.1:8000/auth/users/',
+        url: `${process.env.REACT_APP_API_URL}/auth/users/`,
         // data: {
         //   email: data.email,
         //   username: data.username,

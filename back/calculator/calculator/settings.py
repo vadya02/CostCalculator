@@ -103,7 +103,7 @@ DATABASES = {
         'NAME': 'cars',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'postgres',  # Или IP-адрес вашего PostgreSQL сервера
+        'HOST': os.environ.get('DB_HOST'),  # Или IP-адрес вашего PostgreSQL сервера
         'PORT': '5432',       # Порт PostgreSQL (по умолчанию 5432)
     
     }
@@ -166,6 +166,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
+    os.environ.get('CORS_ALLOWED_HOST')
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -181,10 +182,11 @@ CORS_ALLOW_HEADERS = [
     'Access-Control-Allow-Headers',
     'Access-Control-Allow-Origin',
 ]
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.environ.get('ALLOWED_HOST')]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Замените на адрес вашего фронтенда
     "http://127.0.0.1:3000",   # Замените на адрес вашего фронтенда
+    os.environ.get('CORS_ALLOWED_HOST'),
     # Другие допустимые источники
 ]
 

@@ -66,19 +66,12 @@ function Calculator( {Store} ) {
       // const selectedBrand=e.target.value;
       setBrand(selectedBrand);
       console.log(brand)
-      // axios
-      //   // .get(`/api/models?brand=${selectedBrand}`)
-      //   .get(`http://localhost:8000/brands`, {
-      //     headers: {
-      //       'Access-Control-Allow-Origin': 'http://localhost:3000', // Замените на адрес вашего фронтенда
-      //       // Другие заголовки, если необходимо
-      //     }
-      //   })
+
         axios({
           method: 'get',
           // url: 'https://chatbot.ext.lomger.tech/auth/users/',
-          url: 'http://127.0.0.1:8000/brands',
-          headers: {'Access-Control-Allow-Origin': 'http://localhost:3000',}
+          url: `${process.env.REACT_APP_API_URL}/brands`,
+          headers: {'Access-Control-Allow-Origin': `${process.env.REACT_APP_URL}`,}
         })
         .then((response) => {
           setBrandList(response.data.map(item => item.Nazvanie_brand))
@@ -93,8 +86,8 @@ function Calculator( {Store} ) {
       setRegion(selectedRegion);
         axios({
           method: 'get',
-          url: 'http://127.0.0.1:8000/regions',
-          headers: {'Access-Control-Allow-Origin': 'http://localhost:3000',}
+          url: `${process.env.REACT_APP_API_URL}/regions`,
+          headers: {'Access-Control-Allow-Origin': `${process.env.REACT_APP_URL}`,}
         })
         .then((response) => {
           setRegionList(response.data)
@@ -107,7 +100,7 @@ function Calculator( {Store} ) {
     const handleModelsView = (brand) => {
       setBrand(brand)
       console.log(brand)
-      axios.get('http://127.0.0.1:8000/models-by-brand/', { 
+      axios.get(`${process.env.REACT_APP_API_URL}/models-by-brand/`, { 
         method: 'GET',
         params: {
           Nazvanie_marki: brand
@@ -137,7 +130,7 @@ function Calculator( {Store} ) {
     const handleModificationView = (model) => {
       // setBrand(brand)
       // console.log(brand)
-      axios.get('http://127.0.0.1:8000/modification-by-model/', { 
+      axios.get(`${process.env.REACT_APP_API_URL}/modification-by-model/`, { 
         method: 'GET',
         params: {
           Nazvanie_modeli: model
@@ -170,7 +163,7 @@ function Calculator( {Store} ) {
   const handleCountSum = (modification_id, probeg, region, rashod, cost) =>{
     console.log(region)
     const token = storedToken;
-    axios.get('http://127.0.0.1:8000/cost_of_carship/', { 
+    axios.get(`${process.env.REACT_APP_API_URL}/cost_of_carship/`, { 
         method: 'GET',
         params: {
           Region: region,

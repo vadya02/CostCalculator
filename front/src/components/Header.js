@@ -18,7 +18,7 @@ const Header = observer(({Store, UserName, isAuthenticated}) =>{
           // Если есть токен, проверяем его на сервере
           axios({
             method: 'GET',
-            url: 'http://localhost:8000/auth/users/me/', // Замените на ваш URL для проверки авторизации
+            url: `${process.env.REACT_APP_API_URL}/auth/users/me/`, // Замените на ваш URL для проверки авторизации
             headers: {
               Authorization: `Token ${authToken}`,
             },

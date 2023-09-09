@@ -40,7 +40,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
     const UserData = JSON.stringify(data);
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/auth/token/login/',
+      url: `${process.env.REACT_APP_API_URL}/auth/token/login/`,
       data: UserData,
       headers: {
         'Content-Type': 'application/json',
