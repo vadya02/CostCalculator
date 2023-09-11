@@ -201,11 +201,11 @@ function Calculator( {Store} ) {
   
   return (
     <div className="">
-        <Header Store={AuthStore}/>
-        <div className='container text-center' style={{padding: '50px'}}>
-            <div className='row p-40' style={{padding: '10px'}}>
-                <h5>Марка автомобиля</h5>
-                <select className="form-select" onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
+        <Header Store={AuthStore} showOptions={true}/>
+        <div className='container text-center p-5' >
+            <div className='row justify-content-center' >
+                <h5 className='col-md-3' style={{marginRight: '10px', width: '30%'}}>Марка автомобиля</h5>
+                <select  className="form-select" style={{width: '30%'}} onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
                 <option value="">Выберите марку автомобиля</option>
                     {BrandList &&
                     BrandList.map((brand) => (
@@ -215,9 +215,9 @@ function Calculator( {Store} ) {
                     ))}
                 </select>
             </div>
-            <div className='row' style={{padding: '10px'}}>
-                <h5>Модель автомобиля</h5>
-                <select className="form-select" onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
+            <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
+                <h5 style={{marginRight: '10px', width: '30%'}}>Модель автомобиля</h5>
+                <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
                 <option value="">Выберите модель автомобиля</option>
                 
                 {ModelList &&
@@ -228,9 +228,9 @@ function Calculator( {Store} ) {
                   ))}
                 </select>
             </div>
-            <div className='row' style={{padding: '10px'}}>
-                <h5>Модификация</h5>
-                <select className="form-select" onChange={(e) => {handleModificationIdChange(e.target.value); console.log(e.target.value)}}>
+            <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
+                <h5 style={{marginRight: '10px', width: '30%'}}>Модификация</h5>
+                <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModificationIdChange(e.target.value); console.log(e.target.value)}}>
                 <option value="">Выберите модификацию автомобиля</option>
                 
                 {ModificatioinList &&
@@ -241,9 +241,9 @@ function Calculator( {Store} ) {
                   ))}
                 </select>
             </div>
-            <div className='row' style={{padding: '10px'}}>
-                <h5>Выберите регион</h5>
-                <select className="form-select" onChange={(e) => {handleRegionChange(e.target.value); console.log(e.target.value)}}>
+            <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
+                <h5 style={{marginRight: '10px', width: '30%'}}>Выберите регион</h5>
+                <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleRegionChange(e.target.value); console.log(e.target.value)}}>
                 <option value="">Выберите регион</option>
                 
                 {RegionList&&
@@ -254,19 +254,19 @@ function Calculator( {Store} ) {
                   ))}
                 </select>
             </div>
-            <div className='row' style={{padding: '10px'}}>
-                <h5>Годовой пробег</h5>
-                <input type="number" class="form-control" id="exampleInput" placeholder="Введите годовой пробег" onChange={(e)=>handleProbegChange(e.target.value)}></input>
+            <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
+                <h5 style={{marginRight: '10px', width: '30%'}}>Годовой пробег</h5>
+                <input type="number" class="form-control" style={{width: '30%'}} id="exampleInput" placeholder="Введите годовой пробег" onChange={(e)=>handleProbegChange(e.target.value)}></input>
             </div>
-            <div className='row' style={{padding: '10px'}}>
-                <h5>Цена топлива</h5>
-                <input type="number" class="form-control" id="exampleInput" placeholder="Введите цену топлива" onChange={(e)=>handleCostChange(e.target.value)}></input>
+            <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
+                <h5 style={{marginRight: '10px', width: '30%'}}>Цена топлива</h5>
+                <input type="number" class="form-control" style={{width: '30%'}} id="exampleInput" placeholder="Введите цену топлива" onChange={(e)=>handleCostChange(e.target.value)}></input>
             </div>
-            <div className='row' style={{padding: '10px'}}>
-                <h5>Расход топлива</h5>
-                <input type="number" class="form-control" id="exampleInput" placeholder="Введите расход топлива" onChange={(e)=>handleRashodChange(e.target.value)}></input>
+            <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
+                <h5 style={{marginRight: '10px', width: '30%'}}>Расход топлива</h5>
+                <input type="number" class="form-control" style={{width: '30%'}} id="exampleInput" placeholder="Введите расход топлива" onChange={(e)=>handleRashodChange(e.target.value)}></input>
             </div>
-            <div className='container d-flex justify-content-center align-items-center' style={{padding: '10px'}}>
+            <div className='container d-flex justify-content-center align-items-center' style={{padding: '10px', display: 'flex'}}>
                 <button className='btn btn-primary' onClick={() => {
                   handleRegionChange(Region);
                   handleCountSum(Modification_id, Probeg, Region, Rashod, FuelPrice)

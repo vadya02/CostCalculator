@@ -8,7 +8,7 @@ import ModalReg from './ModalReg';
 import AuthStore from './AuthStore';
 import { observer } from 'mobx-react';
 import { useContext } from 'react';
-const Header = observer(({Store, UserName, isAuthenticated}) =>{
+const Header = observer(({Store, UserName, showOptions}) =>{
     const authStore = Store
     useEffect(() => {
         // При загрузке компонента
@@ -109,7 +109,7 @@ const Header = observer(({Store, UserName, isAuthenticated}) =>{
             </>
             )}
 
-            {Store.isAuthenticated && (
+            {Store.isAuthenticated && showOptions && (
             <>
 
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">

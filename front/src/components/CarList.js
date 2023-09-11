@@ -14,7 +14,7 @@ function CarList({Store}) {
   
   return (
     <div className="">
-        <Header Store={Store}/>
+        <Header Store={Store} showOptions={false}/>
         <h5 className='text-center'>
             Ваши автомобили
         </h5>

@@ -237,9 +237,13 @@ class CountSumView(generics.ListAPIView):
             car_model = model,
             modification_power = modification_power,
             modification_capacity = modification_capacity,
-            cost_of_ownership = sumOfCarship
+            cost_of_ownership = sumOfCarship,
+            
 
         )
+        if (created==False):
+            obj.kolichestvo_zaprosov = obj.kolichestvo_zaprosov+1
+            obj.save()
         
         statistic, created = Statistic.objects.get_or_create(brand = brand, model_name = model)
         print('Статистика: ' + statistic.model_name)
@@ -261,7 +265,11 @@ class RequestedCarView(generics.ListCreateAPIView):
     
 
 class CarRequestStatisticView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         statistics = Statistic.objects.all()
-        data = [{'Марка': stat.brand.__str__(), 'Модель': stat.model_name, 'Количество запросов': stat.num_requests} for stat in statistics]
+        data = [{'Marka': stat.brand.__str__(), 'Model': stat.model_name, 'Kolichestvo_zaprosov': stat.num_requests} for stat in statistics]
         return Response(data)
+        # user = self.request.user
+        # print (user)
+        # return Statistic.objects.filter(user=user)

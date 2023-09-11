@@ -32,9 +32,11 @@ class RequestedCar(models.Model):
     modification_power = models.IntegerField(default=0)
     modification_capacity = models.IntegerField(default=0)
     cost_of_ownership = models.IntegerField(default=0)
+    kolichestvo_zaprosov = models.IntegerField(default=0)
     # requested_date = models.DateTimeField(auto_now_add=True)
 
 class Statistic(models.Model):
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     brand = models.CharField(max_length=255, default='')
     num_requests = models.PositiveIntegerField(default=0)
     # average_ownership_cost = models.DecimalField(max_digits=10, decimal_places=2)
