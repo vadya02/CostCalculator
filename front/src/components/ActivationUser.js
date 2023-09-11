@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Header from './Header';
+import AuthStore from './AuthStore';
 // import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -34,7 +35,7 @@ function ActivationUser() {
   
   return (
     <div className="">
-        <Header/>
+        <Header Store={AuthStore}/>
         <h5 className='h1'>
             Ваш аккаунт активирован
         </h5>

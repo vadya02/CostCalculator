@@ -40,7 +40,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
     const UserData = JSON.stringify(data);
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/auth/token/login/',
+      url: `http://127.0.0.1:8000/auth/token/login/`,
       data: UserData,
       headers: {
         'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
             </Form.Group>
             <Form.Group style={{alignItems: 'center', display: 'flex', justifyContent: 'center',}}>
                 <Form.Label>Еще не зарегистрированы?</Form.Label>
-                <Form.Label style={{color: '#0D6EFD'}}>Зарегистрироваться</Form.Label>
+                <Form.Label style={{color: '#0D6EFD'}} onClick={handleClick}>Зарегистрироваться</Form.Label>
             </Form.Group>
             
           </Form>
