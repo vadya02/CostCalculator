@@ -5,6 +5,7 @@ import Header from './Header';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Card, Button, Modal } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 // import { useEffect } from 'react';
 function RequestedCar({ title, content }) {   
   const [requestedCar, setRequestedCar] = useState('')
@@ -63,7 +64,67 @@ function RequestedCar({ title, content }) {
   };
   return (
     <div className="">
-      {requestedCar&&
+
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Номер</th>
+                  <th>Марка</th>
+                  <th>Модель</th>
+                  <th>Стоимость владения</th>
+                  <th>Дата запроса</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              
+          
+
+        
+                {requestedCar&&
+                  requestedCar.map((car) => (
+                  <tr key={car.id}>
+                    <td>{car.id}</td>
+                    <td>{car.car_name}</td>
+                    <td>{car.car_model}</td>
+                    <td>{car.cost_of_ownership}</td>
+                    
+                      {/* <script>
+                        const date = new Date(jsonData.fullDate);
+
+                        // Получение года, месяца и дня
+                        const year = date.getFullYear(); // Год (например, 2023)
+                        const month = date.getMonth() + 1; // Месяц (0-11, поэтому добавляем 1) (например, 9)
+                        const day = date.getDate(); // День (например, 13)
+
+                        // Преобразование в строку в нужном формате (например, "2023-09-13")
+                        const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                    
+                      </script> */}
+                     <td> {car.request_date}</td>
+                     <td> <Button onClick={() =>{handleStatistic(); handleShowStatistic()}} style={{marginRight: '10px'}}>Статистика</Button></td>
+                      
+                    {/* Вывод других данных из ответа */}
+                    <Modal show={showStatistic} onHide={handleCloseStatistic}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Статистика по автомобилю: {car.car_name} {car.car_model}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Количество запросов со стороны пользователей: {car.kolichestvo_zaprosov}
+                </Modal.Body>
+                <Modal.Footer>
+
+                </Modal.Footer>
+              </Modal>
+                  </tr>
+                  
+                ))}
+                {/* Добавьте другие строки как необходимо */}
+              </tbody>
+            </Table>
+            
+        
+      {/* {requestedCar&&
         requestedCar.map((car) => (
           
           <Card key={car.id}>
@@ -80,21 +141,17 @@ function RequestedCar({ title, content }) {
                   Количество запросов со стороны пользователей: {car.kolichestvo_zaprosov}
                 </Modal.Body>
                 <Modal.Footer>
-                  {/* <Button variant="secondary" onClick={handleCloseStatistic}>
-                    Закрыть
-                  </Button> */}
-                  
+
                 </Modal.Footer>
               </Modal>
-              {/* {!checkTax && ( */}
+
                 <Button variant="primary" onClick={() => toggleBlock(car.id)}>
                   {car.isOpen ? 'Свернуть' : 'Подробнее'}
                 </Button>
-              {/* )} */}
+
               
               {car.isOpen && (
                 <>
-                  {/* <Button variant="primary" onClick={handleCheckTax}>Свернуть</Button> */}
                   <div>
                     <p>
                       Объем двигателя: {car.modification_capacity} куб.см.
@@ -105,17 +162,8 @@ function RequestedCar({ title, content }) {
                 )}
             </Card.Body>
           </Card>
-          // <option key={region.id} value={region.id}>
-          //   {region.Nazvanie_regiona} 
-          // </option>
-        ))}
-      {/* <Card>
-        <Card.Body>
-          <Card.Title>{title}</Card.Title>
-          <Card.Text>{content}</Card.Text>
-          <Button variant="primary">Подробнее</Button>
-        </Card.Body>
-      </Card> */}
+
+        ))} */}
 
     </div>
   );

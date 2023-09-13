@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import { observer } from 'mobx-react';
 const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, show, onClose,isOpen}) =>{
   // const authStore = useContext(AuthStore);
+  console.log(Store.isAuthenticated)
   console.log(showModal)
   // if (!showModal) {
     

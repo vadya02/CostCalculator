@@ -8,12 +8,13 @@ import ModalReg from './ModalReg';
 import AuthStore from './AuthStore';
 import { observer } from 'mobx-react';
 import { useContext } from 'react';
+import { Button } from 'react-bootstrap';
 const Header = observer(({Store, UserName, showOptions}) =>{
     const authStore = Store
     useEffect(() => {
         // При загрузке компонента
         const authToken = localStorage.getItem('authToken');
-    
+        console.log('showOption: ' + showOptions)
         if (authToken) {
           // Если есть токен, проверяем его на сервере
           axios({
@@ -114,8 +115,11 @@ const Header = observer(({Store, UserName, showOptions}) =>{
 
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav text-center">
-                        <li className="nav-item" style={{paddingRight: '10px'}}>         
-                            <Link to="/CarList" id='navbarNav' className='nav-item'>Ваши автомобили</Link>
+                        <li className="nav-item" style={{paddingRight: '10px'}}> 
+                            <Button>
+                                <Link style={{color: 'white', textDecoration: "none"}} to="/CarList" id='navbarNav' className='nav-item'>Ваши автомобили</Link>
+                            </Button>        
+                            
                         </li>
                         <li className="nav-item">
                         
