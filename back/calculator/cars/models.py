@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.models import User 
 from django.db.models import Avg, Count, Sum
+from django.utils import timezone
 # Create your models here.
 class Brand(models.Model):
     Nazvanie_brand = models.CharField(max_length=255)
@@ -33,6 +34,7 @@ class RequestedCar(models.Model):
     modification_capacity = models.IntegerField(default=0)
     cost_of_ownership = models.IntegerField(default=0)
     kolichestvo_zaprosov = models.IntegerField(default=0)
+    request_date = models.DateTimeField(default=timezone.now)
     # requested_date = models.DateTimeField(auto_now_add=True)
 
 class Statistic(models.Model):
