@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CarList from './components/CarList';
 import { Provider } from 'mobx-react';
 import AuthStore from './components/AuthStore';
+import StartPage from './components/StartPage';
 function App() {
   return (
     <div className="App">
@@ -13,7 +14,8 @@ function App() {
         <Router>
           {/* <Header/> */}
           <Routes>
-            <Route exact path='/calculator' element={<Calculator Store={AuthStore}/>}/>
+          <Route path='/startPage' element={<StartPage Store={AuthStore}/>}/>
+            <Route path='/calculator' element={<Calculator Store={AuthStore}/>}/>
             <Route path='/activationAccount' element={<ActivationUser Store={AuthStore}/>}/>
             <Route path='/CarList' element={<CarList Store={AuthStore}/>}/>
           </Routes>

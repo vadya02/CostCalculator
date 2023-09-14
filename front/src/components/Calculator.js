@@ -81,6 +81,7 @@ function Calculator( {Store} ) {
           headers: {'Access-Control-Allow-Origin': 'http://localhost:3000',}
         })
         .then((response) => {
+          response.json()
           setBrandList(response.data.map(item => item.Nazvanie_brand))
           console.log(BrandList)
           // console.log(selectedBrand)
@@ -97,6 +98,7 @@ function Calculator( {Store} ) {
           headers: {'Access-Control-Allow-Origin': 'http://localhost:3000',}
         })
         .then((response) => {
+          response.json()
           setRegionList(response.data)
         })
         .catch((error) =>{ console.error(error); console.log('svfev')});
@@ -121,6 +123,7 @@ function Calculator( {Store} ) {
 
       })
       .then(response => {
+        response.json()
         // Обработка успешного ответа от сервера
         setModelList(response.data.map(item => item.Nazvanie_modeli))
         // setBrand(e)
@@ -151,6 +154,7 @@ function Calculator( {Store} ) {
 
       })
       .then(response => {
+        response.json()
         // Обработка успешного ответа от сервера
         console.log(response.data)
         setModificationList(response.data)

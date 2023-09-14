@@ -7,8 +7,7 @@ import { useObserver } from 'mobx-react';
 import AuthStore from './AuthStore';
 import { useContext } from 'react';
 import { observer } from 'mobx-react';
-import { redirect } from 'react-router-dom';
-const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, show, onClose,isOpen}) =>{
+const Login = observer(({Store, showModal, handleModalClose, openRegClick, show, onClose,isOpen}) =>{
   // const authStore = useContext(AuthStore);
   console.log(Store.isAuthenticated)
   console.log(showModal)
@@ -56,7 +55,6 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
         localStorage.setItem('authToken', response.data.auth_token);
         Store.login()
         handleModalClose();
-        return redirect('/calculator')
       })
       .catch(error => {
         // Обработка ошибки
@@ -97,11 +95,11 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
 
 
       
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Авторизация и регистрация</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+    //   <Modal show={showModal} onHide={handleModalClose}>
+    //     <Modal.Header closeButton>
+    //       <Modal.Title>Авторизация и регистрация</Modal.Title>
+    //     </Modal.Header>
+    //     <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicUserName">
               <Form.Label>Логин</Form.Label>
@@ -133,10 +131,10 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
             </Form.Group>
             
           </Form>
-        </Modal.Body>
-      </Modal>
+    //     </Modal.Body>
+    //   </Modal>
     
   );
 })
 
-export default ModalAuth;
+export default Login;
