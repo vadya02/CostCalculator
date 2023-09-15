@@ -20,7 +20,7 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
     else {setChechPassword(true)}
     // Создайте объект с данными для отправки на сервер
     const userData = {
-      email: email,
+      // email: email,
       username: username,
       password: password,
       re_password: confirmPassword
@@ -53,6 +53,8 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
         // Обработка успешного ответа
         setCheckLogin(true)
         console.log('Успешная регистрация:', response.data);
+        alert('Регистрация прошла успешно')
+        handleModalClose()
       })
       .catch((error) => {
         // Обработка ошибки
@@ -60,6 +62,9 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
         console.log(error.response.data); // Данные ошибки от сервера
         console.log(error.response.status); // Код состояния
         console.log(error.response.headers);
+        setUsername('')
+        setPassword('')
+        setConfirmPassword('')
         // console.log(response.data);
         console.error(error);
         if (error.response.data.username == 'A user with that username already exists.'){
@@ -80,14 +85,14 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
     
   return (
     <div className="">
-        <Modal show={showModal} onHide={handleModalClose}>
+    <Modal show={showModal} onHide={handleModalClose}>
       <Modal.Header closeButton>
         <Modal.Title>Регистрация</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           {/* Форма регистрации */}
-          <Form.Group controlId="formBasicEmail">
+          {/* <Form.Group controlId="formBasicEmail">
             <Form.Label>Email адрес</Form.Label>
             <Form.Control 
               type="email"
@@ -95,7 +100,7 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group controlId="formBasicUsername">
             <Form.Label>Логин</Form.Label>
             <Form.Control

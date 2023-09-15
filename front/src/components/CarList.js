@@ -14,9 +14,9 @@ function CarList({Store}) {
   
   return (
     <div className="">
-        <Header Store={Store} showOptions={false}/>
+        <Header Store={Store} showOptions={false} showBack={true}/>
         <h5 className='text-center'>
-            Ваши автомобили
+            Список ранее запрашиваемых автомобилей:
         </h5>
         <RequestedCar title={'BMW'} content={'M5'}/>
 

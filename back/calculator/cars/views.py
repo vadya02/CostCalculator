@@ -194,12 +194,11 @@ class CountSumView(generics.ListAPIView):
 
         # power = float(self.request.query_params.get('Power', None))
         region = self.request.query_params.get('Region', None)
-        # try:
-        #     number = float(region)
-        #     print("Значение является числом.")
-        # except ValueError:
-        #     print("Значение не является числом.")
-        print('регион: '+region)
+        print('регион: '+ region)
+        region_object = Region.objects.get(id=region)
+        print (region_object)
+        region_name = region_object.Nazvanie_regiona
+        print ('Название региона: ' + region_name)
         probeg = float(self.request.query_params.get('Probeg', None))      
         print(probeg)  
         rashod = float(self.request.query_params.get('Rashod_topliva', None))
@@ -238,7 +237,13 @@ class CountSumView(generics.ListAPIView):
             modification_power = modification_power,
             modification_capacity = modification_capacity,
             cost_of_ownership = sumOfCarship,
-            
+            cost_of_fuel = cost_of_fuel,
+            region = region_name, 
+            probeg = probeg, 
+            rashod = rashod, 
+            modification_name = modification_name,
+            sum_of_nalog = tax*modification_power,
+            sum_of_fuel = (probeg/100) * rashod * cost_of_fuel
 
         )
         if (created==False):

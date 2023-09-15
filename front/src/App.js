@@ -14,7 +14,7 @@ function App() {
         <Router>
           {/* <Header/> */}
           <Routes>
-          <Route path='/startPage' element={<StartPage Store={AuthStore}/>}/>
+          {/* <Route path='/startPage' element={<StartPage Store={AuthStore}/>}/> */}
             <Route path='/calculator' element={<Calculator Store={AuthStore}/>}/>
             <Route path='/activationAccount' element={<ActivationUser Store={AuthStore}/>}/>
             <Route path='/CarList' element={<CarList Store={AuthStore}/>}/>

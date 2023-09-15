@@ -9,7 +9,9 @@ import AuthStore from './AuthStore';
 import { observer } from 'mobx-react';
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
-const Header = observer(({Store, UserName, showOptions}) =>{
+import { useNavigate } from 'react-router-dom';
+const Header = observer(({Store, UserName, showOptions, showBack}) =>{
+    let navigate = useNavigate();
     const authStore = Store
     useEffect(() => {
         // При загрузке компонента
@@ -62,8 +64,9 @@ const Header = observer(({Store, UserName, showOptions}) =>{
         Store.logout();
         
         localStorage.removeItem('authToken');
+        navigate('/calculator')
         // return redirect('/startPage')
-        return <Navigate to='/calculator'/>
+        // return <Navigate to='/calculator'/>
     }
     const [modalShow, setModalShow] = useState(false);
 
@@ -79,7 +82,13 @@ const Header = observer(({Store, UserName, showOptions}) =>{
     <div className="" >
         <header className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-            <a className="navbar-brand mr-4" >Автокалькулятор.рф</a>
+            {showBack && (
+                <Button>
+                    <Link style={{color: 'white', textDecoration: "none"}} to="/calculator" id='navbarNav' className='nav-item'>Назад</Link>
+                </Button>  
+            )}
+
+            {/* <a className="navbar-brand mr-4">Калькулятор расчета стоимости владения авто</a> */}
             <button
                 className="navbar-toggler"
                 type="button"
@@ -92,7 +101,7 @@ const Header = observer(({Store, UserName, showOptions}) =>{
                 <span className="navbar-toggler-icon"></span>
             </button>
             {/* !authStore.isAuthenticated */}
-            {!Store.isAuthenticated && (
+            {/* {!Store.isAuthenticated && (
             <>
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul className="navbar-nav text-center">
@@ -111,7 +120,7 @@ const Header = observer(({Store, UserName, showOptions}) =>{
             </div>
                 
             </>
-            )}
+            )} */}
 
             {Store.isAuthenticated && showOptions && (
             <>
