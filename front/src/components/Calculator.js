@@ -337,7 +337,6 @@ function Calculator( {Store} ) {
                 <h5 style={{width: '30%', textAlign: 'left'}}>Модель автомобиля</h5>
                 <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
                 <option value=""></option>
-                
                 {ModelList &&
                   ModelList.map((model) => (
                     <option key={model} value={model}>
@@ -373,15 +372,15 @@ function Calculator( {Store} ) {
                 </select>
             </div>
             <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
-                <h5 style={{ width: '30%', textAlign: 'left'}}>Годовой пробег</h5>
+                <h5 style={{ width: '30%', textAlign: 'left'}}>Годовой пробег (км.)</h5>
                 <input type="number" class="form-control" style={{width: '30%'}} id="exampleInput" placeholder="" onChange={(e)=>handleProbegChange(e.target.value)}></input>
             </div>
             <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
-                <h5 style={{ width: '30%', textAlign: 'left'}}>Цена топлива</h5>
+                <h5 style={{ width: '30%', textAlign: 'left'}}>Цена топлива (руб. за литр)</h5>
                 <input type="number" class="form-control" style={{width: '30%'}} id="exampleInput" placeholder="" onChange={(e)=>handleCostChange(e.target.value)}></input>
             </div>
             <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}}>
-                <h5 style={{width: '30%', textAlign: 'left'}}>Расход топлива</h5>
+                <h5 style={{width: '30%', textAlign: 'left'}}>Расход топлива (литров на 100 км.)</h5>
                 <input type="number" class="form-control" style={{width: '30%'}} id="exampleInput" placeholder="" onChange={(e)=>handleRashodChange(e.target.value)}></input>
             </div>
             <div className='container d-flex justify-content-center align-items-center' style={{padding: '10px', display: 'flex'}}>

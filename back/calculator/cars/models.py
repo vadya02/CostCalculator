@@ -33,7 +33,7 @@ class RequestedCar(models.Model):
     modification_power = models.FloatField(default=0)
     modification_capacity = models.FloatField(default=0)
     cost_of_ownership = models.FloatField(default=0)
-    kolichestvo_zaprosov = models.IntegerField(default=0)
+    kolichestvo_zaprosov = models.IntegerField(default=1)
     request_date = models.DateTimeField(default=timezone.now)
     modification_name = models.CharField(max_length=255, default='')
     region = models.CharField(max_length=255, default='')
