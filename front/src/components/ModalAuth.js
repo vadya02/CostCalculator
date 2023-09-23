@@ -96,12 +96,14 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
   //   </Modal>
 
 
+      <div className='bg-black text-light'>
+
       
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
+      <Modal show={showModal} onHide={handleModalClose} >
+        <Modal.Header className='bg-dark text-light' closeButton style={{border: '1px solid gray'}}>
           <Modal.Title>Авторизация и регистрация</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className='bg-dark text-light' style={{border: '1px solid gray'}}>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicUserName">
               <Form.Label>Логин</Form.Label>
@@ -135,7 +137,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
           </Form>
         </Modal.Body>
       </Modal>
-    
+      </div>
   );
 })
 

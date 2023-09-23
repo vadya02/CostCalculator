@@ -4,10 +4,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, redirect } from 'react-router-dom';
 import ModalAuth from './ModalAuth';
+import time from '../img/time.png'
 import ModalReg from './ModalReg';
+import statistic from '../img/statistic.png'
 import AuthStore from './AuthStore';
 import Image from 'react-bootstrap/Image';
 import { observer } from 'mobx-react';
+import help from '../img/help.png'
+import Footer from './Footer';
 import car from '../img/car.jpeg'
 import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -57,31 +61,52 @@ const About = observer(({Store, UserName, showOptions}) =>{
     <div style={{backgroundColor:'black'}}>
       
       <Header Store={AuthStore} showOptions={true}/>
-      <Container style={{height: '90vh'}} >
+      <Container style={{padding: '50px', margin: '50px'}} >
         
-        <Row className="h-100 justify-content-center align-items-center">
+        <Row className="justify-content-center align-items-center" style={{padding:'20px'}}>
             <Col md={6} className="text-center">
-            <h3 style={{color: 'white'}}>Расчитаем стоимость годового владения вашего авто</h3>
-            <Button>
-                    <Link style={{color: 'white', textDecoration: "none"}} to="/calculator" id='navbarNav' className='nav-item'>Рассчитать стоимость</Link>
-                </Button> 
+              <h2 style={{color: 'white'}}>Расчитаем стоимость годового владения вашего автомобиля</h2>
+              <Button className='btn btn-primary btn-lg'>
+                <Link style={{color: 'white', textDecoration: "none"}} to="/calculator" id='navbarNav' className='nav-item'>Рассчитать стоимость</Link>
+              </Button> 
             {/* <Button style={{marginRight:'10px'}} variant="outline-primary" className="login" data-toggle='modal' data-target='#modalAuth' onClick={ ()=>{handleModalAuthActiveOpen(); console.log(isModalAuthActive)}}>Вход</Button>
             <Button variant="primary" className="signup" onClick={ ()=>{handleModalRegActiveOpen()}}>Регистрация</Button> */}
             </Col>
             <Col>
-            <Image src={car} fluid className="rounded mx-auto"/> 
+              <Image src={car} fluid className="rounded mx-auto"/> 
             </Col>
             
             
+        </Row>
+        <Row className="justify-content-center align-items-center text-light" style={{padding:'50px'}}>
+            <h3 className='text-center text-light'>
+              Преимущества нашего сервиса
+            </h3>
+          <Col className=''>
+            <Image src={time} fluid className="rounded mx-auto"/>
+            <h5>Экономим ваше время</h5>
+          </Col>
+          <Col>
+            <Image src={help} fluid className="rounded mx-auto"/>
+            <h5>Поможем выбрать автомобиль</h5>
+          </Col>
+          <Col>
+            <Image src={statistic} fluid className="rounded mx-auto"/>
+            <h5>Распишем ваши расходы на автомобиль</h5>
+          </Col>
+
+          
+          
         </Row>
         
         
 
             
       </Container>
+      <Footer/>
       <ModalAuth Store={Store} showModal = {isModalAuthActive} handleModalClose = {handleModalAuthActiveClose} openRegClick={handleModalRegActiveOpen}/>
       <ModalReg Store={Store} showModal = {isModalRegActive} handleModalClose = {handleModalRegActiveClose} openAuthClick={handleModalAuthActiveOpen}/>
-        
+      
     </div>
 
   );

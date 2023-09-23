@@ -85,11 +85,11 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
     
   return (
     <div className="">
-    <Modal show={showModal} onHide={handleModalClose}>
-      <Modal.Header closeButton>
+    <Modal show={showModal} onHide={handleModalClose} >
+      <Modal.Header closeButton className='bg-dark text-light' style={{border: '1px solid gray'}}>
         <Modal.Title>Регистрация</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className='bg-dark text-light' style={{border: '1px solid gray'}}>
         <Form onSubmit={handleSubmit}>
           {/* Форма регистрации */}
           {/* <Form.Group controlId="formBasicEmail">

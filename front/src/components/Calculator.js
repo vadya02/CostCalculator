@@ -4,12 +4,16 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Header from './Header';
 import CountSum from './CountSum';
+import Chart from './Chart';
 import AuthStore from './AuthStore';
 import StartPage from './StartPage';
 import ModalAuth from './ModalAuth';
 import ModalReg from './ModalReg';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Doughnut } from 'react-chartjs-2';
+import { CDBContainer } from 'cdbreact';
+
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 function Calculator( {Store} ) {
     const [Probeg, setProbeg] = useState(0);
@@ -29,6 +33,7 @@ function Calculator( {Store} ) {
     const [RegionList, setRegionList] = useState([]);
     const [Region, setRegion] = useState([]);
     const [checkSum, setcheckSum] = useState(false);
+    
     var storedToken = localStorage.getItem('authToken');
     let navigate = useNavigate();
     useEffect(() => {
@@ -73,9 +78,6 @@ function Calculator( {Store} ) {
 
     //получение списка марок авто
     function handleMarkaGet (selectedBrand) {
-      // const selectedBrand = event.target.value;
-      // setSelectedBrand(selectedBrand);
-      // const selectedBrand=e.target.value;
       setBrand(selectedBrand);
       console.log(brand)
 
@@ -125,8 +127,6 @@ function Calculator( {Store} ) {
 
       })
       .then(response => {
-        // response.json()
-        // Обработка успешного ответа от сервера
         setModelList(response.data.map(item => item.Nazvanie_modeli))
         // setBrand(e)
         console.log(response.data);
@@ -156,14 +156,10 @@ function Calculator( {Store} ) {
 
       })
       .then(response => {
-        // response.json()
-        // Обработка успешного ответа от сервера
         console.log(response.data)
         setModificationList(response.data)
         // setBrand(e)
         console.log(response.data);
-        // console.log(ModelList)
-        // console.log(brand)
       })
       .catch(error => {
         // Обработка ошибки
@@ -244,13 +240,13 @@ function Calculator( {Store} ) {
 
   
   return (
-    <div className="bg-black text-light" style={{height: '100vh'}}>
+    <div className="bg-black text-light" >
         {console.log('Авторизация' + Store.isAuthenticated)}
         {!Store.isAuthenticated && (
           <div>
             {console.log('Авторизация' + Store.isAuthenticated)}
             <Header Store={AuthStore} showOptions={false} showBack={true}/>
-            <div className='container text-center' style={{height: '100vh'}}>
+            <div className='container text-center' >
               {/* <StartPage Store={AuthStore}/> */}
               <div>
       
@@ -367,7 +363,7 @@ function Calculator( {Store} ) {
             {!errorCount&&(
                   <p style={{color: 'red'}}>Заполните все поля</p>
                 )}
-            {checkSum &&(
+            {!checkSum &&(
               <>
                 {/* <CountSum nalog={Probeg} toplivo={Rashod} summa={10}/> */}
                 <div className="">
@@ -376,9 +372,9 @@ function Calculator( {Store} ) {
                       <p>Топливо {Summa.toplivo} руб.</p>
                       <p>Итоговая стоимость {Summa.sum_of_carship} руб.</p>
                   </div>
-                  
+                  <Chart/>
 
-              </div>
+                </div>
               </>
               
             )}

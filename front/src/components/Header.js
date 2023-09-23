@@ -81,7 +81,7 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout}
             </div>
             {showBack && (
                 <Button>
-                    <Link style={{color: 'white', textDecoration: "none"}} to="/about" id='navbarNav' className='nav-item'>Назад</Link>
+                    <Link style={{color: 'white', textDecoration: "none"}} to="/about" id='navbarNav' className='nav-item'>На главную</Link>
                 </Button>  
             )}
             <button
@@ -140,7 +140,7 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout}
                         
                         <p>{UserName}</p>
                         </li>
-                        <Button variant="danger" onClick={HandleQuit}>Выход</Button>
+                        <Button variant="btn btn-outline-danger" onClick={HandleQuit}>Выход</Button>
                     </ul>
                 </div>
                 
