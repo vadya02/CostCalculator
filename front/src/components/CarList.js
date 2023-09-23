@@ -13,7 +13,7 @@ function CarList({Store}) {
     }
   
   return (
-    <div className="">
+    <div className="bg-black text-light" style={{height: '100vh'}}>
         <Header Store={Store} showOptions={false} showBack={true}/>
         <h5 className='text-center'>
             Список ранее запрашиваемых автомобилей:

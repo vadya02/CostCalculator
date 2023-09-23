@@ -56,7 +56,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
         localStorage.setItem('authToken', response.data.auth_token);
         Store.login()
         handleModalClose();
-        return redirect('/calculator')
+        return redirect('/about')
       })
       .catch(error => {
         // Обработка ошибки

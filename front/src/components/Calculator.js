@@ -217,37 +217,6 @@ function Calculator( {Store} ) {
 
 
 
-
-
-
-  const authStore = Store
-  // useEffect(() => {
-  //     // При загрузке компонента
-  //     const authToken = localStorage.getItem('authToken');
-  //     console.log('showOption: ')
-  //     if (authToken) {
-  //       // Если есть токен, проверяем его на сервере
-  //       axios({
-  //         method: 'GET',
-  //         url: 'http://localhost:8000/auth/users/me/', // Замените на ваш URL для проверки авторизации
-  //         headers: {
-  //           Authorization: `Token ${authToken}`,
-  //         },
-  //       })
-  //         .then(response => {
-  //           // response.json()
-  //           Store.login(); // Если токен валиден, устанавливаем состояние авторизации
-  //           // return redirect("/calculator")
-  //         })
-  //         .catch(error => {
-  //           console.log('Ошибка проверки авторизации:', error);
-  //           Store.logout();
-  //         });
-  //     }
-  //   }, []);
-  
-
-  
   
   
   
@@ -275,13 +244,13 @@ function Calculator( {Store} ) {
 
   
   return (
-    <div className="">
+    <div className="bg-black text-light" style={{height: '100vh'}}>
         {console.log('Авторизация' + Store.isAuthenticated)}
         {!Store.isAuthenticated && (
           <div>
             {console.log('Авторизация' + Store.isAuthenticated)}
-            <Header Store={AuthStore} showOptions={true}/>
-            <div className='container text-center' style={{height: '90vh'}}>
+            <Header Store={AuthStore} showOptions={false} showBack={true}/>
+            <div className='container text-center' style={{height: '100vh'}}>
               {/* <StartPage Store={AuthStore}/> */}
               <div>
       
@@ -318,7 +287,7 @@ function Calculator( {Store} ) {
         )}
         {Store.isAuthenticated && (
         <div>
-          <Header Store={AuthStore} showOptions={true}/>
+          <Header Store={AuthStore} showOptions={false} showBack={true}/>
         <div className='container text-center p-5' >
 
             <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}} >

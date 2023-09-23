@@ -8,9 +8,10 @@ import ModalReg from './ModalReg';
 import AuthStore from './AuthStore';
 import { observer } from 'mobx-react';
 import { useContext } from 'react';
+import logo from '../img/logo.png'
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-const Header = observer(({Store, UserName, showOptions, showBack}) =>{
+const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout}) =>{
     let navigate = useNavigate();
     const authStore = Store
     useEffect(() => {
@@ -62,33 +63,27 @@ const Header = observer(({Store, UserName, showOptions, showBack}) =>{
     
     const HandleQuit = () => {
         Store.logout();
-        
         localStorage.removeItem('authToken');
-        navigate('/calculator')
-        // return redirect('/startPage')
-        // return <Navigate to='/calculator'/>
+        navigate('/StartPage')
     }
-    const [modalShow, setModalShow] = useState(false);
 
-    const openModal = () => {
-        console.log('Opening modal');
-        setModalShow(true);
-    };
-
-    const closeModal = () => {
-        setModalShow(false);
-    };
   return (
     <div className="" >
-        <header className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container">
+        <header className="navbar navbar-expand-lg navbar-dark" style={{borderBottom:'1px solid gray'}}>
+        <div className="container container">
+            
+           
+
+            {/* <a className="navbar-brand mr-4">АвтоСтат <p style={{fontSize: '12px'}}>сервис по расчету <br/>стоимости владения авто</p></a> */}
+            <div className="navbar-brand mr-4">
+                <img src={logo}/>
+                <p style={{fontSize: '12px'}}>сервис по расчету <br/>стоимости владения авто</p>
+            </div>
             {showBack && (
                 <Button>
-                    <Link style={{color: 'white', textDecoration: "none"}} to="/calculator" id='navbarNav' className='nav-item'>Назад</Link>
+                    <Link style={{color: 'white', textDecoration: "none"}} to="/about" id='navbarNav' className='nav-item'>Назад</Link>
                 </Button>  
             )}
-
-            {/* <a className="navbar-brand mr-4">Калькулятор расчета стоимости владения авто</a> */}
             <button
                 className="navbar-toggler"
                 type="button"
@@ -125,19 +120,27 @@ const Header = observer(({Store, UserName, showOptions, showBack}) =>{
             {Store.isAuthenticated && showOptions && (
             <>
 
-                <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul className="navbar-nav text-center">
+                <div className="collapse navbar-collapse justify-content-end " id="navbarNav">
+                    <ul className="navbar-nav text-center navbar">
                         <li className="nav-item" style={{paddingRight: '10px'}}> 
-                            <Button>
-                                <Link style={{color: 'white', textDecoration: "none"}} to="/CarList" id='navbarNav' className='nav-item'>Ваши автомобили</Link>
-                            </Button>        
+                            <Button variant="transparent">
+                                <Link style={{color: 'white', textDecoration: "none"}} to="/CarList" id='navbarNav' className='nav-item'>История запросов</Link>
+                            </Button>     
+                               
+                            
+                        </li>
+                        <li className="nav-item" style={{paddingRight: '10px'}}> 
+                            <Button variant="transparent">
+                                <Link style={{color: 'white', textDecoration: "none"}} to="/calculator" id='navbarNav' className='nav-item'>Калькулятор</Link>
+                            </Button>     
+                               
                             
                         </li>
                         <li className="nav-item">
                         
                         <p>{UserName}</p>
                         </li>
-                        <button onClick={HandleQuit}>Выйти</button>
+                        <Button variant="danger" onClick={HandleQuit}>Выход</Button>
                     </ul>
                 </div>
                 

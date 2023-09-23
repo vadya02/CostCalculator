@@ -294,12 +294,12 @@ function RequestedCar({ title, content }) {
 
 
   return (
-    <div className="">
+    <div className="bg-black text-light">
 
-            <Table striped bordered hover>
+            <Table striped bordered hover className="bg-black text-light" style={{borderColor: 'gray'}}>
               <thead>
                 <tr>
-                  {/* <th>Номер</th> */}
+               
                   <th>Марка</th>
                   <th>Модель</th>
                   <th>Модификация</th>
@@ -314,7 +314,7 @@ function RequestedCar({ title, content }) {
                   
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-black text-light">
               
           
 
@@ -324,19 +324,19 @@ function RequestedCar({ title, content }) {
                   <tr key={car.id}>
                     {/* <td>{car.id}</td> */}
                     <td>
-                      <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
-                      {/* <option value=''></option> */}
+                      {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
+                      
                           {BrandList &&
                           BrandList.map((brand) => (
                               <option key={brand} value={brand}>
                                 {brand}
                               </option>
                           ))}
-                      </select>
+                      </select> */}
                       {car.car_name}
                     </td>
                     <td>
-                      <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
+                      {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
                       <option value=""></option>
                       
                       {ModelList &&
@@ -345,14 +345,14 @@ function RequestedCar({ title, content }) {
                             {model}
                           </option>
                         ))}
-                      </select>
+                      </select> */}
                       {car.car_model}
                     </td>
                     <td style={{textAlign: 'right'}}>
-                      <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.modification_power}/><br/>
+                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.modification_power}/><br/> */}
                       {car.modification_power} л.с. {car.modification_capacity} см.куб.</td>
                     <td>
-                      <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleRegionChange(e.target.value); console.log(e.target.value)}}>
+                      {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleRegionChange(e.target.value); console.log(e.target.value)}}>
                       <option value=""></option>
                       
                       {RegionList&&
@@ -361,20 +361,20 @@ function RequestedCar({ title, content }) {
                             {region.Nazvanie_regiona} 
                           </option>
                         ))}
-                      </select>
+                      </select> */}
                       {car.region}
                     </td>
                     <td style={{textAlign: 'right'}}>
-                      <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.probeg}/><br/>
-                      {/* {car.probeg} */}
+                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.probeg}/><br/> */}
+                      {car.probeg}
                     </td>
                     <td style={{textAlign: 'right'}}>
-                      <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.cost_of_fuel}/><br/>
-                      {/* {car.cost_of_fuel} */}
+                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.cost_of_fuel}/><br/> */}
+                      {car.cost_of_fuel}
                     </td>
                     <td style={{textAlign: 'right'}}>
-                      <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.rashod}/><br/>
-                      {/* {car.rashod} */}
+                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.rashod}/><br/> */}
+                      {car.rashod}
                     </td>
                     <td style={{textAlign: 'right'}}> 
                       <b>Топливо: </b><br/>{car.sum_of_fuel} <br/>
@@ -450,10 +450,10 @@ function RequestedCar({ title, content }) {
             </Table>
             
         
-      {/* {requestedCar&&
+      {requestedCar&&
         requestedCar.map((car) => (
           
-          <Card key={car.id}>
+          <Card key={car.id} className="bg-black text-light " style={{borderColor: 'gray'}}>
             <Card.Body>
               <Card.Title>Марка: {car.car_name}</Card.Title>
               <Card.Text>Модель: {car.car_model}</Card.Text>
@@ -486,10 +486,35 @@ function RequestedCar({ title, content }) {
                   </div>  
                 </>
                 )}
+              <Button variant="primary" onClick={() => toggleBlock(car.id)}>
+                          {car.isOpen ? 'Свернуть' : 'Статистика'}
+                        </Button>
+
+              
+                        {car.isOpen && (
+                          <>
+                            <div>
+                              <p>
+                              Статистика по автомобилю: <br/>
+                              <strong>
+                                {car.car_name} {car.car_model}
+                              </strong>
+                              
+                              <br/>
+                              Количество запросов со <br/>
+                              стороны пользователей: <br/>
+                              <strong>
+                                {car.kolichestvo_zaprosov}
+                              </strong>
+                              
+                              </p>
+                            </div>  
+                          </>
+                          )}
             </Card.Body>
           </Card>
 
-        ))} */}
+        ))}
 
     </div>
   );
