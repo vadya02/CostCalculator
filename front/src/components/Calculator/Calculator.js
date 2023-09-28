@@ -1,19 +1,19 @@
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import Header from './Header';
-import CountSum from './CountSum';
-import Chart from './Chart';
-import AuthStore from './AuthStore';
-import StartPage from './StartPage';
-import ModalAuth from './ModalAuth';
-import ModalReg from './ModalReg';
+import Footer from '../Static/Footer';
+import Header from '../Static/Header';
+import AuthStore from '../MobX/AuthStore';
+// import StartPage from '../StartPage';
+import { Bar } from 'react-chartjs-2';
+import ModalAuth from '../Authorization/ModalAuth';
+// import Chart from './Chart';
+import { Chart } from 'react-google-charts';
+import ModalReg from '../Authorization/ModalReg';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Doughnut } from 'react-chartjs-2';
 import { CDBContainer } from 'cdbreact';
-
+// Chart.register(category);
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 function Calculator( {Store} ) {
     const [Probeg, setProbeg] = useState(0);
@@ -33,7 +33,18 @@ function Calculator( {Store} ) {
     const [RegionList, setRegionList] = useState([]);
     const [Region, setRegion] = useState([]);
     const [checkSum, setcheckSum] = useState(false);
-    
+    const data = {
+      labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май'],
+      datasets: [
+        {
+          label: 'Продажи',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          data: [65, 59, 80, 81, 56],
+        },
+      ],
+    };
     var storedToken = localStorage.getItem('authToken');
     let navigate = useNavigate();
     useEffect(() => {
@@ -69,12 +80,6 @@ function Calculator( {Store} ) {
     const handleRegionChange = (region) => {
       setRegion( region);
     }
-    // const handleCheckSumChange = () => {
-    //   setcheckSum(true);
-    // }
-    const handleSumView =() =>{
-      return <CountSum/>
-    }
 
     //получение списка марок авто
     function handleMarkaGet (selectedBrand) {
@@ -88,12 +93,8 @@ function Calculator( {Store} ) {
           headers: {'Access-Control-Allow-Origin': 'http://localhost:3000',}
         })
         .then((response) => {
-          // response.json()
           setBrandList(response.data.map(item => item.Nazvanie_brand))
           console.log(BrandList)
-          // console.log(selectedBrand)
-          // console.log('mistake')
-          
         })
         .catch((error) =>{ console.error(error); console.log('svfev')});
     };
@@ -105,7 +106,6 @@ function Calculator( {Store} ) {
           headers: {'Access-Control-Allow-Origin': 'http://localhost:3000',}
         })
         .then((response) => {
-          // response.json()
           setRegionList(response.data)
         })
         .catch((error) =>{ console.error(error); console.log('svfev')});
@@ -128,7 +128,6 @@ function Calculator( {Store} ) {
       })
       .then(response => {
         setModelList(response.data.map(item => item.Nazvanie_modeli))
-        // setBrand(e)
         console.log(response.data);
         console.log(ModelList)
         console.log(brand)
@@ -140,16 +139,11 @@ function Calculator( {Store} ) {
       console.log(brand)
     }
     const handleModificationView = (model) => {
-      // setBrand(brand)
-      // console.log(brand)
       axios.get('http://127.0.0.1:8000/modification-by-model/', { 
         method: 'GET',
         params: {
           Nazvanie_modeli: model
         },
-        // body: JSON.stringify({
-        //   brand: brand
-        // }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -158,8 +152,6 @@ function Calculator( {Store} ) {
       .then(response => {
         console.log(response.data)
         setModificationList(response.data)
-        // setBrand(e)
-        console.log(response.data);
       })
       .catch(error => {
         // Обработка ошибки
@@ -176,7 +168,7 @@ function Calculator( {Store} ) {
     }
     else
     {
-        console.log(region)
+      console.log(region)
       const token = storedToken;
       axios.get('http://127.0.0.1:8000/cost_of_carship/', { 
           method: 'GET',
@@ -192,7 +184,6 @@ function Calculator( {Store} ) {
               // 'Authorization': `Bearer ${token}`  // Передача токена в заголовках
               'Authorization': `Token ${token}`
           }
-
         })
         .then(response => {
           // Обработка успешного ответа от сервера
@@ -200,8 +191,6 @@ function Calculator( {Store} ) {
           setSumma(response.data)
           setcheckSum(true);
           setErrorCount(true)
-          // setModificationList(response.data)
-          console.log(response.data);
         })
         .catch(error => {
           // Обработка ошибки
@@ -209,12 +198,6 @@ function Calculator( {Store} ) {
           setErrorCount(false)
         });}
   }
-
-
-
-
-  
-  
   
   
   
@@ -235,8 +218,15 @@ function Calculator( {Store} ) {
       setIsModalRegActive(false)
   } 
 
-
-
+  // const google = useGoogleCharts();
+  const chartData = [
+    ['Task', 'Hours per Day'],
+    ['Work', 11],
+    ['Eat', 2],
+    ['Commute', 2],
+    ['Watch TV', 2],
+    ['Sleep', 7],
+  ];
 
   
   return (
@@ -283,7 +273,48 @@ function Calculator( {Store} ) {
         )}
         {Store.isAuthenticated && (
         <div>
-          <Header Store={AuthStore} showOptions={false} showBack={true}/>
+        <Header Store={AuthStore} showOptions={false} showBack={true}/>
+
+        {/*  */}
+        {/* <Container>
+          <Row>
+            <Col>
+              <div className='row justify-content-center' >
+                  <h5 className='col-md-3' >Марка автомобиля</h5>
+                  <select  className="form-select"  onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
+                  <option value=""></option>
+                      {BrandList &&
+                      BrandList.map((brand) => (
+                          <option key={brand} value={brand}>
+                          {brand}
+                          </option>
+                      ))}
+                  </select>
+              </div>
+            </Col>
+            <Col>
+              <div className='row justify-content-center' >
+                  <h5 >Модель автомобиля</h5>
+                  <select className="form-select" onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
+                  <option value=""></option>
+                  
+                  {ModelList &&
+                    ModelList.map((model) => (
+                      <option key={model} value={model}>
+                        {model}
+                      </option>
+                    ))}
+                  </select>
+              </div>
+            </Col>
+            
+          </Row>
+          <Row>
+
+          </Row>
+        </Container> */}
+        {/*  */}
+
         <div className='container text-center p-5' >
 
             <div className='row justify-content-center' style={{padding: '10px', display: 'flex'}} >
@@ -363,23 +394,53 @@ function Calculator( {Store} ) {
             {!errorCount&&(
                   <p style={{color: 'red'}}>Заполните все поля</p>
                 )}
-            {!checkSum &&(
+            {checkSum &&(
               <>
                 {/* <CountSum nalog={Probeg} toplivo={Rashod} summa={10}/> */}
-                <div className="">
-                  <div className='container'>
+                <div className="container text-center ">
+                  <Container className="text-center">
+                    <Row>
+                      <p className='fw-normal'>
+                        <b>{Summa.sum_of_carship}</b>руб. Полная сумма владения за 1 год
+                      </p>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <p>
+                          {Summa.sum_of_carship/12} руб. в месяц
+                        </p>
+                      </Col>
+                      <Col>
+                        <h6>
+                          {Probeg/Summa.sum_of_carship} руб. за 1 км. пробега
+                        </h6>
+                      </Col>
+                      
+                    </Row>
+                  </Container>
+                  <div className='container text-center'>
                       <p>Налог: {Summa.nalog } руб.</p>
                       <p>Топливо {Summa.toplivo} руб.</p>
                       <p>Итоговая стоимость {Summa.sum_of_carship} руб.</p>
+                      <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        loader={<div>Loading Chart</div>}
+                        data={chartData}
+                        options={{
+                          title: 'My Daily Activities',
+                        }}
+                        rootProps={{ 'data-testid': '1' }}
+                      />
                   </div>
-                  <Chart/>
-
                 </div>
               </>
               
             )}
         </div></div>
         )}
+        <Footer/>
     </div>
   );
 }

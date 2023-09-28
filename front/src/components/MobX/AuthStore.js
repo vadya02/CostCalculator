@@ -3,6 +3,8 @@ import { makeAutoObservable } from 'mobx';
 class AuthStore {
 //   @observable
   isAuthenticated = false;
+  carDescription = ''
+  
   // Probeg = 0;
   // Rashod = 0;
   // Cost_of_fuel = 0;

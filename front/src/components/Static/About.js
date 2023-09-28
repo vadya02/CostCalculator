@@ -3,16 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, redirect } from 'react-router-dom';
-import ModalAuth from './ModalAuth';
-import time from '../img/time.png'
-import ModalReg from './ModalReg';
-import statistic from '../img/statistic.png'
-import AuthStore from './AuthStore';
+import ModalAuth from '../Authorization/ModalAuth';
+import time from '../../img/time.png'
+import ModalReg from '../Authorization/ModalReg';
+import statistic from '../../img/statistic.png'
+import AuthStore from '../MobX/AuthStore';
 import Image from 'react-bootstrap/Image';
 import { observer } from 'mobx-react';
-import help from '../img/help.png'
+import help from '../../img/help.png'
 import Footer from './Footer';
-import car from '../img/car.jpeg'
+import car from '../../img/car.jpeg'
 import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Header from './Header';
@@ -74,6 +74,8 @@ const About = observer(({Store, UserName, showOptions}) =>{
             </Col>
             <Col>
               <Image src={car} fluid className="rounded mx-auto"/> 
+              {/* <Image src='http://127.0.0.1:8000/media/car_images/a3f7e970b95f224a737c7dcfc06f0d0c.jpeg' fluid className="rounded mx-auto"/>  */}
+              {/* <img src='http://127.0.0.1:8000/media/car_images/a3f7e970b95f224a737c7dcfc06f0d0c.jpeg' alt="Car"/> */}
             </Col>
             
             

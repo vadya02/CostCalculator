@@ -27,8 +27,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from  cars.views import BrandDetail, BrandList, ModelsByBrandView, ActivateUser, ModificationByModelView, RegionList, CountSumView, RequestedCarView, CarRequestStatisticView
+from  cars.views import BrandDetail, BrandList, ModelsByBrandView, ActivateUser, ModificationByModelView, RegionList, CountSumView, RequestedCarView, CarRequestStatisticView,CarDescriptionView, CarDescriptionListView
 from djoser import views as djoser_views
+from django.conf import settings
+from django.conf.urls.static import static
 # from djoser.views import ActivationView
 
 
@@ -41,9 +43,11 @@ urlpatterns = [
     path('modification-by-model/', ModificationByModelView.as_view(), name='modification-by-model'),
     path('brands/', BrandList.as_view(), name='brand-list'),
     path('regions/', RegionList.as_view(), name='region-list'),
+    path('car_descriptions_all/', CarDescriptionListView.as_view(), name='region-list'),
     path('cost_of_carship/', CountSumView.as_view(), name='cost-of-carship'),
     path('requested_car/', RequestedCarView.as_view(), name='requested-car'),
     path('statistic/', CarRequestStatisticView.as_view(), name='statistic'),
+    path('car_descriptions/', CarDescriptionView.as_view(), name='statistic'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
     path('auth/', include('djoser.urls.jwt')),
@@ -54,3 +58,5 @@ urlpatterns = [
     # path('api/', include('cars.urls'))
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

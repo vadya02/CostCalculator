@@ -4,7 +4,7 @@ import axios from 'axios';
 // import Modal from 'react-modal';
 import { useState } from 'react';
 import { useObserver } from 'mobx-react';
-import AuthStore from './AuthStore';
+import AuthStore from '../MobX/AuthStore';
 import { useContext } from 'react';
 import { observer } from 'mobx-react';
 import { redirect } from 'react-router-dom';

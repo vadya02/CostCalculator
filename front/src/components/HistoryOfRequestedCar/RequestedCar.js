@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import Header from './Header';
+// import Header from './Header';
 // import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
@@ -297,7 +297,7 @@ function RequestedCar({ title, content }) {
     <div className="bg-black text-light">
 
             <Table striped bordered hover className="bg-black text-light" style={{borderColor: 'gray'}}>
-              <thead>
+              <thead className="bg-black text-light">
                 <tr>
                
                   <th>Марка</th>
@@ -450,7 +450,7 @@ function RequestedCar({ title, content }) {
             </Table>
             
         
-      {requestedCar&&
+      {/* {requestedCar&&
         requestedCar.map((car) => (
           
           <Card key={car.id} className="bg-black text-light " style={{borderColor: 'gray'}}>
@@ -486,7 +486,7 @@ function RequestedCar({ title, content }) {
                   </div>  
                 </>
                 )}
-              <Button variant="primary" onClick={() => toggleBlock(car.id)}>
+                        <Button variant="primary" onClick={() => toggleBlock(car.id)}>
                           {car.isOpen ? 'Свернуть' : 'Статистика'}
                         </Button>
 
@@ -514,7 +514,7 @@ function RequestedCar({ title, content }) {
             </Card.Body>
           </Card>
 
-        ))}
+        ))} */}
 
     </div>
   );

@@ -50,7 +50,48 @@ class Statistic(models.Model):
     num_requests = models.PositiveIntegerField(default=0)
     # average_ownership_cost = models.DecimalField(max_digits=10, decimal_places=2)
     model_name = models.CharField(max_length=255, default='')
-   
+
+class CarDescription(models.Model):
+    PRIVOD_CHOICES = [
+        ('Полный', 'Полный'),
+        ('Передний', 'Передний'),
+        ('Задний', 'Задний'),
+    ]
+    KUZOV_CHOICES = [
+        ('Седан', 'Седан'),
+        ('Внедорожник', 'Внедорожник'),
+        ('Кроссовер', 'Кроссовер'),
+    ]
+    TOPLIVO_CHOICES = [
+        ('Бензин', 'Бензин'),
+        ('Дизель', 'Дизель'),
+
+    ]
+
+    privod = models.CharField(
+        choices=PRIVOD_CHOICES,
+        default=1,  # Значение по умолчанию
+    )
+    tip_kuzova = models.CharField(
+        choices=KUZOV_CHOICES,
+        default=1,  # Значение по умолчанию
+    )
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    model = models.ForeignKey(Model, on_delete=models.CASCADE)
+    Min_year_of_production = models.IntegerField(default=0)
+    Max_year_of_production = models.IntegerField(default=0)
+    name_of_car = models.CharField(max_length=255, default='')
+    # privod = models.CharField(max_length=255, default='')
+    # tip_kuzova = models.CharField(max_length=255, default='')
+    # toplivo = models.CharField(max_length=255, default='')
+    description = models.TextField()
+    main_image = models.ImageField(upload_to='car_images/', default='')
+    first_image = models.ImageField(upload_to='car_images/', default='')
+    second_image = models.ImageField(upload_to='car_images/', default='')
+    third_image = models.ImageField(upload_to='car_images/', default='')
+    salon_image = models.ImageField(upload_to='car_images/', default='')
+
+
 # class CustomUserManager(BaseUserManager):
 #     def create_user(self, email, username, password=None, **extra_fields):
 #         if not email:

@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, redirect } from 'react-router-dom';
-import ModalAuth from './ModalAuth';
-import ModalReg from './ModalReg';
-import AuthStore from './AuthStore';
+import ModalAuth from '../Authorization/ModalAuth';
+import ModalReg from '../Authorization/ModalReg';
+import AuthStore from '../MobX/AuthStore';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';

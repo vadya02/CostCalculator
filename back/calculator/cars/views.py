@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from .models import Brand, Model, RequestedCar, Region, Modification, Tax, Statistic
-from .serializers import BrandSerializer, ModelSerializer, TaxSerializer, RegionSerializer, RequestedCarSerializer, ModificationSerializer, StatisticSerializer, FloatNumberSerializer
+from .models import Brand, Model, RequestedCar, Region, Modification, Tax, Statistic, CarDescription
+from .serializers import BrandSerializer, ModelSerializer, TaxSerializer, RegionSerializer, RequestedCarSerializer, ModificationSerializer, StatisticSerializer, FloatNumberSerializer,CarDescriptionSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
@@ -278,3 +278,33 @@ class CarRequestStatisticView(APIView):
         # user = self.request.user
         # print (user)
         # return Statistic.objects.filter(user=user)
+
+class CarDescriptionView(generics.ListAPIView):
+    serializer_class = CarDescriptionSerializer
+
+    # def get_queryset(self):
+    #     # Получите ключ (марку автомобиля) из параметров запроса
+    #     model_name = self.kwargs['Nazvanie_modeli']
+    #     # Фильтруйте модели по марке
+    #     queryset = CarDescription.objects.filter(model=model_name)
+    #     return queryset
+
+    def get_queryset(self):
+        
+        model_name = self.request.query_params.get('Nazvanie_modeli', None)
+        self.request.car_request_data = {
+            
+            'CarDescripiton': model_name,
+        }
+        if model_name is not None:
+            print(model_name)
+            return CarDescription.objects.filter(model__Nazvanie_modeli=model_name)
+            
+        else:
+            return CarDescription.objects.none()
+            
+
+
+class CarDescriptionListView(generics.ListCreateAPIView):
+    queryset = CarDescription.objects.all()
+    serializer_class = CarDescriptionSerializer

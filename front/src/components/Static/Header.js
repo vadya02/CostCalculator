@@ -3,15 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, redirect, Navigate } from 'react-router-dom';
-import ModalAuth from './ModalAuth';
-import ModalReg from './ModalReg';
-import AuthStore from './AuthStore';
+import ModalAuth from '../Authorization/ModalAuth';
+import ModalReg from '../Authorization/ModalReg';
+import AuthStore from '../MobX/AuthStore';
 import { observer } from 'mobx-react';
 import { useContext } from 'react';
-import logo from '../img/logo.png'
+import logo from '../../img/logo.png'
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout}) =>{
+const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout, showBackList}) =>{
     let navigate = useNavigate();
     const authStore = Store
     useEffect(() => {
@@ -84,6 +84,11 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout}
                     <Link style={{color: 'white', textDecoration: "none"}} to="/about" id='navbarNav' className='nav-item'>На главную</Link>
                 </Button>  
             )}
+            {showBackList && (
+                <Button>
+                    <Link style={{color: 'white', textDecoration: "none"}} to="/ListOfModels" id='navbarNav' className='nav-item'>Назад</Link>
+                </Button>  
+            )}
             <button
                 className="navbar-toggler"
                 type="button"
@@ -132,9 +137,12 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout}
                         <li className="nav-item" style={{paddingRight: '10px'}}> 
                             <Button variant="transparent">
                                 <Link style={{color: 'white', textDecoration: "none"}} to="/calculator" id='navbarNav' className='nav-item'>Калькулятор</Link>
-                            </Button>     
-                               
-                            
+                            </Button>
+                        </li>
+                        <li className="nav-item" style={{paddingRight: '10px'}}> 
+                            <Button variant="transparent">
+                                <Link style={{color: 'white', textDecoration: "none"}} to="/ListOfMOdels" id='navbarNav' className='nav-item'>Каталог моделей</Link>
+                            </Button>
                         </li>
                         <li className="nav-item">
                         

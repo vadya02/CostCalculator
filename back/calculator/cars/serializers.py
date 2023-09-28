@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from djoser.serializers import UserCreateSerializer
-from .models import Brand, Model, Tax, Region, RequestedCar, Modification, Statistic
+from .models import Brand, Model, Tax, Region, RequestedCar, Modification, Statistic, CarDescription
 from django.contrib.auth import get_user_model
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,7 +16,10 @@ class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Region
         fields = '__all__'
-
+class CarDescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarDescription
+        fields = '__all__'
 class RequestedCarSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestedCar
