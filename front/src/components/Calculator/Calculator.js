@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Footer from '../Static/Footer';
 import Header from '../Static/Header';
-import ChartReact from '../etc/Chart';
+import ChartReact from '../etc/ChartReact';
 import AuthStore from '../MobX/AuthStore';
 // import StartPage from '../StartPage';
 import { Bar } from 'react-chartjs-2';
@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Doughnut } from 'react-chartjs-2';
 import { CDBContainer } from 'cdbreact';
+import CarDescriptionStore from '../MobX/CarDescriptionStore';
 // Chart.register(category);
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 function Calculator( {Store} ) {
@@ -34,24 +35,13 @@ function Calculator( {Store} ) {
     const [RegionList, setRegionList] = useState([]);
     const [Region, setRegion] = useState([]);
     const [checkSum, setcheckSum] = useState(false);
-    const data = {
-      labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май'],
-      datasets: [
-        {
-          label: 'Продажи',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-          data: [65, 59, 80, 81, 56],
-        },
-      ],
-    };
+
     var storedToken = localStorage.getItem('authToken');
     let navigate = useNavigate();
     useEffect(() => {
       handleMarkaGet();
       handleRegionGet();
-      setcheckSum(false)
+      // setcheckSum(false)
       storedToken = localStorage.getItem('authToken');
       setErrorCount(true)
       if (storedToken) {
@@ -188,8 +178,17 @@ function Calculator( {Store} ) {
         })
         .then(response => {
           // Обработка успешного ответа от сервера
+          
           console.log(response.data)
           setSumma(response.data)
+          
+          // CarDescriptionStore.Nalog = Summa.nalog
+          // CarDescriptionStore.Toplivo = Summa.toplivo
+          CarDescriptionStore.updateNalog(response.data.nalog)
+          CarDescriptionStore.updateToplivo(response.data.toplivo)
+          
+          console.log('Текущий налог: ' + CarDescriptionStore.Nalog)
+          console.log('Текущая стоимость топлива: ' + CarDescriptionStore.Toplivo)
           setcheckSum(true);
           setErrorCount(true)
         })
@@ -220,15 +219,7 @@ function Calculator( {Store} ) {
   } 
 
   // const google = useGoogleCharts();
-  const chartData = [
-    ['Task', 'Hours per Day'],
-    ['Work', 11],
-    ['Eat', 2],
-    ['Commute', 2],
-    ['Watch TV', 2],
-    ['Sleep', 7],
-  ];
-
+  
   
   return (
     <div className="bg-black text-light" >
@@ -395,7 +386,7 @@ function Calculator( {Store} ) {
             {!errorCount&&(
                   <p style={{color: 'red'}}>Заполните все поля</p>
                 )}
-            {!checkSum &&(
+            {checkSum &&(
               <>
                 {/* <CountSum nalog={Probeg} toplivo={Rashod} summa={10}/> */}
                 <div className="container text-center ">

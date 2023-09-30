@@ -23,6 +23,8 @@ constructor() {
   this.SalonImage = 'Initial Value';
   this.Marka = 'марка';
   this.Model = 'модель';
+  this.Nalog = '';
+  this.Toplivo = '';
 }
 
 CarDescription = 'Initial Value';
@@ -40,9 +42,17 @@ updateMarka = action((newValue) => {
 updateModel = action((newValue) => {
   this.Model = newValue;
 });
+
+updateNalog = action((newValue) => {
+  this.Nalog = newValue;
+});
+
+updateToplivo = action((newValue) => {
+  this.Toplivo = newValue;
+});
+
 }
 
-const myStore = new CarDescriptioinStore();
 
 export default new CarDescriptioinStore();
 
