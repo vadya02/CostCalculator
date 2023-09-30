@@ -1,19 +1,9 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, redirect } from 'react-router-dom';
-import ModalAuth from '../Authorization/ModalAuth';
-import ModalReg from '../Authorization/ModalReg';
-import AuthStore from '../MobX/AuthStore';
-
-import Image from 'react-bootstrap/Image';
 import { observer } from 'mobx-react';
 import logo from '../../img/logo.png'
-import car from '../../img/car.jpeg'
-import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Header from './Header';
 const Footer = observer(({Store, UserName, showOptions}) =>{
 
   

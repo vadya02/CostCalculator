@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Footer from '../Static/Footer';
 import Header from '../Static/Header';
+import ChartReact from '../etc/Chart';
 import AuthStore from '../MobX/AuthStore';
 // import StartPage from '../StartPage';
 import { Bar } from 'react-chartjs-2';
@@ -394,7 +395,7 @@ function Calculator( {Store} ) {
             {!errorCount&&(
                   <p style={{color: 'red'}}>Заполните все поля</p>
                 )}
-            {checkSum &&(
+            {!checkSum &&(
               <>
                 {/* <CountSum nalog={Probeg} toplivo={Rashod} summa={10}/> */}
                 <div className="container text-center ">
@@ -417,23 +418,36 @@ function Calculator( {Store} ) {
                       </Col>
                       
                     </Row>
-                  </Container>
-                  <div className='container text-center'>
+                    {/* <Row className='d-flex justify-content-center'>
                       <p>Налог: {Summa.nalog } руб.</p>
                       <p>Топливо {Summa.toplivo} руб.</p>
                       <p>Итоговая стоимость {Summa.sum_of_carship} руб.</p>
                       <Chart
-                        width={'500px'}
-                        height={'300px'}
-                        chartType="PieChart"
-                        loader={<div>Loading Chart</div>}
-                        data={chartData}
-                        options={{
-                          title: 'My Daily Activities',
-                        }}
-                        rootProps={{ 'data-testid': '1' }}
-                      />
-                  </div>
+                          width={'500px'}
+                          height={'300px'}
+                          chartType="PieChart"
+                          loader={<div>Loading Chart</div>}
+                          data={chartData}
+                          options={{
+                            title: 'My Daily Activities',
+                          }}
+                          rootProps={{ 'data-testid': '1' }}
+                        />
+                      
+                      
+                    </Row> */}
+                    <Row className='d-flex justify-content-center text-center'>
+                      <p>Налог: {Summa.nalog } руб.</p>
+                      <p>Топливо {Summa.toplivo} руб.</p>
+                      <p>Итоговая стоимость {Summa.sum_of_carship} руб.</p>
+                      <div style={{width: '50%'}}>
+                        <ChartReact/>
+                      </div>
+                      
+                    </Row>
+                  </Container>
+
+                 
                 </div>
               </>
               

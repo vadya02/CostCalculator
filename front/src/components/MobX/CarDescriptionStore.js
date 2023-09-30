@@ -21,6 +21,8 @@ class CarDescriptioinStore {
 constructor() {
   this.CarDescription = 'Initial Value';
   this.SalonImage = 'Initial Value';
+  this.Marka = 'марка';
+  this.Model = 'модель';
 }
 
 CarDescription = 'Initial Value';
@@ -31,6 +33,12 @@ updateCarDescription = action((newValue) => {
 });
 updateSalonImage = action((newValue) => {
   this.SalonImage = newValue;
+});
+updateMarka = action((newValue) => {
+  this.Marka = newValue;
+});
+updateModel = action((newValue) => {
+  this.Model = newValue;
 });
 }
 

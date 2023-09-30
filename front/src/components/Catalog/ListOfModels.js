@@ -2,6 +2,7 @@
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Form } from 'react-bootstrap';
 import { Link, redirect } from 'react-router-dom';
 import ModalAuth from '../Authorization/ModalAuth';
 // import time from '../img/time.png'
@@ -19,11 +20,19 @@ import { useContext } from 'react';
 import { Container, Row, Col, Button, Card, Modal } from 'react-bootstrap';
 import Header from '../Static/Header';
 const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOptions}) =>{
+  
+    const [brand, setBrand] = useState('');
+    const [model, setModel] = useState('');
+    const [BrandList, setBrandList] = useState([]);
+    const [ModelList, setModelList] = useState([]);
+    const [CarDescriptionList, setCarDescriptionList] = useState([]);
+
     const authStore = Store
     useEffect(() => {
         // При загрузке компонента
         const authToken = localStorage.getItem('authToken');
         console.log('showOption: ' + showOptions)
+        
         if (authToken) {
           // Если есть токен, проверяем его на сервере
           axios({
@@ -42,91 +51,37 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
             });
         }
       }, []);
-    
-    const [isModalAuthActive, setIsModalAuthActive] = useState(false)
-    const [isModalRegActive, setIsModalRegActive] = useState(false)
-    function handleModalAuthActiveOpen () {
-        setIsModalAuthActive(true)
-    } 
-    function handleModalAuthActiveClose (){
-        setIsModalAuthActive(false)
-    } 
-    function handleModalRegActiveOpen () {
-        setIsModalRegActive(true)
-    } 
-    function handleModalRegActiveClose (){
-        setIsModalRegActive(false)
-    } 
 
-
-
-    const [Probeg, setProbeg] = useState(0);
-    const [Rashod, setRashod] = useState(0);
-    const [FuelPrice, setFuelPrice] = useState(0);
-    const [year, setYear] = useState(0);
-    const [Modification_id, setModification_id] = useState(0);
-    const [brand, setBrand] = useState('');
-    const [model, setModel] = useState('');
-    const [errorCount, setErrorCount] = useState(false);
-    const [showCalculator, setShowCalculator] = useState('');
-
-    const [BrandList, setBrandList] = useState([]);
-    const [ModelList, setModelList] = useState([]);
-    const [CarDescriptionList, setCarDescriptionList] = useState([]);
-    const [Summa, setSumma] = useState([]);
-    const [ModificatioinList, setModificationList] = useState([]);
-    const [RegionList, setRegionList] = useState([]);
-    const [Region, setRegion] = useState([]);
-    const [checkSum, setcheckSum] = useState(false);
-    const data = {
-      labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май'],
-      datasets: [
-        {
-          label: 'Продажи',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-          data: [65, 59, 80, 81, 56],
-        },
-      ],
-    };
     var storedToken = localStorage.getItem('authToken');
-    let navigate = useNavigate();
     useEffect(() => {
+      console.log("Текущая марка: " + CarDescriptionStore.Marka)
+      console.log("Текущая модель: " + CarDescriptionStore.Model)
       handleMarkaGet();
-      handleRegionGet();
-      handleCarDescriptionList();
-      setcheckSum(false)
+
+      //handleCarDescriptionList();
+      setBrand(CarDescriptionStore.Marka)
+      setModel(CarDescriptionStore.Model)
+      handleModelList(CarDescriptionStore.Model)
+      // setcheckSum(false)
       storedToken = localStorage.getItem('authToken');
-      setErrorCount(true)
+      // setErrorCount(true)
       if (storedToken) {
         Store.login();
       }
-      setShowCalculator(Store.isAuthenticated)
+      // setShowCalculator(Store.isAuthenticated)
     }, []);
-    
-    const handleProbegChange = (probeg) => {
-      setProbeg(probeg);
-    }
-    const handleRashodChange = (rashod) => {
-      setRashod(rashod);
-    }
-    const handleCostChange = (cost) => {
-      setFuelPrice(cost);
-    }
     const handleBrandChange = (selectedBrand) => {
+      
+      CarDescriptionStore.updateMarka(selectedBrand)
+      console.log("Текущая марка:"+CarDescriptionStore.Marka)
       setBrand(selectedBrand);
     }
     const handleModelChange = (selectedModel) => {
+      
+      CarDescriptionStore.updateModel(selectedModel)
+      console.log("Текущая марка:"+CarDescriptionStore.Model)
       setModel(selectedModel);
     }
-    const handleModificationIdChange = (id) => {
-      setModification_id(id);
-    }
-    const handleRegionChange = (region) => {
-      setRegion( region);
-    }
-
     //получение списка марок авто
     function handleMarkaGet (selectedBrand) {
       setBrand(selectedBrand);
@@ -144,19 +99,6 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
         })
         .catch((error) =>{ console.error(error); console.log('svfev')});
     };
-    function handleRegionGet (selectedRegion) {
-      setRegion(selectedRegion);
-        axios({
-          method: 'get',
-          url: 'http://127.0.0.1:8000/regions',
-          headers: {'Access-Control-Allow-Origin': 'http://localhost:3000',}
-        })
-        .then((response) => {
-          setRegionList(response.data)
-        })
-        .catch((error) =>{ console.error(error); console.log('svfev')});
-    };
-
     //получение списка моделей марки после выбора марки авто
 
     const handleModelsView = (brand) => {
@@ -233,35 +175,6 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
         console.log(brand)
       }
 
-
-  
-  
-  
-  // const authStore = useContext(authStore);
-
-  function handleModalAuthActiveOpen () {
-      setIsModalAuthActive(true)
-  } 
-  function handleModalAuthActiveClose (){
-      setIsModalAuthActive(false)
-  } 
-  function handleModalRegActiveOpen () {
-      setIsModalRegActive(true)
-  } 
-  function handleModalRegActiveClose (){
-      setIsModalRegActive(false)
-  } 
-
-  // const google = useGoogleCharts();
-  const chartData = [
-    ['Task', 'Hours per Day'],
-    ['Work', 11],
-    ['Eat', 2],
-    ['Commute', 2],
-    ['Watch TV', 2],
-    ['Sleep', 7],
-  ];
-  
   return (
     
     <div style={{backgroundColor:'black'}}>
@@ -292,8 +205,24 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
                           </option>
                       ))}
                   </select>
+
               </div>
-                  
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <Form.Label>Марка автомобиля</Form.Label>
+                <Form.Select
+                  custom
+                  defaultValue={CarDescriptionStore.Marka}
+                  onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}
+                >
+                  <option value={CarDescriptionStore.Marka}>{CarDescriptionStore.Marka}</option>
+                  {BrandList &&
+                    BrandList.map((brand) => (
+                        <option key={brand} value={brand}>
+                        {brand}
+                        </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
             </Col>
             <Col className='d-flex justify-content-center'>
               <div>
@@ -309,7 +238,22 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
                     ))}
                   </select>
               </div>
-                  
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <Form.Label>Марка автомобиля</Form.Label>
+                <Form.Select
+                  custom
+                  defaultValue={CarDescriptionStore.Model}
+                  onChange={(e) => {handleModelChange(e.target.value); handleModelList(e.target.value)}}
+                >
+                  <option value={CarDescriptionStore.Model}>{CarDescriptionStore.Model}</option>
+                  {ModelList &&
+                    ModelList.map((model) => (
+                      <option key={model} value={model}>
+                        {model}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
 
             </Col>
             
@@ -324,7 +268,7 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
               // </Card>
               <Col key={car.id} style={{padding: '60px'}}>
                 <Card className='bg-dark text-light'>
-                  <Card.Img variant="top" src={car.main_image} />
+                  <Card.Img variant="top" src={car.main_image}/>
                   <Card.Body>
                     <Card.Title>{car.name_of_car}</Card.Title>
                       <Button>

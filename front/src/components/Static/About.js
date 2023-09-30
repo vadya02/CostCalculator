@@ -61,9 +61,9 @@ const About = observer(({Store, UserName, showOptions}) =>{
     <div style={{backgroundColor:'black'}}>
       
       <Header Store={AuthStore} showOptions={true}/>
-      <Container style={{padding: '50px', margin: '50px'}} >
+      <Container >
         
-        <Row className="justify-content-center align-items-center" style={{padding:'20px'}}>
+        <Row className="gx-10 justify-content-center align-items-center" style={{padding: '50px'}}>
             <Col md={6} className="text-center">
               <h2 style={{color: 'white'}}>Расчитаем стоимость годового владения вашего автомобиля</h2>
               <Button className='btn btn-primary btn-lg'>
@@ -80,7 +80,7 @@ const About = observer(({Store, UserName, showOptions}) =>{
             
             
         </Row>
-        <Row className="justify-content-center align-items-center text-light" style={{padding:'50px'}}>
+        <Row className="justify-content-center align-items-center text-light" style={{padding: '50px'}}>
             <h3 className='text-center text-light'>
               Преимущества нашего сервиса
             </h3>

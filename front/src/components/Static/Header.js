@@ -13,7 +13,26 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout, showBackList}) =>{
     let navigate = useNavigate();
-    const authStore = Store
+    const [isModalAuthActive, setIsModalAuthActive] = useState(false)
+    const [isModalRegActive, setIsModalRegActive] = useState(false)
+    function handleModalAuthActiveOpen () {
+        setIsModalAuthActive(true)
+    } 
+    function handleModalAuthActiveClose (){
+        setIsModalAuthActive(false)
+    } 
+    function handleModalRegActiveOpen () {
+        setIsModalRegActive(true)
+    } 
+    function handleModalRegActiveClose (){
+        setIsModalRegActive(false)
+    } 
+    
+    const HandleQuit = () => {
+        Store.logout();
+        localStorage.removeItem('authToken');
+        navigate('/StartPage')
+    }
     useEffect(() => {
         // При загрузке компонента
         const authToken = localStorage.getItem('authToken');
@@ -36,60 +55,29 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout,
             });
         }
       }, []);
-    
-
-    
-    
-    
-    
-    
-    
-    
     // const authStore = useContext(authStore);
-    const [isModalAuthActive, setIsModalAuthActive] = useState(false)
-    const [isModalRegActive, setIsModalRegActive] = useState(false)
-    function handleModalAuthActiveOpen () {
-        setIsModalAuthActive(true)
-    } 
-    function handleModalAuthActiveClose (){
-        setIsModalAuthActive(false)
-    } 
-    function handleModalRegActiveOpen () {
-        setIsModalRegActive(true)
-    } 
-    function handleModalRegActiveClose (){
-        setIsModalRegActive(false)
-    } 
     
-    const HandleQuit = () => {
-        Store.logout();
-        localStorage.removeItem('authToken');
-        navigate('/StartPage')
-    }
 
   return (
     <div className="" >
         <header className="navbar navbar-expand-lg navbar-dark" style={{borderBottom:'1px solid gray'}}>
         <div className="container container">
-            
-           
-
             {/* <a className="navbar-brand mr-4">АвтоСтат <p style={{fontSize: '12px'}}>сервис по расчету <br/>стоимости владения авто</p></a> */}
             <div className="navbar-brand mr-4">
                 <img src={logo}/>
                 <p style={{fontSize: '12px'}}>сервис по расчету <br/>стоимости владения авто</p>
             </div>
             {showBack && (
-                <Button>
-                    <Link style={{color: 'white', textDecoration: "none"}} to="/about" id='navbarNav' className='nav-item'>На главную</Link>
+                <Button id="navbarNav">
+                    <Link  style={{color: 'white', textDecoration: "none"}} to="/about" id='navbarNav' className='nav-item'>На главную</Link>
                 </Button>  
             )}
             {showBackList && (
-                <Button>
-                    <Link style={{color: 'white', textDecoration: "none"}} to="/ListOfModels" id='navbarNav' className='nav-item'>Назад</Link>
+                <Button id="navbarNav">
+                    <Link  style={{color: 'white', textDecoration: "none"}} to="/ListOfModels" id='navbarNav' className='nav-item'>Назад</Link>
                 </Button>  
             )}
-            <button
+            {/* <button
                 className="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
@@ -99,7 +87,7 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout,
                 aria-label="Toggle navigation"
             >
                 <span className="navbar-toggler-icon"></span>
-            </button>
+            </button> */}
             {/* !authStore.isAuthenticated */}
             {/* {!Store.isAuthenticated && (
             <>
@@ -124,15 +112,23 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout,
 
             {Store.isAuthenticated && showOptions && (
             <>
-
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                <span className="navbar-toggler-icon"></span>
+                </button>
                 <div className="collapse navbar-collapse justify-content-end " id="navbarNav">
                     <ul className="navbar-nav text-center navbar">
                         <li className="nav-item" style={{paddingRight: '10px'}}> 
                             <Button variant="transparent">
                                 <Link style={{color: 'white', textDecoration: "none"}} to="/CarList" id='navbarNav' className='nav-item'>История запросов</Link>
-                            </Button>     
-                               
-                            
+                            </Button>           
                         </li>
                         <li className="nav-item" style={{paddingRight: '10px'}}> 
                             <Button variant="transparent">
@@ -150,43 +146,14 @@ const Header = observer(({Store, UserName, showOptions, showBack, showBackAbout,
                         </li>
                         <Button variant="btn btn-outline-danger" onClick={HandleQuit}>Выход</Button>
                     </ul>
-                </div>
-                
+                </div>              
             </>
             )}
-
         </div>
         </header>
-        
-
         <ModalAuth Store={Store} showModal = {isModalAuthActive} handleModalClose = {handleModalAuthActiveClose} openRegClick={handleModalRegActiveOpen}/>
         <ModalReg Store={Store} showModal = {isModalRegActive} handleModalClose = {handleModalRegActiveClose} openAuthClick={handleModalAuthActiveOpen}/>
     </div>
-    //----------------------------------------------------------------------------------------------------------------------
-    // <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    //   <div className="container">
-    //     <a className="navbar-brand" href="#">Логотип</a>
-    //     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    //       <span className="navbar-toggler-icon"></span>
-    //     </button>
-    //     <div className="collapse navbar-collapse" id="navbarNav">
-    //       <ul className="navbar-nav ml-auto">
-    //         <li className="nav-item">
-    //           <a className="nav-link" href="#">Главная</a>
-    //         </li>
-    //         <li className="nav-item">
-    //           <a className="nav-link" href="#">О нас</a>
-    //         </li>
-    //         <li className="nav-item">
-    //           <a className="nav-link" href="#">Сервисы</a>
-    //         </li>
-    //         <li className="nav-item">
-    //           <a className="nav-link" href="#">Контакты</a>
-    //         </li>
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </nav>
   );
 })
 
