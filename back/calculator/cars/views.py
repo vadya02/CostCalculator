@@ -238,10 +238,11 @@ class CountSumView(generics.ListAPIView):
             modification_capacity = modification_capacity,
             cost_of_ownership = sumOfCarship,
             cost_of_fuel = cost_of_fuel,
-            region = region_name, 
+            region = region, 
+            region_name = region_name,
             probeg = probeg, 
             rashod = rashod, 
-            modification_name = modification_name,
+            modification_name = modification_id,
             sum_of_nalog = tax*modification_power,
             sum_of_fuel = (probeg/100) * rashod * cost_of_fuel
 
@@ -306,5 +307,6 @@ class CarDescriptionView(generics.ListAPIView):
 
 
 class CarDescriptionListView(generics.ListCreateAPIView):
+    
     queryset = CarDescription.objects.all()
     serializer_class = CarDescriptionSerializer

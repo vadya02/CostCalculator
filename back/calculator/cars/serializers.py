@@ -17,6 +17,8 @@ class RegionSerializer(serializers.ModelSerializer):
         model = Region
         fields = '__all__'
 class CarDescriptionSerializer(serializers.ModelSerializer):
+    model_name = serializers.CharField(source='model.Nazvanie_modeli', read_only=True)
+    marka_name = serializers.CharField(source='model.Nazvanie_marki.Nazvanie_brand', read_only=True)
     class Meta:
         model = CarDescription
         fields = '__all__'

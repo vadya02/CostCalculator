@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, Button, Modal } from 'react-bootstrap';
+import CalculatorStore from '../Calculator/CalculatorStore'
 import { Table } from 'react-bootstrap';
 // import { useEffect } from 'react';
 function RequestedCar({ title, content }) {   
@@ -81,160 +82,182 @@ function RequestedCar({ title, content }) {
 
     }, []);
   return (
-    <div className="bg-black text-light">
+    <div>
 
-            <Table striped bordered hover className="bg-black text-light" style={{borderColor: 'gray'}}>
-              <thead className="bg-black text-light">
-                <tr>
-               
-                  <th>Марка</th>
-                  <th>Модель</th>
-                  <th>Модификация</th>
-                  <th>Регион</th>
-                  <th>Годовой пробег</th>
-                  <th>Цена топлива</th>
-                  <th>Расход топлива</th>
-                  
-                  <th>Стоимость владения</th>
-                  <th>Дата запроса</th>
-                  <th></th>
-                  
-                </tr>
-              </thead>
-              <tbody className="bg-black text-light">
-              
+      <Table bordered>
+        <thead >
+          <tr>
           
+            <th>Марка</th>
+            <th>Модель</th>
+            <th>Модификация</th>
+            <th>Регион</th>
+            <th>Годовой пробег</th>
+            <th>Цена топлива</th>
+            <th>Расход топлива</th>
+            
+            <th>Стоимость владения</th>
+            <th>Дата запроса</th>
+            <th></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        
+    
+
+  
+          {requestedCar&&
+            requestedCar.map((car) => (
+            <tr key={car.id}>
+              {/* <td>{car.id}</td> */}
+              <td>
+                {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
+                
+                    {BrandList &&
+                    BrandList.map((brand) => (
+                        <option key={brand} value={brand}>
+                          {brand}
+                        </option>
+                    ))}
+                </select> */}
+                {car.car_name}
+              </td>
+              <td>
+                {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
+                <option value=""></option>
+                
+                {ModelList &&
+                  ModelList.map((model) => (
+                    <option key={model} value={model}>
+                      {model}
+                    </option>
+                  ))}
+                </select> */}
+                {car.car_model}
+              </td>
+              <td style={{textAlign: 'right'}}>
+                {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.modification_power}/><br/> */}
+                {car.modification_power} л.с. {car.modification_capacity} см.куб.</td>
+              <td>
+                {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleRegionChange(e.target.value); console.log(e.target.value)}}>
+                <option value=""></option>
+                
+                {RegionList&&
+                  RegionList.map((region) => (
+                    <option key={region.id} value={region.id}>
+                      {region.Nazvanie_regiona} 
+                    </option>
+                  ))}
+                </select> */}
+                {car.region_name}
+              </td>
+              <td style={{textAlign: 'right'}}>
+                {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.probeg}/><br/> */}
+                {car.probeg}
+              </td>
+              <td style={{textAlign: 'right'}}>
+                {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.cost_of_fuel}/><br/> */}
+                {car.cost_of_fuel}
+              </td>
+              <td style={{textAlign: 'right'}}>
+                {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.rashod}/><br/> */}
+                {car.rashod}
+              </td>
+              <td style={{textAlign: 'right'}}> 
+                <b>Топливо: </b><br/>{car.sum_of_fuel} <br/>
+                <b>Налог: </b><br/>{car.sum_of_nalog} <br/>
+                <b>Итоговая стоимость: </b><br/>{car.cost_of_ownership}
+              
+              </td>
+                <td> <TruncateString text={car.request_date} maxLength={10} /></td>
+                <td> 
+
+                  <Button variant="primary" onClick={() => toggleBlock(car.id)}>
+                    {car.isOpen ? 'Свернуть' : 'Статистика'}
+                  </Button>
 
         
-                {requestedCar&&
-                  requestedCar.map((car) => (
-                  <tr key={car.id}>
-                    {/* <td>{car.id}</td> */}
-                    <td>
-                      {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
-                      
-                          {BrandList &&
-                          BrandList.map((brand) => (
-                              <option key={brand} value={brand}>
-                                {brand}
-                              </option>
-                          ))}
-                      </select> */}
-                      {car.car_name}
-                    </td>
-                    <td>
-                      {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
-                      <option value=""></option>
-                      
-                      {ModelList &&
-                        ModelList.map((model) => (
-                          <option key={model} value={model}>
-                            {model}
-                          </option>
-                        ))}
-                      </select> */}
-                      {car.car_model}
-                    </td>
-                    <td style={{textAlign: 'right'}}>
-                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.modification_power}/><br/> */}
-                      {car.modification_power} л.с. {car.modification_capacity} см.куб.</td>
-                    <td>
-                      {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleRegionChange(e.target.value); console.log(e.target.value)}}>
-                      <option value=""></option>
-                      
-                      {RegionList&&
-                        RegionList.map((region) => (
-                          <option key={region.id} value={region.id}>
-                            {region.Nazvanie_regiona} 
-                          </option>
-                        ))}
-                      </select> */}
-                      {car.region}
-                    </td>
-                    <td style={{textAlign: 'right'}}>
-                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.probeg}/><br/> */}
-                      {car.probeg}
-                    </td>
-                    <td style={{textAlign: 'right'}}>
-                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.cost_of_fuel}/><br/> */}
-                      {car.cost_of_fuel}
-                    </td>
-                    <td style={{textAlign: 'right'}}>
-                      {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.rashod}/><br/> */}
-                      {car.rashod}
-                    </td>
-                    <td style={{textAlign: 'right'}}> 
-                      <b>Топливо: </b><br/>{car.sum_of_fuel} <br/>
-                      <b>Налог: </b><br/>{car.sum_of_nalog} <br/>
-                      <b>Итоговая стоимость: </b><br/>{car.cost_of_ownership}
+                  {car.isOpen && (
+                    <>
+                      <div>
+                        <p>
+                        Статистика по автомобилю: <br/>
+                        <strong>
+                          {car.car_name} {car.car_model}
+                        </strong>
+                        
+                        <br/>
+                        Количество запросов со <br/>
+                        стороны пользователей: <br/>
+                        <strong>
+                          {car.kolichestvo_zaprosov}
+                        </strong>
+                        
+                        </p>
+                      </div>  
+                    </>
+                    )}
+                  {/* {!showStatistic&& (
+                    <Button onClick={() =>{handleStatistic(); handleShowStatistic(); toggleBlock(car.id)}} style={{marginRight: '10px'}}>Статистика</Button>
+
+                  )}
+                  {showStatistic&&(
+                    <div>
+                      <p>
+                        Статистика по автомобилю: 
+                        {car.car_name} {car.car_model}
+                      </p>
+                      <p>
+                        Количество запросов со 
+                        стороны пользователей: {car.kolichestvo_zaprosov}
+                      </p>
+                      <Button onClick={() =>{handleCloseStatistic()}} style={{marginRight: '10px'}}>Закрыть</Button>
+                    </div>
+                  )} */}<br/>
+                  {/* <Button onClick={()=> {
+                    CalculatorStore.updateMarka(car.car_name)
+                    CalculatorStore.updateModel(car.car_model)
+                    CalculatorStore.updateModification(car.modification_name)
+                    CalculatorStore.updateRegion(parseInt(car.region))
+                    CalculatorStore.updateProbeg(car.probeg)
+                    CalculatorStore.updateCostOfFuel(car.cost_of_fuel)
+                    CalculatorStore.updateExpenditureOfFuel(car.rashod)
                     
-                    </td>
-                     <td> <TruncateString text={car.request_date} maxLength={10} /></td>
-                     <td> 
+                    navigate('/calculator')
 
-                        <Button variant="primary" onClick={() => toggleBlock(car.id)}>
-                          {car.isOpen ? 'Свернуть' : 'Статистика'}
-                        </Button>
+                  }} style={{marginTop: '10px'}}>Пересчитать</Button> */}
+                  <Button onClick={()=> {
+                    CalculatorStore.updateMarka(car.car_name)
+                    CalculatorStore.updateModel(car.car_model)
+                    CalculatorStore.updateModification(car.modification_name)
+                    CalculatorStore.updateRegion(parseInt(car.region))
+                    CalculatorStore.updateProbeg(car.probeg)
+                    CalculatorStore.updateCostOfFuel(car.cost_of_fuel)
+                    CalculatorStore.updateExpenditureOfFuel(car.rashod)
+                  }}>
+                    <Link style={{color: 'white', textDecoration: "none"}} to='/Calculator' id='navbarNav' className='nav-item'>Пересчитать</Link>
+                  </Button>
+                </td>
+                
+              {/* Вывод других данных из ответа */}
+              {/* <Modal show={showStatistic} onHide={handleCloseStatistic}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Статистика по автомобилю: {car.car_name} {car.car_model}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Количество запросов со стороны пользователей: {car.kolichestvo_zaprosov}
+                </Modal.Body>
+                <Modal.Footer>
 
-              
-                        {car.isOpen && (
-                          <>
-                            <div>
-                              <p>
-                              Статистика по автомобилю: <br/>
-                              <strong>
-                                {car.car_name} {car.car_model}
-                              </strong>
-                              
-                              <br/>
-                              Количество запросов со <br/>
-                              стороны пользователей: <br/>
-                              <strong>
-                                {car.kolichestvo_zaprosov}
-                              </strong>
-                              
-                              </p>
-                            </div>  
-                          </>
-                          )}
-                        {/* {!showStatistic&& (
-                          <Button onClick={() =>{handleStatistic(); handleShowStatistic(); toggleBlock(car.id)}} style={{marginRight: '10px'}}>Статистика</Button>
-
-                        )}
-                        {showStatistic&&(
-                          <div>
-                            <p>
-                              Статистика по автомобилю: 
-                              {car.car_name} {car.car_model}
-                            </p>
-                            <p>
-                              Количество запросов со 
-                              стороны пользователей: {car.kolichestvo_zaprosov}
-                            </p>
-                            <Button onClick={() =>{handleCloseStatistic()}} style={{marginRight: '10px'}}>Закрыть</Button>
-                          </div>
-                        )} */}<br/>
-                        <Button onClick={()=> {navigate('/calculator')}} style={{marginTop: '10px'}}>Пересчитать</Button>
-                     </td>
-                     
-                    {/* Вывод других данных из ответа */}
-                    {/* <Modal show={showStatistic} onHide={handleCloseStatistic}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Статистика по автомобилю: {car.car_name} {car.car_model}</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Количество запросов со стороны пользователей: {car.kolichestvo_zaprosov}
-                      </Modal.Body>
-                      <Modal.Footer>
-
-                      </Modal.Footer>
-                    </Modal> */}
-                  </tr>
-                  
-                ))}
-                {/* Добавьте другие строки как необходимо */}
-              </tbody>
-            </Table>
+                </Modal.Footer>
+              </Modal> */}
+            </tr>
+            
+          ))}
+          {/* Добавьте другие строки как необходимо */}
+        </tbody>
+      </Table>
             
         
       {/* {requestedCar&&

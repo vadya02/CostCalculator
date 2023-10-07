@@ -3,17 +3,21 @@ import { observable, action } from "mobx";
 
 class CalculatorStore {
     constructor () {
-        this.Marka = 'Марка',
-        this.Model = 'Модель',
-        this.Region = 'Регион',
-        this.Modification = 'Модификация',
-        this.Probeg = 0,
-        this.Cost_Of_Fuel = 0,
-        this.Expenditure_Of_Fuel = 0
+        this.Marka = '';
+        this.Model = '';
+        this.Region = '';
+        this.Modification = '';
+        this.Probeg = '';
+        this.Cost_Of_Fuel = '';
+        this.Expenditure_Of_Fuel = '';
+        this.Summa = '';
     }
     updateMarka = action((value) => {
         this.Marka = value
     });
+    updateSumma = action((value) => {
+        this.Summa = value
+    })
     updateModel = action((value) => {
         this.Model = value
     });

@@ -33,10 +33,11 @@ class RequestedCar(models.Model):
     modification_power = models.FloatField(default=0)
     modification_capacity = models.FloatField(default=0)
     cost_of_ownership = models.FloatField(default=0)
-    kolichestvo_zaprosov = models.IntegerField(default=0)
+    kolichestvo_zaprosov = models.IntegerField(default=1)
     request_date = models.DateTimeField(default=timezone.now)
-    modification_name = models.CharField(max_length=255, default='')
-    region = models.CharField(max_length=255, default='')
+    modification_name = models.IntegerField(default=0)
+    region = models.IntegerField(default=0)
+    region_name = models.CharField(max_length=255, default='')
     probeg = models.FloatField(default=0)
     rashod = models.FloatField(default=0)
     cost_of_fuel = models.FloatField(default=0)
@@ -77,10 +78,13 @@ class CarDescription(models.Model):
         default=1,  # Значение по умолчанию
     )
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # marka = models.ForeignKey(Brand, on_delete=models.CASCADE)
     model = models.ForeignKey(Model, on_delete=models.CASCADE)
+
     Min_year_of_production = models.IntegerField(default=0)
     Max_year_of_production = models.IntegerField(default=0)
     name_of_car = models.CharField(max_length=255, default='')
+    
     # privod = models.CharField(max_length=255, default='')
     # tip_kuzova = models.CharField(max_length=255, default='')
     # toplivo = models.CharField(max_length=255, default='')
@@ -90,7 +94,13 @@ class CarDescription(models.Model):
     second_image = models.ImageField(upload_to='car_images/', default='')
     third_image = models.ImageField(upload_to='car_images/', default='')
     salon_image = models.ImageField(upload_to='car_images/', default='')
-
+    @property
+    def marka_name(self):
+        return self.model.Nazvanie_marki.Nazvanie_brand
+    @property
+    def model_name(self):
+        return self.model.Nazvanie_modeli
+        
 
 # class CustomUserManager(BaseUserManager):
 #     def create_user(self, email, username, password=None, **extra_fields):

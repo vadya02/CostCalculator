@@ -27,9 +27,9 @@ function App() {
             <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
             <Route
               path="/aboutCar"
-              render={(props) => (
-                <AboutCar {...props} Description="Hello from FirstPage!" />
-              )}
+              // render={(props) => (
+              //   <AboutCar {...props} Description="Hello from FirstPage!" />
+              // )}
               element={<AboutCar  Description={CarDescriptionStore.CarDescription} CarDescriptionStore={CarDescriptionStore}/>}
             />
           </Routes>

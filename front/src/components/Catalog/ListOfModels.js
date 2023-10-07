@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Container, Row, Col, Button, Card, Modal } from 'react-bootstrap';
 import Header from '../Static/Header';
+import CalculatorStore from '../Calculator/CalculatorStore';
 const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOptions}) =>{
   
     const [brand, setBrand] = useState('');
@@ -57,14 +58,11 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
       console.log("Текущая марка: " + CarDescriptionStore.Marka)
       console.log("Текущая модель: " + CarDescriptionStore.Model)
       handleMarkaGet();
-
-      //handleCarDescriptionList();
+      handleCarDescriptionList()
       setBrand(CarDescriptionStore.Marka)
       setModel(CarDescriptionStore.Model)
-      handleModelList(CarDescriptionStore.Model)
-      // setcheckSum(false)
+      // handleModelList(CarDescriptionStore.Model)
       storedToken = localStorage.getItem('authToken');
-      // setErrorCount(true)
       if (storedToken) {
         Store.login();
       }
@@ -152,12 +150,12 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
         });
         console.log(brand)
       }
-      const handleCarDescriptionList = () => {
-        axios.get('http://127.0.0.1:8000/car_descriptions_all', { 
+      const handleCarDescriptionList = async () => {
+        await axios.get('http://127.0.0.1:8000/car_descriptions_all', { 
           method: 'GET',
-          params: {
-            Nazvanie_modeli: model
-          },
+          // params: {
+          //   Nazvanie_modeli: model
+          // },
           headers: {
               "Content-type": "application/json; charset=UTF-8"
           }
@@ -165,7 +163,6 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
         })
         .then(response => {
           console.log(response.data)
-
           setCarDescriptionList(response.data)
         })
         .catch(error => {
@@ -174,7 +171,12 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
         });
         console.log(brand)
       }
-
+      const handleCarDescription = (id, CarDescriptionList) => {
+        CarDescriptionStore.CarDescription = CarDescriptionList[id].description
+        CarDescriptionStore.SalonImage = CarDescriptionList[0].salon_image
+        // CarDescriptionStore.CarDescription = CarDescriptionList.map(item => item.description)
+        // CarDescriptionStore.SalonImage = CarDescriptionList.map(item => item.salon_image)
+      }
   return (
     
     <div style={{backgroundColor:'black'}}>
@@ -194,7 +196,7 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
         </Row> */}
         <Row className='p-20 text-center ' >
             <Col className='d-flex justify-content-center'>
-              <div>
+              {/* <div>
                 <h5 >Марка автомобиля</h5>
                   <select className="form-select bg-dark text-white " style={{width:'300px'}}  onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
                   <option value=""></option>
@@ -206,15 +208,15 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
                       ))}
                   </select>
 
-              </div>
+              </div> */}
               <Form.Group controlId="exampleForm.SelectCustom">
                 <Form.Label>Марка автомобиля</Form.Label>
-                <Form.Select
+                <Form.Select className='bg-dark text-white'
                   custom
                   defaultValue={CarDescriptionStore.Marka}
                   onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}
                 >
-                  <option value={CarDescriptionStore.Marka}>{CarDescriptionStore.Marka}</option>
+                  <option className='bg-dark text-white' value={CarDescriptionStore.Marka}>{CarDescriptionStore.Marka}</option>
                   {BrandList &&
                     BrandList.map((brand) => (
                         <option key={brand} value={brand}>
@@ -225,7 +227,7 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
               </Form.Group>
             </Col>
             <Col className='d-flex justify-content-center'>
-              <div>
+              {/* <div>
                 <h5 >Модель автомобиля</h5>
                   <select className="form-select bg-dark text-white" style={{width:'300px'}} onChange={(e) => {handleModelChange(e.target.value); handleModelList(e.target.value)}}>
                   <option value=""></option>
@@ -237,10 +239,11 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
                       </option>
                     ))}
                   </select>
-              </div>
+              </div> */}
               <Form.Group controlId="exampleForm.SelectCustom">
-                <Form.Label>Марка автомобиля</Form.Label>
+                <Form.Label>Модель автомобиля</Form.Label>
                 <Form.Select
+                  className='bg-dark text-white'
                   custom
                   defaultValue={CarDescriptionStore.Model}
                   onChange={(e) => {handleModelChange(e.target.value); handleModelList(e.target.value)}}
@@ -271,7 +274,13 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
                   <Card.Img variant="top" src={car.main_image}/>
                   <Card.Body>
                     <Card.Title>{car.name_of_car}</Card.Title>
-                      <Button>
+                      <Button onClick={()=>{
+                        CalculatorStore.updateMarka(CarDescriptionList[car.id-1].marka_name) 
+                        CalculatorStore.updateModel(CarDescriptionList[car.id-1].model_name) 
+                        CarDescriptionStore.updateSalonImage(CarDescriptionList[car.id-1].salon_image)  
+                        CarDescriptionStore.updateCarDescription(CarDescriptionList[car.id-1].description) 
+                      }   
+                      }>
                         <Link style={{color: 'white', textDecoration: "none"}} to='/aboutCar' id='navbarNav' className='nav-item'>Подробнее</Link>
                       </Button>
                     </Card.Body>
