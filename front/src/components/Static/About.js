@@ -16,12 +16,12 @@ import car from '../../img/car.jpeg'
 import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Header from './Header';
-const About = observer(({Store, UserName, showOptions}) =>{
+const About = observer(({Store, UserName}) =>{
     const authStore = Store
     useEffect(() => {
         // При загрузке компонента
         const authToken = localStorage.getItem('authToken');
-        console.log('showOption: ' + showOptions)
+        // console.log('showOption: ' + showOptions)
         if (authToken) {
           // Если есть токен, проверяем его на сервере
           axios({
@@ -35,6 +35,7 @@ const About = observer(({Store, UserName, showOptions}) =>{
               Store.login(); // Если токен валиден, устанавливаем состояние авторизации
             })
             .catch(error => {
+              redirect('/StartPage')
               console.log('Ошибка проверки авторизации:', error);
               Store.logout();
             });
