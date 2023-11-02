@@ -179,10 +179,10 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
       }
   return (
     
-    <div style={{backgroundColor:'black'}}>
+    <div style={{backgroundColor:'black'}} className='justify-content-center'>
       
       <Header Store={AuthStore} showOptions={false} showBack={true}/>
-      <Container className='text-light' style={{padding: '30px', margin: '30px'}} >
+      <Container className='text-light' >
         <Row className='text-center'>
             <h3>Каталог автомобилей</h3>
         </Row>

@@ -173,14 +173,14 @@ function RequestedCar({ title, content }) {
                 <td> <TruncateString text={car.request_date} maxLength={10} /></td>
                 <td> 
 
-                  <Button variant="primary" onClick={() => toggleBlock(car.id)}>
+                  <Button variant="primary" onClick={() => toggleBlock(car.id)} style={{margin: '10px'}}>
                     {car.isOpen ? 'Свернуть' : 'Статистика'}
                   </Button>
 
         
                   {car.isOpen && (
                     <>
-                      <div>
+                      <div style={{padding: '10px'}}>
                         <p>
                         Статистика по автомобилю: <br/>
                         <strong>
@@ -235,7 +235,9 @@ function RequestedCar({ title, content }) {
                     CalculatorStore.updateProbeg(car.probeg)
                     CalculatorStore.updateCostOfFuel(car.cost_of_fuel)
                     CalculatorStore.updateExpenditureOfFuel(car.rashod)
-                  }}>
+                  }}
+                  style={{paddingTop: '10px'}}
+                  >
                     <Link style={{color: 'white', textDecoration: "none"}} to='/Calculator' id='navbarNav' className='nav-item'>Пересчитать</Link>
                   </Button>
                 </td>

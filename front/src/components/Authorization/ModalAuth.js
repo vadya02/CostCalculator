@@ -8,7 +8,7 @@ import AuthStore from '../MobX/AuthStore';
 import { useContext } from 'react';
 import { observer } from 'mobx-react';
 import { redirect } from 'react-router-dom';
-const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, show, onClose,isOpen}) =>{
+const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, showError, onClose,isOpen}) =>{
   // const authStore = useContext(AuthStore);
   console.log(Store.isAuthenticated)
   console.log(showModal)
@@ -18,6 +18,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
   // }
   const id='modalAuth'
   const handleClick =()=>{
+    setcheckLogin(true)
     openRegClick();
     handleModalClose();
   }
@@ -30,7 +31,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [checkLogin, setcheckLogin] = useState(true);
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -97,9 +98,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
 
 
       <div className='bg-black text-light'>
-
-      
-      <Modal show={showModal} onHide={handleModalClose} >
+      <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header className='bg-dark text-light' closeButton style={{border: '1px solid gray'}}>
           <Modal.Title>Авторизация и регистрация</Modal.Title>
         </Modal.Header>
@@ -110,7 +109,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
               <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Введите логин'/>
               <Form.Group controlId="formBasicPassword" style={{paddingBottom: '10px'}}>
                 <Form.Label>Пароль</Form.Label>
-                <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Введите пароль'/>
               </Form.Group>
               {/* <Form.Text className="text-muted">
                 Мы никогда не передадим вашу электронную почту кому-либо еще.

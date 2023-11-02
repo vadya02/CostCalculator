@@ -567,10 +567,10 @@ function Calculator( {Store} ) {
                       </Col>
                       <Col >
                         <p >
-                          <h1 style={{color: '#0D6EFD'}}>{(CalculatorStore.Probeg/Summa.sum_of_carship).toPrecision(2)} руб.</h1> <h6>за 1 км. пробега</h6>
+                          <h2 style={{color: '#0D6EFD'}}>{(CalculatorStore.Probeg/Summa.sum_of_carship).toFixed(2)} руб.</h2> <h6>за 1 км. пробега</h6>
                         </p>
                         <p>
-                          <h1 style={{color: '#0D6EFD'}}>{(Summa.sum_of_carship/12).toPrecision(2)} руб.</h1> в месяц
+                          <h2 style={{color: '#0D6EFD'}}>{(Summa.sum_of_carship/12).toFixed(2)} руб.</h2> в месяц
                         </p>
                         <p className='fw-normal'>
                           <h1 style={{color: '#0D6EFD'}}><b>{Summa.sum_of_carship}</b> руб. </h1>Полная сумма владения за 1 год
