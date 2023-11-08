@@ -11,6 +11,7 @@ import ListOfModels from './components/Catalog/ListOfModels';
 import About from './components/Static/About';
 import CarDescriptionStore from './components/MobX/CarDescriptionStore';
 import AboutCar from './components/Catalog/AboutCar';
+import AdminPage from './components/Static/AdminPage';
 function App() {
   return (
     <div className="App">
@@ -23,6 +24,7 @@ function App() {
             <Route path='/activationAccount' element={<ActivationUser Store={AuthStore}/>}/>
             <Route path='/CarList' element={<CarList Store={AuthStore}/>}/>
             <Route path='/StartPage' element={<StartPage Store={AuthStore}/>}/>
+            <Route path='/Admin' element={<AdminPage Store={AuthStore}/>}/>
             <Route path='/about' element={<About Store={AuthStore}/>}/>
             <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
             <Route
