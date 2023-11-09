@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import Header from './Header';
 const AdminPage = observer(({Store, UserName, showOptions}) =>{
   const navigate = useNavigate();
     useEffect(() => {
@@ -26,7 +27,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
             },
           })
             .then(response => {
-              Store.login(); // Если токен валиден, устанавливаем состояние авторизации
+              // Store.login(); // Если токен валиден, устанавливаем состояние авторизации
             })
             .catch(error => {
               console.log('Ошибка проверки авторизации:', error);
@@ -57,18 +58,25 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
   return (
     
     <div className='bg-black text-light'>
-      
+      <Header Store={AuthStore} showOptionsAdmin={true}/>
      
       <Container fluid className="" style={{height: '100vh'}}>
-      <Row className="h-100 justify-content-center align-items-center">
-        <Col md={6} className="text-center">
-          <h1>Калькулятор расчета стоимости владения автомобилем</h1>
-          <p>Чтобы рассчитать стоимость войдите в систему</p>
-          <Button style={{marginRight:'10px'}} variant="outline-primary" className="login" data-toggle='modal' data-target='#modalAuth' onClick={ ()=>{handleModalAuthActiveOpen(); console.log(isModalAuthActive)}}>Вход</Button>
-          <Button variant="primary" className="signup" onClick={ ()=>{handleModalRegActiveOpen()}}>Регистрация</Button>
-        </Col>
-      </Row>
-    </Container>
+        <Row className="me-1">
+          <Col md={8} className="pe-10">
+            <h3>Администрирование пользователей</h3>
+            
+
+            
+          </Col>
+        </Row>
+        <Row className="">
+          <Col md={8} className="pe-10">
+            <h3>Администрирование автомобилей</h3>
+            
+            
+          </Col>
+        </Row>
+      </Container>
       <ModalAuth Store={Store} showModal = {isModalAuthActive} handleModalClose = {handleModalAuthActiveClose} openRegClick={handleModalRegActiveOpen}/>
       <ModalReg Store={Store} showModal = {isModalRegActive} handleModalClose = {handleModalRegActiveClose} openAuthClick={handleModalAuthActiveOpen}/>
         
