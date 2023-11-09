@@ -61,19 +61,106 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
       <Header Store={AuthStore} showOptionsAdmin={true}/>
      
       <Container fluid className="" style={{height: '100vh'}}>
-        <Row className="me-1">
-          <Col md={8} className="pe-10">
+        <Row className="m-5  align-items-center">
+          <Col md={8} className="pe-10 ">
             <h3>Администрирование пользователей</h3>
-            
+            <Row className="align-items-center">
+              <Col>
+                <h5>Пользователи</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
 
             
           </Col>
         </Row>
-        <Row className="">
+        <Row className="m-5">
           <Col md={8} className="pe-10">
-            <h3>Администрирование автомобилей</h3>
-            
-            
+            <h3>Администрирование БД "Автомобили"</h3>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Марка автомобиля</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Модель автомобиля</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Модификация автомобиля</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Регион эксплуатации</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Описание автомобиля</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Ранее запрошенный автомобиль</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Статистика</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
+            <Row className="align-items-center">
+              <Col>
+                <h5>Налог</h5>
+              </Col>
+              <Col>
+                <Button variant="outline-primary" className='m-1'>Добавить</Button>
+                <Button variant="outline-primary">Изменить</Button>
+              </Col>
+
+            </Row>
           </Col>
         </Row>
       </Container>
