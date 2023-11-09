@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 class AuthStore {
 //   @observable
   isAuthenticated = false;
+  isAuthenticatedAdmin = false;
   carDescription = ''
   
   // Probeg = 0;
@@ -18,6 +19,14 @@ class AuthStore {
 
   logout() {
     this.isAuthenticated = false;
+  }
+
+  loginAdmin() {
+    this.isAuthenticatedAdmin = true;
+  }
+
+  logoutAdmin() {
+    this.isAuthenticatedAdmin = false;
   }
 }
 

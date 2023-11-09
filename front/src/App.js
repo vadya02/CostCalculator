@@ -11,7 +11,7 @@ import ListOfModels from './components/Catalog/ListOfModels';
 import About from './components/Static/About';
 import CarDescriptionStore from './components/MobX/CarDescriptionStore';
 import AboutCar from './components/Catalog/AboutCar';
-import AdminPage from './components/Static/AdminPage';
+import AdminPage from './components/admin/AdminPage';
 function App() {
   return (
     <div className="App">

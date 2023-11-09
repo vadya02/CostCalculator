@@ -10,7 +10,7 @@ import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Header from './Header';
+import Header from '../Static/Header';
 const AdminPage = observer(({Store, UserName, showOptions}) =>{
   const navigate = useNavigate();
     useEffect(() => {
@@ -50,9 +50,9 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
     function handleModalRegActiveClose (){
         setIsModalRegActive(false)
     } 
-  if (Store.isAuthenticated){
+  if (Store.isAuthenticatedAdmin){
     // return redirect("/about")
-    navigate('/about')
+    // navigate('/about')
   }
   else
   return (
@@ -81,7 +81,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
         <Row className="m-5">
           <Col md={8} className="pe-10">
             <h3>Администрирование БД "Автомобили"</h3>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1">
               <Col>
                 <h5>Марка автомобиля</h5>
               </Col>
@@ -91,7 +91,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
               </Col>
 
             </Row>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1">
               <Col>
                 <h5>Модель автомобиля</h5>
               </Col>
@@ -101,7 +101,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
               </Col>
 
             </Row>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1">
               <Col>
                 <h5>Модификация автомобиля</h5>
               </Col>
@@ -111,7 +111,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
               </Col>
 
             </Row>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1">
               <Col>
                 <h5>Регион эксплуатации</h5>
               </Col>
@@ -121,7 +121,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
               </Col>
 
             </Row>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1">
               <Col>
                 <h5>Описание автомобиля</h5>
               </Col>
@@ -131,7 +131,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
               </Col>
 
             </Row>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1">
               <Col>
                 <h5>Ранее запрошенный автомобиль</h5>
               </Col>
@@ -141,7 +141,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
               </Col>
 
             </Row>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1">
               <Col>
                 <h5>Статистика</h5>
               </Col>
@@ -151,7 +151,7 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
               </Col>
 
             </Row>
-            <Row className="align-items-center">
+            <Row className="align-items-center p-1" >
               <Col>
                 <h5>Налог</h5>
               </Col>
@@ -166,7 +166,6 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
       </Container>
       <ModalAuth Store={Store} showModal = {isModalAuthActive} handleModalClose = {handleModalAuthActiveClose} openRegClick={handleModalRegActiveOpen}/>
       <ModalReg Store={Store} showModal = {isModalRegActive} handleModalClose = {handleModalRegActiveClose} openAuthClick={handleModalAuthActiveOpen}/>
-        
     </div>
   );
 })
