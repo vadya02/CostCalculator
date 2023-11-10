@@ -26,7 +26,18 @@ const StartPage = observer(({Store, UserName, showOptions}) =>{
             },
           })
             .then(response => {
-              Store.login(); // Если токен валиден, устанавливаем состояние авторизации
+              if (response.data.username == 'admin'){
+                Store.loginAdmin()
+                console.log('вход админа')
+                return redirect('/Admin')
+                // Store.login()
+              }
+              else{
+                Store.login()
+                console.log('вход пользователя')
+                return redirect('/about')
+              }
+              // Store.login(); // Если токен валиден, устанавливаем состояние авторизации
             })
             .catch(error => {
               console.log('Ошибка проверки авторизации:', error);
@@ -53,7 +64,12 @@ const StartPage = observer(({Store, UserName, showOptions}) =>{
     // return redirect("/about")
     navigate('/about')
   }
-  else
+  else if (Store.isAuthenticatedAdmin){
+    // return redirect("/about")
+    console.log('osuvfodfvnofvnnvpeivoe')
+    navigate('/Admin')
+  }
+  // else
   return (
     
     <div className='bg-black text-light'>

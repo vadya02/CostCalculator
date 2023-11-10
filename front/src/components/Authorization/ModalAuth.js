@@ -8,7 +8,10 @@ import AuthStore from '../MobX/AuthStore';
 import { useContext } from 'react';
 import { observer } from 'mobx-react';
 import { redirect } from 'react-router-dom';
+import { RedirectFunction } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, showError, onClose,isOpen}) =>{
+  const navigate = useNavigate()
   // const authStore = useContext(AuthStore);
   console.log(Store.isAuthenticated)
   console.log(showModal)
@@ -31,7 +34,53 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [checkLogin, setcheckLogin] = useState(true);
-  
+  const handleSubmitAdmin = (e) => {
+    
+    const authToken = localStorage.getItem('authToken');
+    const data = {
+      username: username,
+      password: password,
+    };
+    // console.log(data)
+    // const UserData = JSON.stringify(data);
+    axios({
+      method: 'get',
+      url: `http://127.0.0.1:8000/auth/users/me`,
+      // data: UserData,
+      headers: {
+        Authorization: `Token ${authToken}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        // Обработка успешного входа
+        // setcheckLogin(true)
+        // localStorage.setItem('authToken', response.data.auth_token);
+        // Store.login()
+        // handleModalClose();
+        console.log(response.data.username == 'admin')
+        console.log('response.data.username' + response.data.username)
+        if (response.data.username == 'admin'){
+          Store.loginAdmin()
+          console.log('вход админа')
+          return redirect('/Admin')
+          // navigate('/Admin')
+          // Store.login()
+        }
+        else{
+          Store.login()
+          console.log('вход пользователя')
+          return redirect('/about')
+          // navigate('/about')
+        }
+        // return redirect('/about')
+      })
+      .catch(error => {
+        // Обработка ошибки
+        setcheckLogin(false)
+        console.error('Ошибка входа:', error);
+      });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -55,9 +104,11 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
         setcheckLogin(true)
         console.log('Успешный вход:', response.data);
         localStorage.setItem('authToken', response.data.auth_token);
-        Store.login()
+        // Store.login()
+        handleSubmitAdmin()
         handleModalClose();
-        return redirect('/about')
+        // return redirect('/about')
+        
       })
       .catch(error => {
         // Обработка ошибки

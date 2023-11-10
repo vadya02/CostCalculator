@@ -29,6 +29,7 @@ const Header = observer(({Store, UserName, showOptions, showOptionsAdmin, showBa
     } 
     
     const HandleQuit = () => {
+        Store.logoutAdmin()
         Store.logout();
         localStorage.removeItem('authToken');
         navigate('/StartPage')
