@@ -11,7 +11,7 @@ import { useContext } from 'react';
 import logo from '../../img/logo.png'
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-const Header = observer(({Store, UserName, showOptions, showOptionsAdmin, showBack, showBackAbout, showBackList}) =>{
+const Header = observer(({Store, UserName, showOptions, showOptionsAdmin, showBack, showBackAdmin, showBackList}) =>{
     let navigate = useNavigate();
     const [isModalAuthActive, setIsModalAuthActive] = useState(false)
     const [isModalRegActive, setIsModalRegActive] = useState(false)
@@ -70,6 +70,11 @@ const Header = observer(({Store, UserName, showOptions, showOptionsAdmin, showBa
                     <p style={{fontSize: '12px'}}>сервис по расчету <br/>стоимости владения авто</p>
                 </div>
             )} 
+            {showBackAdmin && (
+                <Button id="navbarNav">
+                    <Link  style={{color: 'white', textDecoration: "none"}} to="/Admin" id='navbarNav' className='nav-item'>На главную</Link>
+                </Button>  
+            )}
             {showBack && (
                 <Button id="navbarNav">
                     <Link  style={{color: 'white', textDecoration: "none"}} to="/about" id='navbarNav' className='nav-item'>На главную</Link>

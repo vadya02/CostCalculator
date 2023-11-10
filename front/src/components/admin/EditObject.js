@@ -1,14 +1,13 @@
 import React from 'react'
 import Header from '../Static/Header'
 import AuthStore from '../MobX/AuthStore'
-function AddObject() {
+function EditObject() {
   return (
-
     <div className='bg-black text-light'>
       <Header Store={AuthStore} showOptionsAdmin={false} showBackAdmin={true}/>
-      AddObject
+      EditOblect
     </div>
   )
 }
 
-export default AddObject
+export default EditObject

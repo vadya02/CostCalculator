@@ -69,8 +69,8 @@ const AdminPage = observer(({Store, UserName, showOptions}) =>{
                 <h5>Пользователи</h5>
               </Col>
               <Col>
-                <Button variant="outline-primary" className='m-1'>Добавить</Button>
-                <Button variant="outline-primary">Изменить</Button>
+                <Button variant="outline-primary" className='m-1' onClick={()=>navigate('/AdminAddObject')}>Добавить</Button>
+                <Button variant="outline-primary" onClick={()=>navigate('/AdminEditObject')}>Изменить</Button>
               </Col>
 
             </Row>

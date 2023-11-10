@@ -12,6 +12,8 @@ import About from './components/Static/About';
 import CarDescriptionStore from './components/MobX/CarDescriptionStore';
 import AboutCar from './components/Catalog/AboutCar';
 import AdminPage from './components/admin/AdminPage';
+import AddObject from './components/admin/AddObject';
+import EditObject from './components/admin/EditObject';
 function App() {
   return (
     <div className="App">
@@ -25,6 +27,8 @@ function App() {
             <Route path='/CarList' element={<CarList Store={AuthStore}/>}/>
             <Route path='/StartPage' element={<StartPage Store={AuthStore}/>}/>
             <Route path='/Admin' element={<AdminPage Store={AuthStore}/>}/>
+            <Route path='/AdminAddObject' element={<AddObject Store={AuthStore}/>}/>
+            <Route path='/AdminEditObject' element={<EditObject Store={AuthStore}/>}/>
             <Route path='/about' element={<About Store={AuthStore}/>}/>
             <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
             <Route
