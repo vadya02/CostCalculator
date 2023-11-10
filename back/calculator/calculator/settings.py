@@ -296,3 +296,5 @@ EMAIL_HOST_USER = 'django.tester@yandex.ru'
 EMAIL_HOST_PASSWORD = 'cfdangdiiwtjypkf' #<- пароль вашего созданного приложения а не от почты
 DEFAULT_FROM_EMAIL = 'django.tester@yandex.ru'
 EMAIL_USE_TLS = True
+
+

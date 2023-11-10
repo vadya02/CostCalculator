@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.models import User 
 from django.db.models import Avg, Count, Sum
@@ -138,3 +139,10 @@ class CarDescription(models.Model):
 
 #     def __str__(self):
 #         return self.email
+
+
+# class CustomUser(AbstractUser):
+#     is_admin = models.BooleanField(default=False)
+
+#     def __str__(self):
+#         return self.username
