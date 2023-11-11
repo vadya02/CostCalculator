@@ -14,6 +14,7 @@ import AboutCar from './components/Catalog/AboutCar';
 import AdminPage from './components/admin/AdminPage';
 import AddObject from './components/admin/AddObject';
 import EditObject from './components/admin/EditObject';
+import Recomendation from './components/recomendationSystem/Recomendation';
 function App() {
   return (
     <div className="App">
@@ -30,6 +31,7 @@ function App() {
             <Route path='/AdminAddObject' element={<AddObject Store={AuthStore}/>}/>
             <Route path='/AdminEditObject' element={<EditObject Store={AuthStore}/>}/>
             <Route path='/about' element={<About Store={AuthStore}/>}/>
+            <Route path='/recomend' element={<Recomendation/>}/>
             <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
             <Route
               path="/aboutCar"

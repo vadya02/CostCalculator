@@ -150,6 +150,11 @@ const Header = observer(({Store, UserName, showOptions, showOptionsAdmin, showBa
                                 <Link style={{color: 'white', textDecoration: "none"}} to="/ListOfMOdels" id='navbarNav' className='nav-item'>Каталог моделей</Link>
                             </Button>
                         </li>
+                        <li className="nav-item" style={{paddingRight: '10px'}}> 
+                            <Button variant="transparent">
+                                <Link style={{color: 'white', textDecoration: "none"}} to="/recomend" id='navbarNav' className='nav-item'>Помощь в подборе авто</Link>
+                            </Button>
+                        </li>
                         <li className="nav-item">
                         
                         <p>{UserName}</p>
