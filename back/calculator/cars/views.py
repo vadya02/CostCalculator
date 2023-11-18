@@ -1,4 +1,7 @@
+import json
+from bs4 import BeautifulSoup
 from django.shortcuts import render
+import requests
 from rest_framework import generics, status
 from .models import Brand, Model, RequestedCar, Region, Modification, Tax, Statistic, CarDescription
 from .serializers import BrandSerializer, ModelSerializer, TaxSerializer, RegionSerializer, RequestedCarSerializer, ModificationSerializer, StatisticSerializer, FloatNumberSerializer,CarDescriptionSerializer
@@ -310,3 +313,27 @@ class CarDescriptionListView(generics.ListCreateAPIView):
     
     queryset = CarDescription.objects.all()
     serializer_class = CarDescriptionSerializer
+
+
+class ParcingView(generics.ListCreateAPIView):
+    def get(self, request):
+        # URL веб-сайта для парсинга
+        url = 'https://auto.drom.ru/toyota/camry/generation9/restyling1/'
+
+        # Отправка GET-запроса к странице
+        response = requests.get(url)
+
+        # Проверка успешности запроса
+        if response.status_code == 200:
+            # Использование BeautifulSoup для анализа HTML-кода страницы
+            soup = BeautifulSoup(response.text, 'html.parser')
+            price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
+            # Пример: Извлечение заголовков всех объявлений с использованием селекторов
+            titles = soup.select('.item-title')
+            for price_span in price_spans:
+                print(f"Найденная цена: {price_span.text}")
+            data = [price_span.text for price_span in price_spans]
+            print(data)
+            return Response(data)
+        else:
+            return Response({'error': f"Ошибка {response.status_code}. Невозможно получить доступ к странице."})

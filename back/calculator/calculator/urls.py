@@ -27,7 +27,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from  cars.views import BrandDetail, BrandList, ModelsByBrandView, ActivateUser, ModificationByModelView, RegionList, CountSumView, RequestedCarView, CarRequestStatisticView,CarDescriptionView, CarDescriptionListView
+from  cars.views import BrandDetail, BrandList, ModelsByBrandView, ActivateUser, ModificationByModelView, RegionList, CountSumView, RequestedCarView, CarRequestStatisticView,CarDescriptionView, CarDescriptionListView, ParcingView
 from djoser import views as djoser_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -48,6 +48,7 @@ urlpatterns = [
     path('requested_car/', RequestedCarView.as_view(), name='requested-car'),
     path('statistic/', CarRequestStatisticView.as_view(), name='statistic'),
     path('car_descriptions/', CarDescriptionView.as_view(), name='statistic'),
+    path('cars_from_parcing/', ParcingView.as_view(), name='parcing'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
     path('auth/', include('djoser.urls.jwt')),
