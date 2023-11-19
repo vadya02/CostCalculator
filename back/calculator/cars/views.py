@@ -320,12 +320,18 @@ class CarDescriptionListView(generics.ListCreateAPIView):
 
 class ParcingView(generics.ListCreateAPIView):  
     def get(self, request):
-        brand_name = self.request.query_params.get('Nazvanie_marki', None)
-        model_name = self.request.query_params.get('Nazvanie_modeli', None)
-        mileage = self.request.query_params.get('Mileage', None)
-        year = self.request.query_params.get('Year', None)
-        engine_capacity = self.request.query_params.get('Engine_Capacity', None)
-        url = 'https://auto.drom.ru/toyota/corolla/'
+        # brand_name = self.request.query_params.get('Nazvanie_marki', None)
+        # model_name = self.request.query_params.get('Nazvanie_modeli', None)
+        # mileage = self.request.query_params.get('Mileage', None)
+        # year = self.request.query_params.get('Year', None)
+        # engine_capacity = self.request.query_params.get('Engine_Capacity', None)
+        brand_name = 'toyota'
+        model_name = 'camry'
+        mileage = 150000
+        year = 2007
+        engine_capacity = 2.4
+
+        url = f'https://auto.drom.ru/{brand_name}/{model_name}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
         response = requests.get(url)
         #проверка на ответ
         if response.status_code == 200:
@@ -344,18 +350,16 @@ class ParcingView(generics.ListCreateAPIView):
             count_of_page = count_of_pages(count_of_cars)
             print(count_of_page)
             if (count_of_page > 1):
-                for i in range (1 , 5):
+                for i in range (1 , count_of_page + 1):
                     
                     if (i > 1):
-                        url = f'https://auto.drom.ru/toyota/corolla/page{i}/'
-                    else:
-                        url = f'https://auto.drom.ru/toyota/corolla/'
+                        url = f'https://auto.drom.ru/{brand_name}/{model_name}/page{i}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
                     response = requests.get(url)
                     soup = BeautifulSoup(response.text, 'html.parser')
                     price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
                     data = [price_span.text for price_span in price_spans]
                     for price in data:
-                        print(price)
+                        # print(price)
                         prices.append(int(''.join(filter(str.isdigit, price))))
             print(calculate_average_price(prices))
             return Response(calculate_average_price(prices))
