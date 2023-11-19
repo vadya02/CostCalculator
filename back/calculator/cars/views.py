@@ -1,4 +1,6 @@
 import json
+import math
+import re
 from bs4 import BeautifulSoup
 from django.shortcuts import render
 import requests
@@ -21,6 +23,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import NotFound
 from cars.models import Brand, Model
+from utils.functions import count_of_pages, calculate_average_price
 
 # from djoser.views import ActivationView as DjoserActivationView
 # from django.shortcuts import redirect
@@ -315,25 +318,46 @@ class CarDescriptionListView(generics.ListCreateAPIView):
     serializer_class = CarDescriptionSerializer
 
 
-class ParcingView(generics.ListCreateAPIView):
+class ParcingView(generics.ListCreateAPIView):  
     def get(self, request):
-        # URL веб-сайта для парсинга
-        url = 'https://auto.drom.ru/toyota/camry/generation9/restyling1/'
-
-        # Отправка GET-запроса к странице
+        brand_name = self.request.query_params.get('Nazvanie_marki', None)
+        model_name = self.request.query_params.get('Nazvanie_modeli', None)
+        mileage = self.request.query_params.get('Mileage', None)
+        year = self.request.query_params.get('Year', None)
+        engine_capacity = self.request.query_params.get('Engine_Capacity', None)
+        url = 'https://auto.drom.ru/toyota/corolla/'
         response = requests.get(url)
-
-        # Проверка успешности запроса
+        #проверка на ответ
         if response.status_code == 200:
-            # Использование BeautifulSoup для анализа HTML-кода страницы
+            prices = []
             soup = BeautifulSoup(response.text, 'html.parser')
-            price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
-            # Пример: Извлечение заголовков всех объявлений с использованием селекторов
-            titles = soup.select('.item-title')
-            for price_span in price_spans:
-                print(f"Найденная цена: {price_span.text}")
-            data = [price_span.text for price_span in price_spans]
-            print(data)
-            return Response(data)
+            # price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
+            count_of_cars = soup.find('div', attrs={'class': "css-1ksi09z eckkbc90"})
+            # for price_span in price_spans:
+            #     print(f"Найденная цена: {price_span.text}")
+            # data = [price_span.text for price_span in price_spans]
+            # for price in data:
+            #     print(price)
+            #     prices.append(int(''.join(filter(str.isdigit, price))))
+            print(prices)
+            # print(count_of_cars.text)
+            count_of_page = count_of_pages(count_of_cars)
+            print(count_of_page)
+            if (count_of_page > 1):
+                for i in range (1 , 5):
+                    
+                    if (i > 1):
+                        url = f'https://auto.drom.ru/toyota/corolla/page{i}/'
+                    else:
+                        url = f'https://auto.drom.ru/toyota/corolla/'
+                    response = requests.get(url)
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
+                    data = [price_span.text for price_span in price_spans]
+                    for price in data:
+                        print(price)
+                        prices.append(int(''.join(filter(str.isdigit, price))))
+            print(calculate_average_price(prices))
+            return Response(calculate_average_price(prices))
         else:
             return Response({'error': f"Ошибка {response.status_code}. Невозможно получить доступ к странице."})
