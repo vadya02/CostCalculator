@@ -2,12 +2,10 @@
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, redirect, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ModalAuth from '../Authorization/ModalAuth';
 import ModalReg from '../Authorization/ModalReg';
-import AuthStore from '../MobX/AuthStore';
 import { observer } from 'mobx-react';
-import { useContext } from 'react';
 import logo from '../../img/logo.png'
 import { Button } from 'react-bootstrap';
 
@@ -48,7 +46,7 @@ const Header = observer(({Store, UserName, showOptions, showOptionsAdmin, showBa
               Authorization: `Token ${authToken}`,
             },
           })
-            .then(response => {
+            .then(() => {
             //   Store.login(); // Если токен валиден, устанавливаем состояние авторизации
             })
             .catch(error => {
@@ -153,7 +151,7 @@ const Header = observer(({Store, UserName, showOptions, showOptionsAdmin, showBa
                         </li>
                         <li className="nav-item" style={{paddingRight: '10px'}}> 
                             <Button variant="transparent">
-                                <Link style={{color: 'white', textDecoration: "none"}} to="/recomend" id='navbarNav' className='nav-item'>Помощь в подборе авто</Link>
+                                <Link style={{color: 'white', textDecoration: "none"}} to="/CostOfCar" id='navbarNav' className='nav-item'>Оценить ваш автомобиль</Link>
                             </Button>
                         </li>
                         <li className="nav-item">

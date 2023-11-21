@@ -3,8 +3,9 @@
 import React from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
+import { observer } from 'mobx-react';
 import axios from 'axios';
-function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
+const ModalReg = observer( ( { showModal, handleModalClose, openAuthClick} ) => {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -159,6 +160,6 @@ function ModalReg( { showModal, handleModalClose, openAuthClick} ) {
     </div>
 
   );
-}
+})
 
 export default ModalReg;

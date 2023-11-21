@@ -7,7 +7,8 @@ import Header from '../Static/Header';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import RequestedCar from './RequestedCar';
-function CarList({Store}) {    
+import { observer } from 'mobx-react';
+const CarList = observer(({Store}) => {    
     const handleCarList =()=>{
 
     }
@@ -22,6 +23,6 @@ function CarList({Store}) {
 
     </div>
   );
-  }
+  });
 
 export default CarList;

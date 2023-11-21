@@ -2,7 +2,7 @@
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, redirect } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import ModalAuth from '../Authorization/ModalAuth';
 import time from '../../img/time.png'
 import ModalReg from '../Authorization/ModalReg';
@@ -15,8 +15,10 @@ import Footer from './Footer';
 import car from '../../img/car.jpeg'
 import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+// import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 const About = observer(({Store, UserName}) =>{
+  const navigate = useNavigate()
     const authStore = Store
     useEffect(() => {
         // При загрузке компонента
@@ -35,7 +37,7 @@ const About = observer(({Store, UserName}) =>{
               Store.login(); // Если токен валиден, устанавливаем состояние авторизации
             })
             .catch(error => {
-              redirect('/StartPage')
+              navigate('/StartPage')
               console.log('Ошибка проверки авторизации:', error);
               Store.logout();
             });

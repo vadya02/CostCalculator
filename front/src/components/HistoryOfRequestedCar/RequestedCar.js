@@ -7,8 +7,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Card, Button, Modal } from 'react-bootstrap';
 import CalculatorStore from '../Calculator/CalculatorStore'
 import { Table } from 'react-bootstrap';
+import { observer } from 'mobx-react';
 // import { useEffect } from 'react';
-function RequestedCar({ title, content }) {   
+const RequestedCar = observer(({ title, content }) => {   
   let navigate = new useNavigate();
   const [requestedCar, setRequestedCar] = useState('')
   const [statistic, setStatistic] = useState('')
@@ -330,6 +331,6 @@ function RequestedCar({ title, content }) {
 
     </div>
   );
-  }
+});
 
 export default RequestedCar;

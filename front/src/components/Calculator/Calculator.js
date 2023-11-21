@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Footer from '../Static/Footer';
@@ -9,17 +10,15 @@ import CalculatorStore from './CalculatorStore';
 import { Bar } from 'react-chartjs-2';
 import ModalAuth from '../Authorization/ModalAuth';
 // import Chart from './Chart';
-import { Chart } from 'react-google-charts';
+// import { Chart } from 'react-google-charts';
 import ModalReg from '../Authorization/ModalReg';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Doughnut } from 'react-chartjs-2';
-import { CDBContainer } from 'cdbreact';
 import CarDescriptionStore from '../MobX/CarDescriptionStore';
-import { type } from '@testing-library/user-event/dist/type';
+import { observer } from 'mobx-react';
 // Chart.register(category);
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-function Calculator( {Store} ) {
+const Calculator = observer(( {Store} ) => {
     const [Probeg, setProbeg] = useState(0);
     const [render, setRender] = useState(0);
     const [Rashod, setRashod] = useState(0);
@@ -152,7 +151,7 @@ function Calculator( {Store} ) {
           console.log(BrandList)
         })
         .catch((error) =>{ console.error(error); console.log('svfev')});
-    };
+    }
     async function handleRegionGet (selectedRegion) {
       setRegion(selectedRegion);
         await axios({
@@ -166,7 +165,7 @@ function Calculator( {Store} ) {
           setRegionName(getNameOfRegion(parseInt(CalculatorStore.Region)-1))
         })
         .catch((error) =>{ console.error(error)});
-    };
+    }
 
     //получение списка моделей марки после выбора марки авто
 
@@ -216,45 +215,6 @@ function Calculator( {Store} ) {
       });
       console.log(brand)
     }
-
-
-    // const handleCountSum = (modification_id, probeg, region, rashod, cost) =>{
-    //   console.log('регион '+region)
-    //   if (probeg == 0 || rashod ==0 || cost == 0){
-    //     setErrorCount(true)
-    //   }
-    //   else
-    //   {
-    //     const token = storedToken;
-    //     axios.get('http://127.0.0.1:8000/cost_of_carship/', { 
-    //         method: 'GET',
-    //         params: {
-    //           Region: region,
-    //           Probeg: probeg,
-    //           Modification: modification_id,
-    //           Rashod_topliva: rashod,
-    //           Cost_of_fuel: cost
-    //         },
-    //         headers: {
-    //             "Content-type": "application/json; charset=UTF-8",
-    //             // 'Authorization': `Bearer ${token}`  // Передача токена в заголовках
-    //             'Authorization': `Token ${token}`
-    //         }
-    //       })
-    //       .then(response => {
-    //         setSumma(response.data)
-    //         CarDescriptionStore.updateNalog(response.data.nalog)
-    //         CarDescriptionStore.updateToplivo(response.data.toplivo)    
-    //         console.log('Текущий налог: ' + CarDescriptionStore.Nalog)
-    //         console.log('Текущая стоимость топлива: ' + CarDescriptionStore.Toplivo)
-    //         setcheckSum(false);
-    //         // setErrorCount(true)
-    //       })
-    //       .catch(error => {
-    //         console.error(error);
-    //         setErrorCount(true)
-    //       });}
-    // }
   
     const handleCountSum = (modification_id, probeg, region, rashod, cost) =>{
       if (CalculatorStore.Probeg == 0 || CalculatorStore.Expenditure_Of_Fuel ==0 || CalculatorStore.Cost_Of_Fuel == 0){
@@ -326,16 +286,8 @@ function Calculator( {Store} ) {
         console.error();
         return CalculatorStore.Region
       }
-      // if (Number.isInteger(id)){
-      //   let s1 =  RegionList[id].Nazvanie_regiona
-      //   return s1
-      // }
-      // else{
-      //   return CalculatorStore.Region
-      // } 
     }
     
-
     const [isModalAuthActive, setIsModalAuthActive] = useState(false)
     const [isModalRegActive, setIsModalRegActive] = useState(false)
     function handleModalAuthActiveOpen () {
@@ -376,17 +328,6 @@ function Calculator( {Store} ) {
                 </Col>
               </Row>
             </Container>
-                {/* <div class="container h-100 text-center p-50">
-                <div class=" row h-100 justify-content-center align-items-center ">
-                    <div class="col-md-6 p-80">
-                        
-                        <h1>Заголовок</h1>
-                        <p>Текст на странице.</p>
-                        <button variant="outline-primary" className="login" data-toggle='modal' data-target='#modalAuth' onClick={ ()=>{handleModalAuthActiveOpen(); console.log(isModalAuthActive)}}>Вход</button>
-                        <button variant="primary" className="signup" onClick={ ()=>{handleModalRegActiveOpen()}}>Регистрация</button>
-                    </div>
-                </div>
-            </div> */}
               <ModalAuth Store={Store} showModal = {isModalAuthActive} handleModalClose = {handleModalAuthActiveClose} openRegClick={handleModalRegActiveOpen}/>
               <ModalReg Store={Store} showModal = {isModalRegActive} handleModalClose = {handleModalRegActiveClose} openAuthClick={handleModalAuthActiveOpen}/>
                 
@@ -433,16 +374,13 @@ function Calculator( {Store} ) {
                   ))}
                 </select>
             </div>
-            <div className='row justify-content-center ml-autoы' style={{padding: '10px', display: 'flex'}}>
+            <div className='row justify-content-center ml-auto' style={{padding: '10px', display: 'flex'}}>
                 <h5 style={{width: '30%', textAlign: 'left'}}>Модификация</h5>
                 <select className="form-select" style={{width: '30%'}} onChange={(e) => {
                   handleModificationIdChange(e.target.value); 
                   CalculatorStore.updateModification(e.target.value)
                   console.log('проверка на число: ' + Number.isInteger(e.target.value))
                   console.log('номер текущей модификации: '+CalculatorStore.Modification)
-                  // CalculatorStore.updateModification(getNameOfModification(e.target.value));
-                  // console.log('имя модификации: ' + getNameOfModification(e.target.value))
-                  // console.log('имя модификации: ' + ModificatioinList[0].Power)
                 }}>
                 <option value={CalculatorStore.Modification}>{ getNameOfModification(parseInt(CalculatorStore.Modification))}</option>
                 
@@ -476,7 +414,7 @@ function Calculator( {Store} ) {
                 <input 
                   type="number" 
                   value={CalculatorStore.Probeg}
-                  class="form-control" 
+                  className="form-control" 
                   style={{width: '30%'}} 
                   id="exampleInput" 
                   placeholder="" 
@@ -489,7 +427,7 @@ function Calculator( {Store} ) {
                 <input 
                   type="number" 
                   value={CalculatorStore.Cost_Of_Fuel}
-                  class="form-control" 
+                  className="form-control" 
                   style={{width: '30%'}} 
                   id="exampleInput" 
                   placeholder="" 
@@ -502,7 +440,7 @@ function Calculator( {Store} ) {
                 <input 
                   type="number" 
                   value={CalculatorStore.Expenditure_Of_Fuel}
-                  class="form-control" 
+                  className="form-control" 
                   style={{width: '30%'}} 
                   id="exampleInput" 
                   placeholder="" 
@@ -586,6 +524,6 @@ function Calculator( {Store} ) {
         <Footer/>
     </div>
   );
-}
+});
 
 export default Calculator;

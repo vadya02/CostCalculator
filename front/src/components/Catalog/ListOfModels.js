@@ -3,31 +3,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form } from 'react-bootstrap';
-import { Link, redirect } from 'react-router-dom';
-import ModalAuth from '../Authorization/ModalAuth';
-// import time from '../img/time.png'
-import ModalReg from '../Authorization/ModalReg';
-// import statistic from '../img/statistic.png'
+import { Link } from 'react-router-dom';
 import AuthStore from '../MobX/AuthStore';
-import Image from 'react-bootstrap/Image';
 import { observer } from 'mobx-react';
 // import help from '../img/help.png'
 import Footer from '../Static/Footer';
-import { useNavigate } from 'react-router-dom';
-// import car from '../img/car.jpeg'
-
-import { useContext } from 'react';
-import { Container, Row, Col, Button, Card, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import Header from '../Static/Header';
 import CalculatorStore from '../Calculator/CalculatorStore';
+// eslint-disable-next-line no-unused-vars
 const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOptions}) =>{
   
     const [brand, setBrand] = useState('');
+    // eslint-disable-next-line no-unused-vars
     const [model, setModel] = useState('');
     const [BrandList, setBrandList] = useState([]);
     const [ModelList, setModelList] = useState([]);
     const [CarDescriptionList, setCarDescriptionList] = useState([]);
 
+    // eslint-disable-next-line no-unused-vars
     const authStore = Store
     useEffect(() => {
         // При загрузке компонента
@@ -43,6 +37,7 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
               Authorization: `Token ${authToken}`,
             },
           })
+            // eslint-disable-next-line no-unused-vars
             .then(response => {
               Store.login(); // Если токен валиден, устанавливаем состояние авторизации
             })
@@ -96,7 +91,7 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
           console.log(BrandList)
         })
         .catch((error) =>{ console.error(error); console.log('svfev')});
-    };
+    }
     //получение списка моделей марки после выбора марки авто
 
     const handleModelsView = (brand) => {
@@ -170,12 +165,6 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
           console.error(error);
         });
         console.log(brand)
-      }
-      const handleCarDescription = (id, CarDescriptionList) => {
-        CarDescriptionStore.CarDescription = CarDescriptionList[id].description
-        CarDescriptionStore.SalonImage = CarDescriptionList[0].salon_image
-        // CarDescriptionStore.CarDescription = CarDescriptionList.map(item => item.description)
-        // CarDescriptionStore.SalonImage = CarDescriptionList.map(item => item.salon_image)
       }
   return (
     

@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './components/Static/Header';
 import Calculator from './components/Calculator/Calculator';
 import ActivationUser from './components/etc/ActivationUser';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Switch, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CarList from './components/HistoryOfRequestedCar/CarList';
 import { Provider } from 'mobx-react';
 import AuthStore from './components/MobX/AuthStore';
@@ -15,14 +15,13 @@ import AdminPage from './components/admin/AdminPage';
 import AddObject from './components/admin/AddObject';
 import EditObject from './components/admin/EditObject';
 import Recomendation from './components/recomendationSystem/Recomendation';
+import { CostOfCar } from './components/recomendationSystem/CostOfCar';
 function App() {
   return (
     <div className="App">
       <Provider authStore={AuthStore}>
         <Router>
-          {/* <Header/> */}
           <Routes>
-          {/* <Route path='/startPage' element={<StartPage Store={AuthStore}/>}/> */}
             <Route path='/calculator' element={<Calculator Store={AuthStore}/>}/>
             <Route path='/activationAccount' element={<ActivationUser Store={AuthStore}/>}/>
             <Route path='/CarList' element={<CarList Store={AuthStore}/>}/>
@@ -32,7 +31,8 @@ function App() {
             <Route path='/AdminEditObject' element={<EditObject Store={AuthStore}/>}/>
             <Route path='/about' element={<About Store={AuthStore}/>}/>
             <Route path='/recomend' element={<Recomendation/>}/>
-            <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
+            <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore}/>}/>
+            <Route path='/CostOfCar' element={<CostOfCar Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
             <Route
               path="/aboutCar"
               // render={(props) => (
@@ -41,10 +41,8 @@ function App() {
               element={<AboutCar  Description={CarDescriptionStore.CarDescription} CarDescriptionStore={CarDescriptionStore}/>}
             />
           </Routes>
-        
         </Router>
       </Provider>
-      
     </div>
   );
 }
