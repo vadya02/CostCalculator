@@ -2,15 +2,13 @@
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, redirect } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 import ModalAuth from '../Authorization/ModalAuth';
 import ModalReg from '../Authorization/ModalReg';
-import AuthStore from '../MobX/AuthStore';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-const StartPage = observer(({Store, UserName, showOptions}) =>{
+const StartPage = observer(({Store, showOptions}) =>{
   const navigate = useNavigate();
     useEffect(() => {
         // При загрузке компонента

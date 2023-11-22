@@ -1,42 +1,24 @@
+/* eslint-disable react/react-in-jsx-scope */
 
 import {Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 // import Modal from 'react-modal';
 import { useState } from 'react';
-import { useObserver } from 'mobx-react';
-import AuthStore from '../MobX/AuthStore';
-import { useContext } from 'react';
 import { observer } from 'mobx-react';
 import { redirect } from 'react-router-dom';
-import { RedirectFunction } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, showError, onClose,isOpen}) =>{
-  const navigate = useNavigate()
-  // const authStore = useContext(AuthStore);
-  console.log(Store.isAuthenticated)
-  console.log(showModal)
-  // if (!showModal) {
-    
-  //   return null;
-  // }
-  const id='modalAuth'
+const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick}) =>{
   const handleClick =()=>{
     setcheckLogin(true)
     openRegClick();
     handleModalClose();
   }
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Логика для обработки входа пользователя
-    // ...
-  };
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [checkLogin, setcheckLogin] = useState(true);
-  const handleSubmitAdmin = (e) => {
+  const handleSubmitAdmin = () => {
     
     const authToken = localStorage.getItem('authToken');
+    // eslint-disable-next-line no-unused-vars
     const data = {
       username: username,
       password: password,
@@ -53,27 +35,18 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick, s
       },
     })
       .then(response => {
-        // Обработка успешного входа
-        // setcheckLogin(true)
-        // localStorage.setItem('authToken', response.data.auth_token);
-        // Store.login()
-        // handleModalClose();
         console.log(response.data.username == 'admin')
         console.log('response.data.username' + response.data.username)
         if (response.data.username == 'admin'){
           Store.loginAdmin()
           console.log('вход админа')
           return redirect('/Admin')
-          // navigate('/Admin')
-          // Store.login()
         }
         else{
           Store.login()
           console.log('вход пользователя')
           return redirect('/about')
-          // navigate('/about')
         }
-        // return redirect('/about')
       })
       .catch(error => {
         // Обработка ошибки

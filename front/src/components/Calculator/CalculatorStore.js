@@ -1,5 +1,4 @@
-import React from "react";
-import { observable, action } from "mobx";
+import { action } from "mobx";
 
 class CalculatorStore {
     constructor () {
