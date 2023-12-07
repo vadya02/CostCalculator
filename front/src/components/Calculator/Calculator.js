@@ -16,7 +16,12 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import CarDescriptionStore from '../MobX/CarDescriptionStore';
 import { observer } from 'mobx-react';
+
 // Chart.register(category);
+
+// const google = useGoogleCharts();
+import MicRecorder from "mic-recorder-to-mp3";
+
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 const Calculator = observer(( {Store} ) => {
     const [Probeg, setProbeg] = useState(0);
@@ -139,7 +144,7 @@ const Calculator = observer(( {Store} ) => {
     function handleMarkaGet (selectedBrand) {
       setBrand(selectedBrand);
       console.log(brand)
-
+        
         axios({
           method: 'get',
           // url: 'https://chatbot.ext.lomger.tech/auth/users/',
@@ -301,12 +306,9 @@ const Calculator = observer(( {Store} ) => {
     } 
     function handleModalRegActiveClose (){
         setIsModalRegActive(false)
-    } 
+    }
 
-    // const google = useGoogleCharts();
-  
-  
-  return (
+    return (
     <div className="bg-black text-light" >
         {console.log('Авторизация' + Store.isAuthenticated)}
         {!Store.isAuthenticated && (

@@ -23,7 +23,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import NotFound
 from cars.models import Brand, Model
-from utils.functions import count_of_pages, calculate_average_price
+from utils.functions import count_of_pages, calculate_average_price, remove_anomalies
 
 # from djoser.views import ActivationView as DjoserActivationView
 # from django.shortcuts import redirect
@@ -361,7 +361,6 @@ class ParcingView(generics.ListCreateAPIView):
             print(f'количество страниц: {count_of_page}')
             # if (count_of_page > 1):
             for i in range (1 , count_of_page + 1):
-                
                 if (i > 1):
                     url = f'https://auto.drom.ru/{brand_name}/{model_name}/page{i}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
                 response = requests.get(url)
@@ -371,7 +370,11 @@ class ParcingView(generics.ListCreateAPIView):
                 for price in data:
                     # print(price)
                     prices.append(int(''.join(filter(str.isdigit, price))))
+                filter_prices = remove_anomalies(prices)
+            print(f'Цены: {prices}' )
+            print(f'Цены после фильтрации: {filter_prices}' )
             print(f'Средняя цена: {calculate_average_price(prices)}' )
-            return Response({'cost_of_car': calculate_average_price(prices), 'image_of_car': ('http://127.0.0.1:8000/media/' + str(information_about_car.main_image))})
+            print(f'Средняя цена после фильтрации: {calculate_average_price(filter_prices)}' )
+            return Response({'cost_of_car': calculate_average_price(filter_prices), 'image_of_car': ('http://127.0.0.1:8000/media/' + str(information_about_car.main_image))})
         else:
             return Response({'error': f"Ошибка {response.status_code}. Невозможно получить доступ к странице."})

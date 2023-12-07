@@ -1,8 +1,7 @@
 import React from 'react';
-import Header from './components/Static/Header';
 import Calculator from './components/Calculator/Calculator';
 import ActivationUser from './components/etc/ActivationUser';
-import { Switch, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CarList from './components/HistoryOfRequestedCar/CarList';
 import { Provider } from 'mobx-react';
 import AuthStore from './components/MobX/AuthStore';
@@ -31,7 +30,7 @@ function App() {
             <Route path='/AdminEditObject' element={<EditObject Store={AuthStore}/>}/>
             <Route path='/about' element={<About Store={AuthStore}/>}/>
             <Route path='/recomend' element={<Recomendation/>}/>
-            <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore}/>}/>
+            <Route path='/ListOfModels' element={<ListOfModels Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
             <Route path='/CostOfCar' element={<CostOfCar Store={AuthStore} CarDescriptionStore={CarDescriptionStore}/>}/>
             <Route
               path="/aboutCar"

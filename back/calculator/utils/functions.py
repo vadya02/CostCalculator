@@ -1,4 +1,6 @@
 import math
+
+import numpy as np
 def calculate_average_price(prices):
         if prices:
             total_price = sum(price for price in prices)
@@ -13,3 +15,19 @@ def count_of_pages(count_of_cars):
         return count_of_pages
     else:
         return 0
+    
+
+def remove_anomalies(arr):
+    # Вычисляем межквартильный размах
+    q1 = np.percentile(arr, 25)
+    q3 = np.percentile(arr, 75)
+    iqr = q3 - q1
+
+    # Определяем границы для аномальных значений
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+
+    # Убираем аномальные значения из массива
+    cleaned_arr = [x for x in arr if lower_bound <= x <= upper_bound]
+
+    return cleaned_arr

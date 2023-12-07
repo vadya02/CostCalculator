@@ -162,13 +162,13 @@ export const CostOfCar = observer((Store) => {
               Оцените свою машину за 1 минуту
             </h3>
         </Row>
-        <Row className='justify-content-left'>
-            <p style={{color: 'white'}}>
+        <Row className='justify-content-center'>
+            <p style={{color: 'white', width: '800px'}}>
             Сайт «Автостат.рф» совместно представляет вам простой, понятный и главное справедливый калькулятор для оценки вашего автомобиля.
 
             Для его создания мы применили авторскую методику расчёта стоимости, которая основывается на реальных предложениях о продаже аналогичного автомобиля дилерами и физическими лицами.
             </p>
-            <p style={{color: 'white'}}>
+            <p style={{color: 'white', width: '800px'}}>
               Узнайте стоимость Вашего автомобиля всего за 1 минуту.
             </p>
         </Row>
@@ -254,7 +254,7 @@ export const CostOfCar = observer((Store) => {
             }>
           </input>
         </Row>
-        <Row className='justify-content-center p-2'>
+        <Row className='justify-content-center p-2 mt-2'>
           <Button variant='outline-success' style={{width: '30%'}} onClick={() => calculateCostOfCar()}>
             Оценить
           </Button>
