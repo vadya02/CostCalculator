@@ -15,6 +15,7 @@ export const CostOfCar = observer((Store) => {
   const [brand, setBrand] = useState('');
   const [cost, setCost] = useState('')
   const [checkViewCost, setCheckViewCost] = useState(false)
+  const [checkErrorCost, setCheckErrorCost] = useState(false)
   const [errorCount, setErrorCount] = useState(false);
   const [BrandList, setBrandList] = useState([]);
   const [ModelList, setModelList] = useState([]);
@@ -144,8 +145,16 @@ export const CostOfCar = observer((Store) => {
     })
     .then((response) => {
       setCost(response.data.cost_of_car)
-      costOfCar.updateMainImage(response.data.image_of_car)
-      setCheckViewCost(true)
+      console.log(response.data)
+      if (response.data.data == 'error'){
+        setCheckErrorCost(true)
+        setCheckViewCost(false)
+      }
+      else{
+        costOfCar.updateMainImage(response.data.image_of_car)
+        setCheckViewCost(true)
+      }
+      
       setLoading(false)
     })
     .catch(error => {
@@ -296,6 +305,16 @@ export const CostOfCar = observer((Store) => {
             </Row> 
           </Container>
            
+        )}
+        {checkErrorCost && (
+          <Container className='m-3 text-light border-light border-3'>
+            <Row className='justify-content-center p-2'>
+              <p>
+                По вашему запросу ничего не найдено
+              </p>
+            </Row>
+          </Container>
+
         )}
 
       </Container>

@@ -16,13 +16,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_decode
 # from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import NotFound
-from cars.models import Brand, Model
+
+# from cars.models import Brand, Model
 from utils.functions import count_of_pages, calculate_average_price, remove_anomalies
 
 # from djoser.views import ActivationView as DjoserActivationView
@@ -320,61 +320,63 @@ class CarDescriptionListView(generics.ListCreateAPIView):
 
 class ParcingView(generics.ListCreateAPIView):  
     def get(self, request):
+        # try:
+            brand_name = str(self.request.query_params.get('Nazvanie_marki', None)).lower()
+            print(brand_name)
+            model_name = str(self.request.query_params.get('Nazvanie_modeli', None)).lower()
+            mileage = int(self.request.query_params.get('Mileage', None))
+            year = int(self.request.query_params.get('Year', None))
+            engine_capacity = float(self.request.query_params.get('Engine_Capacity', None))
+            # brand_name = 'toyota'
+            # model_name = 'camry'
+            # mileage = 150000
+            # year = 2007
+            # engine_capacity = 2.4
 
-        brand_name = str(self.request.query_params.get('Nazvanie_marki', None)).lower()
-        print(brand_name)
-        model_name = str(self.request.query_params.get('Nazvanie_modeli', None)).lower()
-        mileage = int(self.request.query_params.get('Mileage', None))
-        year = int(self.request.query_params.get('Year', None))
-        engine_capacity = float(self.request.query_params.get('Engine_Capacity', None))
-        # brand_name = 'toyota'
-        # model_name = 'camry'
-        # mileage = 150000
-        # year = 2007
-        # engine_capacity = 2.4
 
+            #получение информации об автомобиле
+            id_model = Model.objects.get(Nazvanie_modeli = str(self.request.query_params.get('Nazvanie_modeli', None)))
+            information_about_car = CarDescription.objects.get(model = id_model)
+            print(information_about_car.main_image)
 
-        #получение информации об автомобиле
-        id_model = Model.objects.get(Nazvanie_modeli = str(self.request.query_params.get('Nazvanie_modeli', None)))
-        information_about_car = CarDescription.objects.get(model = id_model)
-        print(information_about_car.main_image)
-
-        url = f'https://auto.drom.ru/{brand_name}/{model_name}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
-        print(url)
-        response = requests.get(url)
-        #проверка на ответ
-        if response.status_code == 200:
-            prices = []
-            soup = BeautifulSoup(response.text, 'html.parser')
-            # price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
-            count_of_cars = soup.find('div', attrs={'class': "css-1ksi09z eckkbc90"})
-            print(count_of_cars)
-            # for price_span in price_spans:
-            #     print(f"Найденная цена: {price_span.text}")
-            # data = [price_span.text for price_span in price_spans]
-            # for price in data:
-            #     print(price)
-            #     prices.append(int(''.join(filter(str.isdigit, price))))
-            print(prices)
-            # print(count_of_cars.text)
-            count_of_page = count_of_pages(count_of_cars)
-            print(f'количество страниц: {count_of_page}')
-            # if (count_of_page > 1):
-            for i in range (1 , count_of_page + 1):
-                if (i > 1):
-                    url = f'https://auto.drom.ru/{brand_name}/{model_name}/page{i}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
-                response = requests.get(url)
+            url = f'https://auto.drom.ru/{brand_name}/{model_name}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
+            print(url)
+            response = requests.get(url)
+            #проверка на ответ
+            if response.status_code == 200:
+                prices = []
                 soup = BeautifulSoup(response.text, 'html.parser')
-                price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
-                data = [price_span.text for price_span in price_spans]
-                for price in data:
-                    # print(price)
-                    prices.append(int(''.join(filter(str.isdigit, price))))
-                filter_prices = remove_anomalies(prices)
-            print(f'Цены: {prices}' )
-            print(f'Цены после фильтрации: {filter_prices}' )
-            print(f'Средняя цена: {calculate_average_price(prices)}' )
-            print(f'Средняя цена после фильтрации: {calculate_average_price(filter_prices)}' )
-            return Response({'cost_of_car': calculate_average_price(filter_prices), 'image_of_car': ('http://127.0.0.1:8000/media/' + str(information_about_car.main_image))})
-        else:
-            return Response({'error': f"Ошибка {response.status_code}. Невозможно получить доступ к странице."})
+                # price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
+                count_of_cars = soup.find('div', attrs={'class': "css-1ksi09z eckkbc90"})
+                print(count_of_cars)
+                # for price_span in price_spans:
+                #     print(f"Найденная цена: {price_span.text}")
+                # data = [price_span.text for price_span in price_spans]
+                # for price in data:
+                #     print(price)
+                #     prices.append(int(''.join(filter(str.isdigit, price))))
+                print(prices)
+                # print(count_of_cars.text)
+                count_of_page = count_of_pages(count_of_cars)
+                print(f'количество страниц: {count_of_page}')
+                # if (count_of_page > 1):
+                for i in range (1 , count_of_page + 1):
+                    if (i > 1):
+                        url = f'https://auto.drom.ru/{brand_name}/{model_name}/page{i}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
+                    response = requests.get(url)
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
+                    data = [price_span.text for price_span in price_spans]
+                    for price in data:
+                        # print(price)
+                        prices.append(int(''.join(filter(str.isdigit, price))))
+                    filter_prices = remove_anomalies(prices)
+                print(f'Цены: {prices}' )
+                print(f'Цены после фильтрации: {filter_prices}' )
+                print(f'Средняя цена: {calculate_average_price(prices)}' )
+                print(f'Средняя цена после фильтрации: {calculate_average_price(filter_prices)}' )
+                return Response({'cost_of_car': calculate_average_price(filter_prices), 'image_of_car': ('http://127.0.0.1:8000/media/' + str(information_about_car.main_image))})
+            else:
+                return Response({'error': f"Ошибка {response.status_code}. Невозможно получить доступ к странице."})
+        # except Exception as e:
+        #     return Response({'data': "error"})
