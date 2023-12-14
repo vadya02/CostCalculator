@@ -19,9 +19,6 @@ from django.urls import path, include
 from .views import BrandList, BrandDetail
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('products/', BrandList.as_view(), name='product-list'),
-    path('products/<int:pk>/', BrandDetail.as_view(), name='product-detail'),
-    path('api/', include('cars.urls'))
+
 ]
 

@@ -96,10 +96,10 @@ class CarDescription(models.Model):
     third_image = models.ImageField(upload_to='car_images/', default='')
     salon_image = models.ImageField(upload_to='car_images/', default='')
     @property
-    def marka_name(self):
+    def marka_name(self): #получение марки авто
         return self.model.Nazvanie_marki.Nazvanie_brand
     @property
-    def model_name(self):
+    def model_name(self): #получение модели авто
         return self.model.Nazvanie_modeli
         
 

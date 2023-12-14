@@ -21,7 +21,7 @@ from django.utils.http import urlsafe_base64_decode
 # from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import NotFound
-
+from rest_framework.response import Response
 # from cars.models import Brand, Model
 from utils.functions import count_of_pages, calculate_average_price, remove_anomalies
 
@@ -39,7 +39,7 @@ from utils.functions import count_of_pages, calculate_average_price, remove_anom
 #         # Выполните код для подтверждения email
 #         return redirect('your_success_redirect_url')
 
-User = get_user_model()
+# User = get_user_model()
 
 # class ConfirmEmailView(generics.GenericAPIView):
 #     def get(self, request, *args, **kwargs):
@@ -82,69 +82,66 @@ User = get_user_model()
 #             status=status.HTTP_201_CREATED
 #         )
 
-
+# класс для просмотра марок автомобилей
 class BrandList(generics.ListCreateAPIView):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
-    # def get_queryset(self):
-    #     user = self.request.data.get('token')
-    #     print(user)
-    #     self.request.car_request_data = {
-    #         'user': user,
-    #     }
+
+# # класс для просмотра регионов
 class RegionList(generics.ListCreateAPIView):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
 
-class BrandDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Brand.objects.all()
-    serializer_class = BrandSerializer
 
+# class BrandDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Brand.objects.all()
+#     serializer_class = BrandSerializer
 
+# класс для просмотра моделей автомобилей
 class ModelList(generics.ListCreateAPIView):
     queryset = Model.objects.all()
     serializer_class = ModelSerializer
 
-class ModelDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Model.objects.all()
-    serializer_class = ModelSerializer
 
+# class ModelDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Model.objects.all()
+#     serializer_class = ModelSerializer
+
+# класс для просмотра налогов
 class TaxList(generics.ListCreateAPIView):
     queryset = Tax.objects.all()
     serializer_class = TaxSerializer
 
-class TaxDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Tax.objects.all()
-    serializer_class = TaxSerializer
+
+# class TaxDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Tax.objects.all()
+#     serializer_class = TaxSerializer
 
 
 
-
-class ModelsByBrandView(generics.ListAPIView):
+# класс для получения списка моделей конкретной марки
+class ModelsByBrandView(generics.ListCreateAPIView):
     serializer_class = ModelSerializer
 
     def get_queryset(self):
-        
         brand_name = self.request.query_params.get('Nazvanie_marki', None)
-        self.request.car_request_data = {
-            
+        self.request.car_request_data = {  
             'brand': brand_name,
         }
         if brand_name is not None:
             print(brand_name)
-            return Model.objects.filter(Nazvanie_marki__Nazvanie_brand=brand_name)
-            
+            return Model.objects.filter(Nazvanie_marki__Nazvanie_brand=brand_name)   
         else:
             return Model.objects.none()
-        
-class ModificationByModelView(generics.ListAPIView):
+
+# класс для получения списка модификаций конкретной модели        
+class ModificationByModelView(generics.ListCreateAPIView):
     serializer_class = ModificationSerializer
     
     def get_queryset(self):
         modification_name = self.request.query_params.get('Nazvanie_modeli', None)
         self.request.car_request_data = {
             'model': modification_name,
-
         }
         if modification_name is not None:
             print(modification_name)
@@ -155,34 +152,32 @@ class ModificationByModelView(generics.ListAPIView):
         
 
 
+# @api_view(['GET'])
+# @permission_classes([AllowAny])  
+
+# class BrandView(generics.ListAPIView):
+#     serializer_class = ModelSerializer
+#     queryset = Brand.objects.all()
 
 
-@api_view(['GET'])  # Указываете методы, которые разрешены
-@permission_classes([AllowAny])  
-class BrandView(generics.ListAPIView):
-    serializer_class = ModelSerializer
-    queryset = Brand.objects.all()
 
-from djoser.views import UserViewSet
-from rest_framework.response import Response
  
-class ActivateUser(UserViewSet):
-    def get_serializer(self, *args, **kwargs):
-        serializer_class = self.get_serializer_class()
-        kwargs.setdefault('context', self.get_serializer_context())
-        print("Hello")
-        # this line is the only change from the base implementation.
-        kwargs['data'] = {"uid": self.kwargs['uid'], "token": self.kwargs['token']}
+# class ActivateUser(UserViewSet):
+#     def get_serializer(self, *args, **kwargs):
+#         serializer_class = self.get_serializer_class()
+#         kwargs.setdefault('context', self.get_serializer_context())
+#         print("Hello")
+#         kwargs['data'] = {"uid": self.kwargs['uid'], "token": self.kwargs['token']}
  
-        return serializer_class(*args, **kwargs)
+#         return serializer_class(*args, **kwargs)
  
-    def activation(self, request, uid, token, *args, **kwargs):
-        print("Hello")
-        super().activation(request, *args, **kwargs)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     def activation(self, request, uid, token, *args, **kwargs):
+#         print("Hello")
+#         super().activation(request, *args, **kwargs)
+#         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
-class CountSumView(generics.ListAPIView):
+class CountSumView(generics.ListCreateAPIView):
     serializer_class = FloatNumberSerializer
     
     def get(self, format=None):
@@ -193,12 +188,6 @@ class CountSumView(generics.ListAPIView):
         print(modification_power)
         modification_capacity = modification_name.Capacity_of_engine
         print(modification_capacity)
-        # self.request.car_request_data = {
-        #     'power': modification_power,
-        #     'capacity': modification_capacity,
-        # }
-
-        # power = float(self.request.query_params.get('Power', None))
         region = self.request.query_params.get('Region', None)
         print('регион: '+ region)
         region_object = Region.objects.get(id=region)
@@ -226,7 +215,6 @@ class CountSumView(generics.ListAPIView):
         modification = get_object_or_404(Modification, id=modification_id)
         print(modification)
         # Получение марки и модели
-        
         model = modification.Nazvanie_modeli_fk.Nazvanie_modeli
         brand = modification.Nazvanie_modeli_fk.Nazvanie_marki.Nazvanie_brand
         print(model)
@@ -234,10 +222,6 @@ class CountSumView(generics.ListAPIView):
 
         obj, created = RequestedCar.objects.get_or_create(
             user=self.request.user,
-            # modification=modification,
-            # rashod_topliva=rashod,
-            # probeg=probeg,
-            # cost_of_fuel=cost_of_fuel,
             car_name = brand,
             car_model = model,
             modification_power = modification_power,
@@ -263,10 +247,8 @@ class CountSumView(generics.ListAPIView):
             statistic.num_requests = statistic.num_requests+1
             statistic.save()
         return Response({'sum_of_carship': sumOfCarship, 'toplivo': (probeg/100) * rashod * cost_of_fuel, 'nalog': tax*modification_power})
-            
-        # else:
-        #     return Response({'error': 'error'})
 
+#класс для получения списка ранее запрашиваемых авто
 class RequestedCarView(generics.ListCreateAPIView):
     serializer_class = RequestedCarSerializer
     permission_classes = [IsAuthenticated]
@@ -275,49 +257,36 @@ class RequestedCarView(generics.ListCreateAPIView):
         user = self.request.user
         return RequestedCar.objects.filter(user=user)
     
-
-class CarRequestStatisticView(APIView):
+#класс для получения статистики по автомобилю
+class CarRequestStatisticView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         statistics = Statistic.objects.all()
         data = [{'Marka': stat.brand.__str__(), 'Model': stat.model_name, 'Kolichestvo_zaprosov': stat.num_requests} for stat in statistics]
         return Response(data)
-        # user = self.request.user
-        # print (user)
-        # return Statistic.objects.filter(user=user)
 
-class CarDescriptionView(generics.ListAPIView):
+#класс для получения статистики по автомобилю
+class CarDescriptionView(generics.ListCreateAPIView):
     serializer_class = CarDescriptionSerializer
 
-    # def get_queryset(self):
-    #     # Получите ключ (марку автомобиля) из параметров запроса
-    #     model_name = self.kwargs['Nazvanie_modeli']
-    #     # Фильтруйте модели по марке
-    #     queryset = CarDescription.objects.filter(model=model_name)
-    #     return queryset
-
     def get_queryset(self):
-        
         model_name = self.request.query_params.get('Nazvanie_modeli', None)
         self.request.car_request_data = {
-            
             'CarDescripiton': model_name,
         }
         if model_name is not None:
             print(model_name)
             return CarDescription.objects.filter(model__Nazvanie_modeli=model_name)
-            
         else:
             return CarDescription.objects.none()
             
-
-
+#класс для получения описания автомобилей
 class CarDescriptionListView(generics.ListCreateAPIView):
     
     queryset = CarDescription.objects.all()
     serializer_class = CarDescriptionSerializer
 
-
+#класс для получения стоимости автомобиля
 class ParcingView(generics.ListCreateAPIView):  
     def get(self, request):
         # try:
@@ -341,23 +310,18 @@ class ParcingView(generics.ListCreateAPIView):
 
             url = f'https://auto.drom.ru/{brand_name}/{model_name}/year-{year}/?mv={engine_capacity}&xv={engine_capacity}&minprobeg={mileage-50000}&maxprobeg={mileage+50000}'
             print(url)
-            response = requests.get(url)
+
+            response = requests.get(url)#получаем html для парсинга
             #проверка на ответ
             if response.status_code == 200:
-                prices = []
+                prices = [] #массив 
                 soup = BeautifulSoup(response.text, 'html.parser')
                 # price_spans= soup.find_all('span', attrs={'data-ftid': "bull_price"})
-                count_of_cars = soup.find('div', attrs={'class': "css-1ksi09z eckkbc90"})
+                count_of_cars = soup.find('div', attrs={'class': "css-1ksi09z eckkbc90"}) # ищем html тег с количеством объявлений
                 print(count_of_cars)
-                # for price_span in price_spans:
-                #     print(f"Найденная цена: {price_span.text}")
-                # data = [price_span.text for price_span in price_spans]
-                # for price in data:
-                #     print(price)
-                #     prices.append(int(''.join(filter(str.isdigit, price))))
                 print(prices)
                 # print(count_of_cars.text)
-                count_of_page = count_of_pages(count_of_cars)
+                count_of_page = count_of_pages(count_of_cars) #считаем количество страниц с объявлениями
                 print(f'количество страниц: {count_of_page}')
                 # if (count_of_page > 1):
                 for i in range (1 , count_of_page + 1):
@@ -369,8 +333,8 @@ class ParcingView(generics.ListCreateAPIView):
                     data = [price_span.text for price_span in price_spans]
                     for price in data:
                         # print(price)
-                        prices.append(int(''.join(filter(str.isdigit, price))))
-                    filter_prices = remove_anomalies(prices)
+                        prices.append(int(''.join(filter(str.isdigit, price)))) # заполняем массив цен
+                    filter_prices = remove_anomalies(prices) # очищаем массив цен от выбросов
                 print(f'Цены: {prices}' )
                 print(f'Цены после фильтрации: {filter_prices}' )
                 print(f'Средняя цена: {calculate_average_price(prices)}' )

@@ -19,11 +19,10 @@ const AboutCar = observer(({Store, CarDescriptionStore, Description, image_1, im
   return (
     
     <div style={{backgroundColor:'black'}}>
-      
       <Header Store={AuthStore} showOptions={false} showBackList={true}/>
         <Container>
           <Row style={{padding: '60px'}}>
-            <Image src={CarDescriptionStore.SalonImage} fluid className="rounded mx-auto"/>
+            <Image src={CarDescriptionStore.SalonImage} fluid className="rounded mx-auto" style={{height: '350px', width: '550px'}}/>
           </Row>
           <Row>
             <p className='bg-black text-light'>{CarDescriptionStore.CarDescription}</p>
@@ -33,14 +32,9 @@ const AboutCar = observer(({Store, CarDescriptionStore, Description, image_1, im
               <Link style={{color: 'white', textDecoration: "none", width: '300px'}} to='/Calculator' id='navbarNav' className='nav-item'>Рассчитать стоимость владения</Link>
             </Button>
           </Row>
-
-
         </Container>
       <Footer/>
-      
-      
     </div>
-
   );
 })
 

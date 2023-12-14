@@ -95,32 +95,6 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick}) 
   
     
   return (
-    
-  //   <Modal
-  //     isOpen={isOpen}
-  //     onRequestClose={onClose}
-  //     contentLabel="Модальное окно"
-  //   >
-  //     <div className="modal" tabIndex="-1" id={id}>
-  //     <div className="modal-dialog">
-  //       <div className="modal-content">
-  //         <div className="modal-header">
-  //           <h5 className="modal-title">Модальное окно авторизации</h5>
-  //           <button type="button" className="btn-close" onClick={handleModalClose} aria-label="Close"></button>
-  //         </div>
-  //         <div className="modal-body">
-  //           {/* Ваш контент модального окна */}
-  //         </div>
-  //         <div className="modal-footer">
-  //           <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Закрыть</button>
-  //           <button type="button" className="btn btn-primary">Войти</button>
-  //         </div>
-  //       </div>
-  //     </div>
-  // </div>
-  //   </Modal>
-
-
       <div className='bg-black text-light'>
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header className='bg-dark text-light' closeButton style={{border: '1px solid gray'}}>
@@ -144,9 +118,7 @@ const ModalAuth = observer(({Store, showModal, handleModalClose, openRegClick}) 
                 <p>Неверный пароль или логин</p>
               </Form.Group>
             )}
-            
 
-            
             <Form.Group style={{alignItems: 'center', display: 'flex', justifyContent: 'center'}}>
                 <Button variant="primary" type="submit" style={{alignItems: 'center', display: 'flex', justifyContent: 'center', width: '200px', padding:'5px'}} >
                     Войти

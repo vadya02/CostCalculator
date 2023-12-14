@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 // import Header from './Header';
@@ -15,6 +17,7 @@ const RequestedCar = observer(({ title, content }) => {
   const [statistic, setStatistic] = useState('')
   const [showStatistic, setShowStatistic] = useState('')
   const [checkTax, setCheckTax] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [blocks, setBlocks] = useState([]);
 
   const handleCloseStatistic = () => setShowStatistic(false);
@@ -57,7 +60,7 @@ const RequestedCar = observer(({ title, content }) => {
         console.log(response.data)
       })
       .catch((error) =>{ console.error(error); console.log('svfev')});
-  };
+  }
   const toggleBlock = id => {
     setRequestedCar(prevBlocks =>
       prevBlocks.map(block =>
@@ -85,22 +88,19 @@ const RequestedCar = observer(({ title, content }) => {
   return (
     <div>
 
-      <Table bordered>
+      <Table bordered className='bg-ligth'>
         <thead >
           <tr>
           
-            <th>Марка</th>
-            <th>Модель</th>
-            <th>Модификация</th>
-            <th>Регион</th>
-            <th>Годовой пробег</th>
-            <th>Цена топлива</th>
-            <th>Расход топлива</th>
-            
-            <th>Стоимость владения</th>
-            <th>Дата запроса</th>
-            <th></th>
-            
+            <th style={{textAlign: 'right', color:"white"}}>Марка</th>
+            <th style={{textAlign: 'right', color:"white"}}>Модель</th>
+            <th style={{textAlign: 'right', color:"white"}}>Модификация</th>
+            <th style={{textAlign: 'right', color:"white"}}>Регион</th>
+            <th style={{textAlign: 'right', color:"white"}}>Годовой пробег</th>
+            <th style={{textAlign: 'right', color:"white"}}>Цена топлива</th>
+            <th style={{textAlign: 'right', color:"white"}}>Расход топлива</th>
+            <th style={{textAlign: 'right', color:"white"}}>Стоимость владения</th>
+            <th style={{textAlign: 'right', color:"white"}}>Дата запроса</th>
           </tr>
         </thead>
         <tbody>
@@ -112,7 +112,7 @@ const RequestedCar = observer(({ title, content }) => {
             requestedCar.map((car) => (
             <tr key={car.id}>
               {/* <td>{car.id}</td> */}
-              <td>
+              <td className='bg-ligth' style={{textAlign: 'right', color:"white"}}>
                 {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleBrandChange(e.target.value);console.log(e.target.value); handleModelsView(e.target.value)}}>
                 
                     {BrandList &&
@@ -124,7 +124,7 @@ const RequestedCar = observer(({ title, content }) => {
                 </select> */}
                 {car.car_name}
               </td>
-              <td>
+              <td className='bg-ligth' style={{textAlign: 'right', color:"white"}}>
                 {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleModelChange(e.target.value); handleModificationView(e.target.value)}}>
                 <option value=""></option>
                 
@@ -137,10 +137,11 @@ const RequestedCar = observer(({ title, content }) => {
                 </select> */}
                 {car.car_model}
               </td>
-              <td style={{textAlign: 'right'}}>
+              <td style={{textAlign: 'right', backgroundColor: "black", color:"white"}} className='bg-ligth'>
                 {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.modification_power}/><br/> */}
-                {car.modification_power} л.с. {car.modification_capacity} см.куб.</td>
-              <td>
+                {car.modification_power} л.с. {car.modification_capacity} см.куб.
+              </td>
+              <td className='bg-ligth' style={{textAlign: 'right', color:"white"}}>
                 {/* <select className="form-select" style={{width: '30%'}} onChange={(e) => {handleRegionChange(e.target.value); console.log(e.target.value)}}>
                 <option value=""></option>
                 
@@ -153,26 +154,26 @@ const RequestedCar = observer(({ title, content }) => {
                 </select> */}
                 {car.region_name}
               </td>
-              <td style={{textAlign: 'right'}}>
+              <td style={{textAlign: 'right', color:"white"}}>
                 {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.probeg}/><br/> */}
                 {car.probeg}
               </td>
-              <td style={{textAlign: 'right'}}>
+              <td style={{textAlign: 'right', color:"white"}}>
                 {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.cost_of_fuel}/><br/> */}
                 {car.cost_of_fuel}
               </td>
-              <td style={{textAlign: 'right'}}>
+              <td style={{textAlign: 'right', color:"white"}}>
                 {/* <input style={{width: '100px'}} type="number" id="firstName" name="firstName" value={car.rashod}/><br/> */}
                 {car.rashod}
               </td>
-              <td style={{textAlign: 'right'}}> 
+              <td style={{textAlign: 'right', color:"white"}}> 
                 <b>Топливо: </b><br/>{car.sum_of_fuel} <br/>
                 <b>Налог: </b><br/>{car.sum_of_nalog} <br/>
                 <b>Итоговая стоимость: </b><br/>{car.cost_of_ownership}
               
               </td>
-                <td> <TruncateString text={car.request_date} maxLength={10} /></td>
-                <td> 
+                <td style={{textAlign: 'right', color:"white"}}> <TruncateString text={car.request_date} maxLength={10} /></td>
+                <td > 
 
                   <Button variant="primary" onClick={() => toggleBlock(car.id)} style={{margin: '10px'}}>
                     {car.isOpen ? 'Свернуть' : 'Статистика'}
@@ -182,7 +183,7 @@ const RequestedCar = observer(({ title, content }) => {
                   {car.isOpen && (
                     <>
                       <div style={{padding: '10px'}}>
-                        <p>
+                        <p style={{color:"white"}}>
                         Статистика по автомобилю: <br/>
                         <strong>
                           {car.car_name} {car.car_model}

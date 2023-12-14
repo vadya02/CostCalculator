@@ -259,8 +259,8 @@ const ListOfModels = observer(({Store, CarDescriptionStore, UserName, showOption
               //   </Card.Body>
               // </Card>
               <Col key={car.id} style={{padding: '60px'}}>
-                <Card className='bg-dark text-light'>
-                  <Card.Img variant="top" src={car.main_image}/>
+                <Card className='bg-dark text-light' >
+                  <Card.Img variant="top" src={car.main_image} style={{height: "350px"}}/>
                   <Card.Body>
                     <Card.Title>{car.name_of_car}</Card.Title>
                       <Button onClick={()=>{

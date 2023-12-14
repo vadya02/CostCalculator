@@ -4,6 +4,7 @@ import React from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
+// eslint-disable-next-line react/prop-types
 function Registration( { showModal, handleModalClose, openAuthClick} ) {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   const [email, setEmail] = useState('');
@@ -35,14 +36,7 @@ function Registration( { showModal, handleModalClose, openAuthClick} ) {
 
       axios({
         method: 'post',
-        // url: 'https://chatbot.ext.lomger.tech/auth/users/',
         url: 'http://127.0.0.1:8000/auth/users/',
-        // data: {
-        //   email: data.email,
-        //   username: data.username,
-        //   password: data.password,
-        //   re_password: data.confirmPassword
-        // }
         data: data,
         headers: {
           'Content-Type': 'application/json',
@@ -65,19 +59,14 @@ function Registration( { showModal, handleModalClose, openAuthClick} ) {
         if (error.response.data.username == 'A user with that username already exists.'){
           setCheckLogin(false)
         }
-
-        
       });
   };
 
-  
   const handleClick =()=>{
     openAuthClick();
     handleModalClose();
   }
 
-  
-    
   return (
     <div className="">
         <Modal show={showModal} onHide={handleModalClose}>
@@ -147,12 +136,10 @@ function Registration( { showModal, handleModalClose, openAuthClick} ) {
                 <Form.Label>Уже зарегистрированы?</Form.Label>
                 <Form.Label style={{color: '#0D6EFD'}} onClick={handleClick}>Войти</Form.Label>
             </Form.Group>
-          
         </Form>
       </Modal.Body>
     </Modal>
     </div>
-
   );
 }
 

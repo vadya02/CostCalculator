@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from djoser.serializers import UserCreateSerializer
 from .models import Brand, Model, Tax, Region, RequestedCar, Modification, Statistic, CarDescription
 from django.contrib.auth import get_user_model
 class BrandSerializer(serializers.ModelSerializer):

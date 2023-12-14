@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import axios from 'axios';
 const ModalReg = observer( ( { showModal, handleModalClose, openAuthClick} ) => {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -33,17 +33,9 @@ const ModalReg = observer( ( { showModal, handleModalClose, openAuthClick} ) => 
   };
 
   const sendDataToServer = (data) => {
-
       axios({
         method: 'post',
-        // url: 'https://chatbot.ext.lomger.tech/auth/users/',
         url: 'http://127.0.0.1:8000/auth/users/',
-        // data: {
-        //   email: data.email,
-        //   username: data.username,
-        //   password: data.password,
-        //   re_password: data.confirmPassword
-        // }
         data: data,
         headers: {
           'Content-Type': 'application/json',
@@ -71,8 +63,6 @@ const ModalReg = observer( ( { showModal, handleModalClose, openAuthClick} ) => 
         if (error.response.data.username == 'A user with that username already exists.'){
           setCheckLogin(false)
         }
-
-        
       });
   };
 
@@ -82,8 +72,6 @@ const ModalReg = observer( ( { showModal, handleModalClose, openAuthClick} ) => 
     handleModalClose();
   }
 
-  
-    
   return (
     <div className="">
     <Modal show={showModal} onHide={handleModalClose} >
@@ -92,16 +80,6 @@ const ModalReg = observer( ( { showModal, handleModalClose, openAuthClick} ) => 
       </Modal.Header>
       <Modal.Body className='bg-dark text-light' style={{border: '1px solid gray'}}>
         <Form onSubmit={handleSubmit}>
-          {/* Форма регистрации */}
-          {/* <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email адрес</Form.Label>
-            <Form.Control 
-              type="email"
-              placeholder="Введите email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group> */}
           <Form.Group controlId="formBasicUsername">
             <Form.Label>Логин</Form.Label>
             <Form.Control
@@ -153,7 +131,6 @@ const ModalReg = observer( ( { showModal, handleModalClose, openAuthClick} ) => 
                 <Form.Label>Уже зарегистрированы?</Form.Label>
                 <Form.Label style={{color: '#0D6EFD'}} onClick={handleClick}>Войти</Form.Label>
             </Form.Group>
-          
         </Form>
       </Modal.Body>
     </Modal>
